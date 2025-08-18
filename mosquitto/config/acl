@@ -1,0 +1,34 @@
+# Echipa 1 — acces complet la topicurile team1/#
+user echipa1
+topic readwrite team1/#
+
+# Echipa 2 — acces complet la topicurile team2/#
+user echipa2
+topic readwrite team2/#
+
+# Echipa 3 — acces complet la topicurile team3/#
+user echipa3
+topic readwrite team3/#
+
+# Echipa 4 — acces complet la topicurile team4/#
+user echipa4
+topic readwrite team4/#
+
+# Echipa 5 — acces complet la topicurile team5/#
+user echipa5
+topic readwrite team5/#
+
+# Echipa 6 — acces complet la topicurile team6/#
+user echipa6
+topic readwrite team6/#
+
+# Echipa 7 - acces complet la topicurile team7/#
+user echipa7
+topic readwrite team7/#
+
+# Toți utilizatorii — acces read-only la topicurile public/#
+pattern read public/#
+
+# Admin - acces complet pe toate topicurile
+user admin
+topic readwrite #

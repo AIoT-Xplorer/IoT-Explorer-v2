@@ -1,0 +1,53 @@
+{
+    email {$ACME_EMAIL}
+}
+
+# Bloc reutilizabil cu reguli de securitate
+(common_hardening) {
+    # ascunde fișiere/directoare sensibile (dotfiles)
+    @forbidden path /.git* /.svn* /.hg* /.env* /.DS_Store /*.bak /*.swp
+    respond @forbidden 404
+
+    # headere de securitate + elimină "Server"
+    header {
+        -Server
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "SAMEORIGIN"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    }
+}
+
+# Frontend
+{$DOMAIN} {
+    import common_hardening
+    encode zstd gzip
+    reverse_proxy frontend:80
+}
+
+# API (poți activa CORS minimal dacă ai nevoie – vezi comentariul)
+{$API_DOMAIN} {
+    import common_hardening
+    encode zstd gzip
+
+    # --- CORS minimal (decomentează dacă este necesar) ---
+    @preflight method OPTIONS
+    handle @preflight {
+        header Access-Control-Allow-Origin "*"
+        header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+        header Access-Control-Allow-Headers "Authorization, Content-Type"
+        header Access-Control-Max-Age "86400"
+        respond "" 204
+    }
+    header Access-Control-Allow-Origin "*"
+    # -----------------------------------------------------
+
+    reverse_proxy backend:80
+}
+
+# MQTT peste WebSocket (WS -> WSS prin Caddy)
+{$MQTT_DOMAIN} {
+    import common_hardening
+    # compresia nu ajută WS, o lăsăm deoparte aici
+    reverse_proxy mosquitto:9001
+}

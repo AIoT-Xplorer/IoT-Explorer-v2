@@ -1,0 +1,57 @@
+version: "3.9"
+name: app_stack
+
+services:
+  caddy:
+    image: caddy:2.8-alpine
+    restart: unless-stopped
+    ports:
+      - "5.75.210.124:80:80"
+      - "5.75.210.124:443:443"
+    environment:
+      - DOMAIN=${DOMAIN}
+      - API_DOMAIN=${API_DOMAIN}
+      - MQTT_DOMAIN=${MQTT_DOMAIN}
+      - ACME_EMAIL=${ACME_EMAIL}
+    volumes:
+      - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy_data:/data
+      - caddy_config:/config
+    depends_on: [frontend, backend, mosquitto]
+    networks: [app_net]
+
+  frontend:
+    image: nginx:alpine
+    restart: unless-stopped
+    expose:
+      - "80"
+    command: ["/bin/sh","-c","mkdir -p /usr/share/nginx/html && echo '<h2>Frontend OK</h2>' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"]
+    networks: [app_net]
+
+  backend:
+    image: ealen/echo-server:latest
+    restart: unless-stopped
+    expose:
+      - "80"
+    networks: [app_net]
+
+  mosquitto:
+    image: eclipse-mosquitto:2
+    restart: unless-stopped
+    ports:               # 👈 aici expunem doar 1883 direct
+      - "5.75.210.124:1883:1883"
+    expose:
+      - "9001"
+    volumes:
+      - ./mosquitto/config:/mosquitto/config
+      - ./mosquitto/data:/mosquitto/data
+      - ./mosquitto/log:/mosquitto/log
+    networks: [app_net]
+
+networks:
+  app_net:
+    driver: bridge
+
+volumes:
+  caddy_data: {}
+  caddy_config: {}
