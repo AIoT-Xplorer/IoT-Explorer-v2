@@ -6,8 +6,8 @@ services:
     image: caddy:2.8-alpine
     restart: unless-stopped
     ports:
-      - "127.0.0.1.80:80"
-      - "127.0.0.1.443:443"
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:443:443"
     environment:
       - DOMAIN=${DOMAIN}
       - API_DOMAIN=${API_DOMAIN}
