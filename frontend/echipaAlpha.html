@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Team Alpha - IoT</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    .hero {
+      background: url('https://media.istockphoto.com/id/956366756/photo/tree-growth-three-steps-in-nature-and-beautiful-morning-lighting.jpg?s=612x612&w=0&k=20&c=0RR1skhLmMxHxbVMClJAi3XOtQ1fnfjUNusssi_3La4=') center center / cover no-repeat;
+      height: 100%;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      text-align: center;
+    }
+    .overlay {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0.55);
+    }
+    .hero-content {
+      position: relative;
+      z-index: 1;
+    }
+    .hero-content h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 4rem;
+      letter-spacing: 3px;
+    }
+    .nav-buttons .btn {
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.6);
+      color: #fff;
+      background: transparent;
+      padding: 0.6rem 1.5rem;
+      margin: 0.3rem;
+      transition: all 0.3s ease;
+    }
+    .nav-buttons .btn:hover,
+    .nav-buttons .dropdown:hover .btn {
+      background: rgba(255,255,255,0.2);
+      border-color: #fff;
+    }
+    .dropdown-menu {
+      background: rgba(0,0,0,0.8);
+      border: none;
+    }
+    .dropdown-item {
+      color: #fff;
+    }
+    .dropdown-item:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1 class="mb-4">Team Alpha</h1>
+
+      <div class="nav-buttons d-flex flex-wrap justify-content-center">
+        <a href="index.html" class="btn">Acasa</a>
+        <a href="proiect.html" class="btn">Proiect</a>
+        <a href="cum-se-foloseste.html" class="btn">Cum se foloseste</a>
+
+        <!-- Dropdown minimalist -->
+        <div class="dropdown">
+          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Membrii echipei
+          </button>
+          <ul class="dropdown-menu text-center">
+            <li><a class="dropdown-item" href="adelin.html">Adelin</a></li>
+            <li><a class="dropdown-item" href="alessia.html">Alessia</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
