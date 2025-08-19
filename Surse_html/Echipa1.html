@@ -72,13 +72,20 @@
              background: #e0f7fa !important;
                 transition: 0.2s;
             }
+              .navbar-nav .nav-item {
+            margin-right: 2.0rem;
+        }
+
+        .navbar-nav .nav-item:last-child {
+            margin-right: 0;
+        }
+        
         </style>
  
     </head>
 
     <body>
         <header>
-            
            <nav
             class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
            >
@@ -99,6 +106,12 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                         <li class="nav-item">
+                            <a class="nav-link active" href="index.html" aria-current="page" style="font-family: montserrat, sans-serif;"
+                                >Home
+                                <span class="visually-hidden">(current)</span></a
+                            >
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: montserrat, sans-serif;"
                                 >Meet the Team
@@ -122,13 +135,13 @@
                             <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: montserrat, sans-serif;">Contact Us
                                 <span class="visually-hidden">(current)</span>
                             </a>
+                            </li>
 
                          <li class="nav-item">
                             <a class="nav-link active" href="news.html" aria-current="page" style="font-family: montserrat, sans-serif;">News & Updates
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>   
-                        
                     </ul>
                     <form class="d-flex my-2 my-lg-0">
                         <input
@@ -147,7 +160,6 @@
                 </div>
             </div>
            </nav>
-           
         </header>
         <main>    
              <div class="content-wrapper">
