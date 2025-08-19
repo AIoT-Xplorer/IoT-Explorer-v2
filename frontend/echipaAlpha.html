@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ro">
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -8,114 +8,187 @@
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-  <!-- Google Fonts -->
+  <!-- Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
 
   <style>
-    body, html {
+    html, body {
       height: 100%;
       margin: 0;
       font-family: 'Orbitron', sans-serif;
+      background: #000;
     }
 
-    /* Navbar simplu */
-    nav.navbar {
-      background: linear-gradient(to right, #fff, rgb(59, 177, 177));
-    }
-
-    /* Hero Section */
     .hero {
-      background: url('https://media.istockphoto.com/id/956366756/photo/tree-growth-three-steps-in-nature-and-beautiful-morning-lighting.jpg?s=612x612&w=0&k=20&c=0RR1skhLmMxHxbVMClJAi3XOtQ1fnfjUNusssi_3La4=') 
-                  center center / cover no-repeat;
+      min-height: 100vh;
       position: relative;
-      height: calc(100vh - 80px);
       display: flex;
-      justify-content: center;
       align-items: center;
-      color: #fff;
+      justify-content: center;
       text-align: center;
+      color: #fff;
+      background:
+        url('https://media.istockphoto.com/id/956366756/photo/tree-growth-three-steps-in-nature-and-beautiful-morning-lighting.jpg?s=612x612&w=0&k=20&c=0RR1skhLmMxHxbVMClJAi3XOtQ1fnfjUNusssi_3La4=')
+        center center / cover no-repeat;
     }
-    .overlay {
+
+    .hero::after {
+      content: "";
       position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%);
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.85) 0%,
+        rgba(0,0,0,0.3) 100%
+      );
+      z-index: 0;
     }
+
     .hero-content {
       position: relative;
       z-index: 1;
+      padding: 0 2rem;
+      display: inline-block;
     }
-    .hero-content h1 {
-      font-size: 6rem;
+
+    .hero-title {
+      font-size: clamp(3rem, 8vw, 7rem);
       letter-spacing: 3px;
       text-transform: uppercase;
-      text-shadow: 0 0 10px rgba(0,255,200,0.8), 0 0 20px rgba(0,255,200,0.5);
-      margin-bottom: 1rem;
+      text-shadow:
+        0 0 10px rgba(0, 255, 200, 0.212),
+        0 0 22px rgba(0, 255, 200, 0.393);
     }
 
-    /* Linie animata sub text */
-    .underline {
-      width: 180px;
-      height: 4px;
-      margin: 0 auto;
-      background: linear-gradient(to right, #00ffc3, #00b3ff);
-      border-radius: 2px;
-      animation: pulse 2s infinite alternate;
+    .animated-border {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
     }
 
-    @keyframes pulse {
-      from { transform: scaleX(0.8); opacity: 0.7; }
-      to   { transform: scaleX(1.2); opacity: 1; }
+    .animated-border rect {
+      width: 100%;
+      height: 100%;
+      fill: none;
+      stroke: #00ffc3;
+      stroke-width: 3px;
+      stroke-dasharray: 200 400;
+      stroke-dashoffset: 0;
+      rx: 12;
+      ry: 12;
+      animation: moveBorder 3s linear infinite;
+    }
+
+    @keyframes moveBorder {
+      to {
+        stroke-dashoffset: -800;
+      }
+    }
+
+    .btn-outline-success:hover {
+      border: 1px solid #fff;
+    }
+
+    footer.footer-bar {
+      background: #0d0d0d;
+      color: #e0e0e0;
+      text-align: center;
+      padding: 15px 10px;
+      font-family: "Segoe UI", sans-serif;
+      font-size: 16px;
     }
   </style>
 </head>
 
 <body>
-  <!-- Header simplificat -->
   <header>
-    <nav class="navbar navbar-expand-md">
-      <div class="container">
-        <!-- Logo optional -->
-        <a class="navbar-brand" href="index.html">
-          <!-- Daca vrei, adaugi imaginea logo aici -->
-          <!-- <img src="/img/IoT-Team-Alpha.png" height="60" alt="Team Alpha Logo"> -->
-        </a>
-        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" 
-                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" 
-                aria-expanded="false" aria-label="Toggle navigation">
+    <nav class="navbar navbar-expand-md"
+         style="background: linear-gradient(to right, #bcefa3, rgb(74, 163, 59));">
+      <div class="container d-flex align-items-center justify-content-between">
+
+        <!-- Mobile toggle on the left -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#collapsibleNavId"
+          aria-controls="collapsibleNavId"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="collapsibleNavId">
-          <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="index.html">Acasa</a></li>
-            <li class="nav-item"><a class="nav-link" href="proiect.html">Proiect</a></li>
-            <li class="nav-item"><a class="nav-link" href="cum-se-foloseste.html">Cum se foloseste</a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="teamDropdown" role="button" data-bs-toggle="dropdown">
-                Membrii echipei
+
+        <!-- Centered nav links -->
+        <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavId">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="Meet_the_Team.html"
+                aria-current="page"
+                style="font-family: Montserrat, sans-serif;"
+              >
+                Meet the Team
+                <span class="visually-hidden">(current)</span>
               </a>
-              <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="adelin.html">Adelin</a></li>
-                <li><a class="dropdown-item" href="alessia.html">Alessia</a></li>
-              </ul>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="Our_project.html"
+                style="font-family: Montserrat, sans-serif;"
+              >
+                Our Project
+                <span class="visually-hidden">(current)</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                href="Contact_us.html"
+                style="font-family: Montserrat, sans-serif;"
+              >
+                Contact Us
+                <span class="visually-hidden">(current)</span>
+              </a>
             </li>
           </ul>
         </div>
+
+        <!-- Logo on the right -->
+        <a class="navbar-brand ms-3 order-last" href="Echipa1.html">
+          <img
+            src="https://bing.com/th/id/BCO.80b95b4a-660f-46fb-9c45-37b2e1f10752.png"
+            height="60"
+            alt="Team A Logo"
+          >
+        </a>
       </div>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <div class="hero">
-    <div class="overlay"></div>
+  <section class="hero">
     <div class="hero-content">
-      <h1>Team Alpha</h1>
-      <div class="underline"></div>
+      <h1 class="hero-title">Team Alpha</h1>
+      <svg class="animated-border">
+        <rect x="0" y="0" width="100%" height="100%" />
+      </svg>
     </div>
-  </div>
+  </section>
 
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  <footer class="footer-bar">
+    <p class="mb-0">
+      © 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform
+      developed in the frame of 2025 IoT Explorer Program
+    </p>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+```
