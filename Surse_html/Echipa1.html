@@ -23,12 +23,57 @@
             crossorigin="anonymous"
         />
 
+          <style>
+        html, main {
+            height: 100%;
+            margin: 0;
+            overflow-y: auto; /* Adaugă bara de scroll verticală */
+        }
+        
+        .content-wrapper {
+            min-height: 100vh;
+            padding-bottom: 80px; /* Spațiu pentru footer */
+            box-sizing: border-box;
+        }
+        
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-y: auto; /* Scroll pentru conținut */
+            max-height: calc(100vh - 80px); /* Înălțime minus footer */
+        }
+
+        /* Pentru conținut lung */
+        .scrollable-content {
+            max-height: calc(100vh - 120px);
+            overflow-y: scroll;
+            padding: 20px;
+        }
+     </style>
+
     <style>
        .btn-outline-success:hover {
             border: 1px solid #fff;
         }
 
     </style>
+    <style>
+            body {
+                background: url("../img/fundal2.png") no-repeat center center fixed;
+                background-size: cover;
+            }
+            .btn-outline-success:hover {
+                border: 1px solid #fff;
+            }
+            .caseta-link:hover textarea,
+            .caseta-link:active textarea {
+             border-color: #00796b !important;
+             background: #e0f7fa !important;
+                transition: 0.2s;
+            }
+        </style>
+ 
     </head>
 
     <body>
@@ -104,19 +149,17 @@
            </nav>
            
         </header>
-        <main></main>
-            <footer  style= "background-color: rgb(59, 177, 177); position: fixed; bottom: 0;width: 100%;left:0; color: #e0f7fa; text-align: center; padding: 10px;">
-            <p class="mb-0">© 2025  AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
-        </footer>
-       
-
-                    <div style="position: fixed; top: auto;left: 90px;">
+        <main>    
+             <div class="content-wrapper">
+                 <div class="main-content">
+                    <div style="position: absolute; top: auto;left: 90px;">
                       <textarea class="form-control" rows="5" style="border:none ;font-family: montserrat, sans-serif;background:none;resize: none;font-size: xx-large; font-weight: bold;" placeholder="Descriere" disabled>IoT-Xplorer Team β</textarea>
-                  </div>
-                  <div>
-                       <div style="width: 50%; height: 3px; background-color:#00796b; margin-top: 60px;margin-left: 100px;"></div>
-                  </div>
-                    <div style="position: fixed; top: 28%; left: 90px">
+                        </div>
+                    <div>
+                       <div style="width: 50%; height: 3px; background-color:#00796b; margin-top:60px; margin-left: 90px;">
+                       </div>
+                     </div>
+                    <div style="position: absolute; top: 28%; left: 90px">
                         
                         <textarea class="form-control" rows="7" style="background:none; overflow: hidden; font-family: montserrat, sans-serif;border:none;;resize: none; width: 800px; min-width: 800px; max-width: 800px; height: 120px; min-height: 120px; max-height: 120px;" placeholder="Descriere" disabled>Textul descrierii aici?????????????????????????????  ???????????????????.....ss
                             ????????????????????
@@ -124,10 +167,19 @@
                             ???????????????
                             ??????????????????????
                         </textarea>
-                    </div>
-                   <div style="position: fixed; top: 28%; right: 10%;">
+                     </div>
+                   <div style="position: absolute; top: 28%; right: 10%;">
                     <img src="/img/IoT - Team B.png" alt="Imagine" style="max-width: 200px; margin-bottom: 20px;">
-                    </div>
+                     </div>  
+                 </div> 
+                    </div> 
+            </main>
+            <footer  style= "background-color: rgb(59, 177, 177); position: fixed; bottom: 0;width: 100%;left:0; color: #e0f7fa; text-align: center; padding: 10px;">
+            <p class="mb-0">© 2025  AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
+        </footer>
+       
+
+                  
         <!-- Bootstrap JavaScript Libraries -->
         <script
             src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
