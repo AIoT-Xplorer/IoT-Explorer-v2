@@ -24,6 +24,20 @@
     transition: 0.2s;
 }
         </style>
+        <style>
+       .btn-outline-success:hover {
+            border: 1px solid #fff;
+        }
+
+        .navbar-nav .nav-item {
+            margin-right: 2.0rem;
+        }
+
+        .navbar-nav .nav-item:last-child {
+            margin-right: 0;
+        }
+
+    </style>
     </head>
 
     <body>
@@ -49,6 +63,13 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+
+                         <li class="nav-item">
+                            <a class="nav-link active" href="index.html" aria-current="page" style="font-family: montserrat, sans-serif;"
+                                >Home
+                                <span class="visually-hidden">(current)</span></a
+                            >
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: montserrat, sans-serif;"
                                 >Meet the Team
@@ -60,11 +81,26 @@
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
-
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Dashboard_proiect.html" aria-current="page" style="font-family: montserrat, sans-serif;">Dashboard Project
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        
+                        
                         <li class="nav-item">
                             <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: montserrat, sans-serif;">Contact Us
                                 <span class="visually-hidden">(current)</span>
                             </a>
+                            </li>
+
+                         <li class="nav-item">
+                            <a class="nav-link active" href="news.html" aria-current="page" style="font-family: montserrat, sans-serif;">News & Updates
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>   
+                        
                         
                     </ul>
                     <form class="d-flex my-2 my-lg-0">
@@ -86,10 +122,8 @@
            </nav>
            
         </header>
-        <main></main>
-        <footer>
-            <!-- place footer here -->
-        </footer>
+       <main> 
+       
         <div style="position: fixed; top: 25%; left: 35%; transform: translateX(-50%); width: 330px;">
             <a href="pagina_daria.html" class="caseta-link" style="text-decoration: none;">
                 <textarea 
@@ -143,5 +177,9 @@
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"
         ></script>
+        </main>
     </body>
+     <footer  style= "background-color: rgb(59, 177, 177); position: fixed; bottom: 0;width: 100%;left:0; color: #e0f7fa; text-align: center; padding: 10px;">
+            <p class="mb-0">© 2025  AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
+        </footer>
 </html>

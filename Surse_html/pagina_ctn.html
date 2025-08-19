@@ -26,8 +26,8 @@
                 background: #e0f7fa !important;
                 transition: 0.2s;
             }
-            .btn-next {
-                background-color: #3bb1b1;
+            .btn-nav {
+                background-color: #00796b;
                 color: white;
                 border: none;
                 padding: 12px 24px;
@@ -37,12 +37,26 @@
                 text-decoration: none;
                 display: inline-block;
             }
-            .btn-next:hover {
+            .btn-nav:hover {
                 background-color: #005a4f;
                 transform: translateY(-2px);
                 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
         </style>
+        <style>
+       .btn-outline-success:hover {
+            border: 1px solid #fff;
+        }
+
+        .navbar-nav .nav-item {
+            margin-right: 2.0rem;
+        }
+
+        .navbar-nav .nav-item:last-child {
+            margin-right: 0;
+        }
+
+    </style>
     </head>
 
     <body>
@@ -67,21 +81,42 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                         <li class="nav-item">
+                            <a class="nav-link active" href="index.html" aria-current="page" style="font-family: montserrat, sans-serif;"
+                                >Home
+                                <span class="visually-hidden">(current)</span></a
+                            >
+                        </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: Montserrat, sans-serif;"
+                            <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: montserrat, sans-serif;"
                                 >Meet the Team
                                 <span class="visually-hidden">(current)</span></a
                             >
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="Our_project.html" aria-current="page" style="font-family: Montserrat, sans-serif;">Our Project
+                            <a class="nav-link active" href="Our_project.html" aria-current="page" style="font-family: montserrat, sans-serif;">Our Project
                                 <span class="visually-hidden">(current)</span>
                             </a>
                         </li>
+                        
                         <li class="nav-item">
-                            <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: Montserrat, sans-serif;">Contact Us
+                            <a class="nav-link active" href="Dashboard_proiect.html" aria-current="page" style="font-family: montserrat, sans-serif;">Dashboard Project
                                 <span class="visually-hidden">(current)</span>
                             </a>
+                        </li>
+                        
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: montserrat, sans-serif;">Contact Us
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                            </li>
+
+                         <li class="nav-item">
+                            <a class="nav-link active" href="news.html" aria-current="page" style="font-family: montserrat, sans-serif;">News & Updates
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>   
                     </ul>
                     <form class="d-flex my-2 my-lg-0">
                         <input
@@ -117,7 +152,7 @@
                             border-bottom: 4px solid #3bb1b1;
                         "
                     >
-                       Catana Marius-Ionut
+                        Catana Marius-Ionut
                     </div>
                 </div>
                 <!-- Al doilea text, poziționabil unde vrei -->
@@ -175,11 +210,10 @@
                     </div>
                 </div>
             </div>
-            
-              <!-- Buton Previous către pagina Daria -->
+            <!-- Buton Next către pagina CTN -->
             <div style="position: fixed; bottom: 50px; left: 30px;">
-                <a href="pagina_daria.html" class="btn-next">
-                    <i class="fas fa-arrow-left"></i> Previous
+                <a href="pagina_Daria.html" class="btn-nav">
+                     <i class="fas fa-arrow-left"></i> Prev
                 </a>
             </div>
         </main>
