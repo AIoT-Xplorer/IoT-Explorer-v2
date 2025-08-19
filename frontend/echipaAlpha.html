@@ -1,132 +1,37 @@
-<html lang="en">
-    <head>
-        <title>IoT - Team β</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
-
-        <!-- Bootstrap CSS v5.2.1 -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        />
-
-    <style>
-       .btn-outline-success:hover {
-            border: 1px solid #fff;
-        }
-
-    </style>
-    </head>
-
-    <body>
-        <header>
-            
-           <nav
-            class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
-           >
-            <div class="container">
-                <a class="navbar-brand" href="Echipa1.html">
-                    <img src = "/img/IoT - Team B.png" height="60">
-                </a>
-                <button
-                    class="navbar-toggler d-lg-none"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapsibleNavId"
-                    aria-controls="collapsibleNavId"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: montserrat, sans-serif;"
-                                >Meet the Team
-                                <span class="visually-hidden">(current)</span></a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Our_project.html" aria-current="page" style="font-family: montserrat, sans-serif;">Our Project
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: montserrat, sans-serif;">Contact Us
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        
-                    </ul>
-                    <form class="d-flex my-2 my-lg-0">
-                        <input
-                            class="form-control me-sm-2"
-                            type="text"
-                            placeholder="Search"
-                        />
-                        <button
-                            class="btn btn-outline-success my-2 my-sm-0"
-                            type="submit"
-                            style="background-color: #00796b; color: #e0f7fa;"                            
-                        >
-                            Search
-                        </button>
-                    </form>
-                </div>
-            </div>
-           </nav>
-           
-        </header>
-        <main></main>
-        <footer>
-            <!-- place footer here -->
-        </footer>
-        <!-- Bootstrap JavaScript Libraries -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
-
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
-    </body>
-</html>
-
 <!DOCTYPE html>
 <html lang="ro">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Team Alpha - IoT</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>IoT - Team Alpha</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
-  
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+
   <style>
-    html, body {
+    body, html {
       height: 100%;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
+      font-family: 'Orbitron', sans-serif;
     }
+
+    /* Navbar simplu */
+    nav.navbar {
+      background: linear-gradient(to right, #fff, rgb(59, 177, 177));
+    }
+
+    /* Hero Section */
     .hero {
-      background: url('https://media.istockphoto.com/id/956366756/photo/tree-growth-three-steps-in-nature-and-beautiful-morning-lighting.jpg?s=612x612&w=0&k=20&c=0RR1skhLmMxHxbVMClJAi3XOtQ1fnfjUNusssi_3La4=') center center / cover no-repeat;
-      height: 100%;
+      background: url('https://media.istockphoto.com/id/956366756/photo/tree-growth-three-steps-in-nature-and-beautiful-morning-lighting.jpg?s=612x612&w=0&k=20&c=0RR1skhLmMxHxbVMClJAi3XOtQ1fnfjUNusssi_3La4=') 
+                  center center / cover no-repeat;
       position: relative;
+      height: calc(100vh - 80px);
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       color: #fff;
       text-align: center;
     }
@@ -134,69 +39,83 @@
       position: absolute;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: rgba(0, 0, 0, 0.55);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 100%);
     }
     .hero-content {
       position: relative;
       z-index: 1;
     }
     .hero-content h1 {
-      font-family: 'Orbitron', sans-serif;
-      font-size: 4rem;
+      font-size: 6rem;
       letter-spacing: 3px;
+      text-transform: uppercase;
+      text-shadow: 0 0 10px rgba(0,255,200,0.8), 0 0 20px rgba(0,255,200,0.5);
+      margin-bottom: 1rem;
     }
-    .nav-buttons .btn {
-      border-radius: 50px;
-      border: 1px solid rgba(255,255,255,0.6);
-      color: #fff;
-      background: transparent;
-      padding: 0.6rem 1.5rem;
-      margin: 0.3rem;
-      transition: all 0.3s ease;
+
+    /* Linie animata sub text */
+    .underline {
+      width: 180px;
+      height: 4px;
+      margin: 0 auto;
+      background: linear-gradient(to right, #00ffc3, #00b3ff);
+      border-radius: 2px;
+      animation: pulse 2s infinite alternate;
     }
-    .nav-buttons .btn:hover,
-    .nav-buttons .dropdown:hover .btn {
-      background: rgba(255,255,255,0.2);
-      border-color: #fff;
-    }
-    .dropdown-menu {
-      background: rgba(0,0,0,0.8);
-      border: none;
-    }
-    .dropdown-item {
-      color: #fff;
-    }
-    .dropdown-item:hover {
-      background: rgba(255,255,255,0.1);
+
+    @keyframes pulse {
+      from { transform: scaleX(0.8); opacity: 0.7; }
+      to   { transform: scaleX(1.2); opacity: 1; }
     }
   </style>
 </head>
+
 <body>
-
-  <div class="hero">
-    <div class="overlay"></div>
-    <div class="hero-content">
-      <h1 class="mb-4">Team Alpha</h1>
-
-      <div class="nav-buttons d-flex flex-wrap justify-content-center">
-        <a href="index.html" class="btn">Home</a>
-        <a href="proiect.html" class="btn">Project</a>
-        <a href="cum-se-foloseste.html" class="btn">Dashboard</a>
-
-        <!-- Dropdown minimalist -->
-        <div class="dropdown">
-          <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Meet the Team
-          </button>
-          <ul class="dropdown-menu text-center">
-            <li><a class="dropdown-item" href="adelin.html">Adelin</a></li>
-            <li><a class="dropdown-item" href="alessia.html">Alessia</a></li>
+  <!-- Header simplificat -->
+  <header>
+    <nav class="navbar navbar-expand-md">
+      <div class="container">
+        <!-- Logo optional -->
+        <a class="navbar-brand" href="index.html">
+          <!-- Daca vrei, adaugi imaginea logo aici -->
+          <!-- <img src="/img/IoT-Team-Alpha.png" height="60" alt="Team Alpha Logo"> -->
+        </a>
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" 
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Acasa</a></li>
+            <li class="nav-item"><a class="nav-link" href="proiect.html">Proiect</a></li>
+            <li class="nav-item"><a class="nav-link" href="cum-se-foloseste.html">Cum se foloseste</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="teamDropdown" role="button" data-bs-toggle="dropdown">
+                Membrii echipei
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="adelin.html">Adelin</a></li>
+                <li><a class="dropdown-item" href="alessia.html">Alessia</a></li>
+              </ul>
+            </li>
           </ul>
         </div>
       </div>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <div class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Team Alpha</h1>
+      <div class="underline"></div>
     </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
