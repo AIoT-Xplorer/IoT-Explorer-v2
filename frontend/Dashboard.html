@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard - Team Alpha</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      color: #fff;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      background: #000;
+    }
+    .navbar {
+      background: linear-gradient(to right, #ffffff, #4caf50);
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .navbar::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, #00ffc3, #4caf50, #00ffc3);
+      box-shadow: 0 0 10px #00ffc3;
+    }
+    .navbar-nav .nav-link {
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .navbar-nav .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background: #00ffc3;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px #00ffc3;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #00ffc3 !important;
+    }
+    .navbar-nav .nav-link:hover::after {
+      width: 100%;
+    }
+    .dashboard-section {
+      flex: 1;
+      background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                  url("Images/Fundal_Secundar_4.png") no-repeat center center fixed;
+      background-size: cover;
+      padding: 80px 20px;
+    }
+    .dashboard-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .dashboard-title {
+      font-size: clamp(2.5rem, 6vw, 4rem);
+      font-family: 'Orbitron', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0,255,200,0.8),
+                   0 0 20px rgba(0,255,200,0.6);
+    }
+    .card-custom {
+      background: rgba(255,255,255,0.05);
+      border: none;
+      border-radius: 20px;
+      padding: 25px 15px;
+      text-align: center;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(0,255,195,0.2);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card-custom:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 0 30px rgba(0,255,195,0.4);
+    }
+    .card-custom i {
+      font-size: 3rem;
+      margin-bottom: 15px;
+      color: #00ffc3;
+    }
+    .card-value {
+      font-size: 2rem;
+      font-weight: bold;
+      margin-top: 10px;
+      color: #f0fdf4;
+    }
+    .card-label {
+      font-size: 1.1rem;
+      margin-top: 5px;
+    }
+    footer.footer-bar {
+      background: #0d0d0d;
+      color: #e0e0e0;
+      text-align: center;
+      padding: 15px 10px;
+      font-size: 16px;
+      border-top: 1px solid rgba(0,255,200,0.3);
+    }
+    .footer-social a {
+      color: #e0e0e0;
+      margin: 0 0.5rem;
+      font-size: 1.4rem;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .footer-social a:hover {
+      color: #00ffc3;
+      transform: scale(1.2);
+    }
+    .charts-section {
+      margin-top: 60px;
+    }
+    .chart-container {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 30px;
+      box-shadow: 0 0 20px rgba(0,255,195,0.2);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar navbar-expand-md">
+      <div class="container">
+        <a class="navbar-brand" href="echipaAlpha.html">
+          <img src="Images/Logo_Team_Alpha.jpeg" height="60" alt="Team A Logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#collapsibleNavId">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="Meet_the_Team.html">Meet the Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="About_The_Project.html">About the Project</a></li>
+            <li class="nav-item"><a class="nav-link active" href="Dashboard.html">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="Resources.html">Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="Contact_us.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+  </header>
+
+  <!-- DASHBOARD -->
+  <main class="dashboard-section">
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">Dashboard</h1>
+      <p>Monitor your plant’s parameters in real time 🌱</p>
+    </div>
+
+    <div class="container">
+      <div class="row g-4 text-center justify-content-center">
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="card-custom">
+            <i class="fas fa-tint"></i>
+            <div class="card-value">-- %</div>
+            <div class="card-label">Soil Moisture</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="card-custom">
+            <i class="fas fa-sun"></i>
+            <div class="card-value">-- lux</div>
+            <div class="card-label">Ambient Light</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="card-custom">
+            <i class="fas fa-faucet"></i>
+            <div class="card-value">OFF</div>
+            <div class="card-label">Irrigation</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="card-custom">
+            <i class="fas fa-thermometer-half"></i>
+            <div class="card-value">-- °C</div>
+            <div class="card-label">Temperature</div>
+          </div>
+        </div>
+        <div class="col-6 col-md-4 col-lg-2">
+          <div class="card-custom">
+            <i class="fas fa-wind"></i>
+            <div class="card-value">-- AQI</div>
+            <div class="card-label">Air Quality</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== CHARTS SECTION ===== -->
+    <div class="container charts-section">
+      <h2 class="text-center mb-4">Live Graphs</h2>
+      <div class="row g-4 justify-content-center">
+        <div class="col-md-6">
+          <div class="chart-container">
+            <canvas id="tempChart"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="chart-container">
+            <canvas id="soilChart"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="chart-container">
+            <canvas id="lightChart"></canvas>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="chart-container">
+            <canvas id="airChart"></canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer-bar">
+    <p class="mb-2">
+      © 2025 AIoT-Explorer – part of the unified, multi-tenant IoT platform
+      developed in the frame of the 2025 IoT Explorer Program
+    </p>
+    <div class="footer-social">
+      <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <!-- ===== CHART.JS SCRIPT ===== -->
+  <script>
+    const createChart = (ctx, label, unit, borderColor, bgColor) => {
+      return new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ["10:00","10:05","10:10","10:15","10:20","10:25"],
+          datasets: [{
+            label: `${label} (${unit})`,
+            data: [20, 21, 21.5, 22, 21.8, 22.1],
+            borderColor: borderColor,
+            backgroundColor: bgColor,
+            fill: true,
+            tension: 0.3
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { labels: { color: '#fff', font: { size: 14 } } }
+          },
+          scales: {
+            x: { ticks: { color: '#fff' } },
+            y: { ticks: { color: '#fff' } }
+          }
+        }
+      });
+    };
+
+    createChart(document.getElementById('tempChart'), 'Temperature', '°C', '#ff6384', 'rgba(255,99,132,0.2)');
+    createChart(document.getElementById('soilChart'), 'Soil Moisture', '%', '#4bc0c0', 'rgba(75,192,192,0.2)');
+    createChart(document.getElementById('lightChart'), 'Ambient Light', 'lux', '#ffcd56', 'rgba(255,205,86,0.2)');
+    createChart(document.getElementById('airChart'), 'Air Quality', 'AQI', '#9966ff', 'rgba(153,102,255,0.2)');
+  </script>
+</body>
+</html>
