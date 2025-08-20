@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Meet the Team - IoT Explorer</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            color: #333;
+            background: linear-gradient(90deg, #ffffff, #87CEEB);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 50px 0;
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #ffffff, #87CEEB);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .nav-link {
+            color: #005f99 !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-link:hover {
+            color: #003f66 !important;
+        }
+
+        .page-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: #005f99;
+            text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.7);
+        }
+
+        .team-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-card img {
+            border-radius: 50%;
+            height: 200px;
+            width: 200px;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .team-card img:hover {
+            transform: scale(1.05);
+        }
+
+        .team-card h5 {
+            color: #005f99;
+            margin-top: 10px;
+        }
+
+        footer {
+            background: rgb(0, 51, 102);
+            color: #fff;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2.2rem;
+                margin-bottom: 30px;
+            }
+
+            .team-card img {
+                height: 150px;
+                width: 150px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-md">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="Delta_Logo.png" height="60" alt="Logo">
+            </a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="about-project-delta.html">About Project</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Our_project.html">Dashboard</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="Meet_the_team.html">Meet the Team</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Contact_us.html">Contact Us</a></li>
+                </ul>
+                <div class="d-flex">
+                    <a href="signin.html" class="btn btn-dark ms-2">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container text-center">
+            <div class="page-title">Meet the Team</div>
+            <div class="row justify-content-center g-5">
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <a href="Petrisor-Andrei.html">
+                            <img src="andrei.jpg" alt="Petrisor Andrei">
+                        </a>
+                        <h5 class="fw-bold">Petrisor Andrei</h5>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="team-card">
+                        <a href="Gabi.html">
+                            <img src="gabi.jpg" alt="Petrisor Gabriel">
+                        </a>
+                        <h5 class="fw-bold">Petrisor Gabriel</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of
+            2025 IoT Explorer Program</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
