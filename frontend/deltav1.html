@@ -1,0 +1,227 @@
+<html lang="en">
+
+<head>
+    <title>IoT - Team β</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        html,
+        body {
+            height: 100%;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            background: #f8f9fa;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: linear-gradient(90deg, #ffffff, #3bb1b1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .nav-link {
+            color: #000 !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar .nav-link:hover {
+            color: #006666 !important;
+        }
+
+        .navbar-brand img {
+            transition: transform 0.3s ease;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.1);
+        }
+
+        /* Buttons */
+        .btn-dark {
+            border-radius: 25px;
+            padding: 0.5rem 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-dark:hover {
+            background: #3bb1b1;
+            border-color: #3bb1b1;
+            color: #fff;
+        }
+
+        /* Dropdown */
+        .dropdown-menu {
+            border-radius: 10px;
+            border: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .dropdown-item {
+            transition: background 0.3s ease;
+        }
+
+        .dropdown-item:hover {
+            background-color: #3bb1b1;
+            color: #fff;
+        }
+
+        /* Footer */
+        footer {
+            background: #000;
+            color: #fff;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+
+        /* Example content styling */
+        .hero {
+            background: linear-gradient(135deg, #3bb1b1, #007777);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 20px;
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .hero h1 {
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-md">
+            <div class="container">
+                <a class="navbar-brand" href="Echipa1.html">
+                    <img src="Delta_Logo.png" height="60" alt="Logo">
+                </a>
+                <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav me-auto">
+                        <!-- Home -->
+                        <li class="nav-item">
+                            <a class="nav-link active" href="index.html">Home</a>
+                        </li>
+                        <!-- About Project -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="deltav1.html">About Project</a>
+                        </li>
+                        <!-- Dashboard -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="Our_project.html">Dashboard</a>
+                        </li>
+                        <!-- Meet the Team (Dropdown) -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="teamDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Meet the Team
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="teamDropdown">
+                                <li><a class="dropdown-item" href="Gabi.html">Petrisor Gabriel</a></li>
+                                <li><a class="dropdown-item" href="Petrisor-Andrei.html">Petrisor Andrei</a></li>
+                            </ul>
+                        </li>
+                        <!-- Contact -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="Contact_us.html">Contact Us</a>
+                        </li>
+                    </ul>
+
+                    <!-- Sign In button -->
+                    <div class="d-flex">
+                        <a href="signin.html" class="btn btn-dark ms-2">Sign In</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <h1>Welcome to Team β - IoT Explorer</h1>
+            <p>We are building the future of smart connectivity through a unified, multi-tenant IoT platform. Join us in
+                exploring innovation and technology.</p>
+        </section>
+
+        <!-- Example content cards -->
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Our Mission</h5>
+                            <p class="card-text">Empowering smart devices to communicate and create value in real-time
+                                applications.</p>
+                            <a href="Our_project.html" class="btn btn-outline-dark btn-sm">Explore</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Meet the Team</h5>
+                            <p class="card-text">Discover the talented people behind the innovation and creativity of our
+                                IoT solutions.</p>
+                            <a href="Gabi.html" class="btn btn-outline-dark btn-sm">Learn More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-4">
+                    <div class="card shadow-sm h-100">
+                        <div class="card-body">
+                            <h5 class="card-title">Get in Touch</h5>
+                            <p class="card-text">We’d love to hear your ideas, feedback, and collaboration proposals.</p>
+                            <a href="Contact_us.html" class="btn btn-outline-dark btn-sm">Contact Us</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-3">
+        <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of
+            2025 IoT Explorer Program</p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
