@@ -12,6 +12,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
     <style>
         body {
             padding-top: 140px;
@@ -194,29 +198,28 @@
         }
 
         .btn-outline-success {
-    --bs-btn-color: #225E3E;
-    --bs-btn-border-color: #225E3E;
-    --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #225E3E;
-    --bs-btn-hover-border-color: #225E3E;
-    --bs-btn-focus-shadow-rgb: 25, 135, 84;
-    --bs-btn-active-color: #fff;
-    --bs-btn-active-bg: #225E3E;
-    --bs-btn-active-border-color: #225E3E;
-    --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-    --bs-btn-disabled-color: #225E3E;
-    --bs-btn-disabled-bg: transparent;
-    --bs-btn-disabled-border-color: #225E3E;
-    --bs-gradient: none;
-}
-.alert-info {
-    --bs-alert-color: #ffffff;
-    --bs-alert-bg: #225E3E;
-    --bs-alert-border-color: #225E3E;
-    --bs-alert-link-color: #225E3E;
-}
+            --bs-btn-color: #225E3E;
+            --bs-btn-border-color: #225E3E;
+            --bs-btn-hover-color: #fff;
+            --bs-btn-hover-bg: #225E3E;
+            --bs-btn-hover-border-color: #225E3E;
+            --bs-btn-focus-shadow-rgb: 25, 135, 84;
+            --bs-btn-active-color: #fff;
+            --bs-btn-active-bg: #225E3E;
+            --bs-btn-active-border-color: #225E3E;
+            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+            --bs-btn-disabled-color: #225E3E;
+            --bs-btn-disabled-bg: transparent;
+            --bs-btn-disabled-border-color: #225E3E;
+            --bs-gradient: none;
+        }
 
-
+        .alert-info {
+            --bs-alert-color: #ffffff;
+            --bs-alert-bg: #225E3E;
+            --bs-alert-border-color: #225E3E;
+            --bs-alert-link-color: #225E3E;
+        }
     </style>
 </head>
 
@@ -384,8 +387,8 @@
                                 </div>
                                 <div class="col-lg-3 col-md-6 mb-4">
                                     <div class="card h-100 sensor-card">
-                                        <img src="src/espcam.png"
-                                            class="card-img-top sensor-img p-3" alt="Micro Camera Module">
+                                        <img src="src/espcam.png" class="card-img-top sensor-img p-3"
+                                            alt="Micro Camera Module">
                                         <div class="card-body text-center">
                                             <h6 class="card-title">Camera Micro</h6>
                                             <p class="card-text">
@@ -469,13 +472,55 @@
             </div>
 
             <div class="row m-0">
-
                 <div class="col-12 d-flex align-items-center justify-content-center bg-light"
                     style="min-height: 100vh;">
 
                     <div class="card text-center shadow-sm p-3 results w-100" id="results-section">
                         <div class="card-body d-flex flex-column align-items-center justify-content-center">
                             <h5 class="card-title">Results</h5>
+
+                            <div class="filter-section w-100 mb-4 text-start">
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        <label for="limit-filter" class="form-label">View last:</label>
+                                        <select class="form-select" id="limit-filter">
+                                            <option value="all" selected>All Readings</option>
+                                            <option value="5">5 Readings</option>
+                                            <option value="10">10 Readings</option>
+                                            <option value="20">20 Readings</option>
+                                            <option value="40">40 Readings</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="sensor-filter" class="form-label">Filter by Sensor:</label>
+                                        <select class="form-select" id="sensor-filter">
+                                            <option value="all" selected>All Sensors</option>
+                                            <option value="temp">Temperature</option>
+                                            <option value="oxygen">Oxygen</option>
+                                            <option value="pulse">Pulse</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="date-range-filter" class="form-label">Filter by Date:</label>
+                                        <select class="form-select" id="date-range-filter">
+                                            <option value="all" selected>All Time</option>
+                                            <option value="today">Today</option>
+                                            <option value="week">This Week</option>
+                                            <option value="month">This Month</option>
+                                            <option value="custom">Custom Range</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2 d-none" id="custom-date-start-container">
+                                        <label for="start-date" class="form-label">Start Date:</label>
+                                        <input type="date" class="form-control" id="start-date">
+                                    </div>
+                                    <div class="col-md-2 d-none" id="custom-date-end-container">
+                                        <label for="end-date" class="form-label">End Date:</label>
+                                        <input type="date" class="form-control" id="end-date">
+                                    </div>
+                                </div>
+                            </div>
+
                             <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
                                 <i class="bi bi-info-circle-fill me-2"></i>
                                 !! TODO: Login in order to see the results !!
@@ -484,30 +529,36 @@
                             </div>
                             <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
                                 <i class="bi bi-info-circle-fill me-2"></i>
-                                Data in this table is randomly generated for
-                                demonstration purposes.
+                                Data in this table is randomly generated for demonstration purposes.
                                 <button type="button" class="btn-close" data-bs-dismiss="alert"
                                     aria-label="Close"></button>
                             </div>
+
                             <div class="results-container w-100 mt-4">
                                 <p class="text-muted text-center"></p>
                                 <div class="table-responsive">
                                     <table class="table table-striped table-hover rounded overflow-hidden shadow-sm">
                                         <thead class="bg-success text-white">
                                             <tr>
-                                                <th scope="col">Timestamp</th>
-                                                <th scope="col">Temperature (°C)</th>
-                                                <th scope="col">Oxygen Saturation (%)</th>
-                                                <th scope="col">Pulse Rate (BPM)</th>
+                                                <th scope="col" class="timestamp-col">Timestamp</th>
+                                                <th scope="col" class="temp-col">Temperature (°C)</th>
+                                                <th scope="col" class="oxygen-col">Oxygen Saturation (%)</th>
+                                                <th scope="col" class="pulse-col">Pulse Rate (BPM)</th>
                                             </tr>
                                         </thead>
                                         <tbody id="results-table-body">
                                         </tbody>
                                     </table>
                                 </div>
-                                <div class="d-flex justify-content-center mt-4">
+                                <div class="d-flex justify-content-center mt-4 gap-2">
                                     <button id="exportCsvBtn" class="btn btn-outline-success">
                                         <i class="fas fa-file-csv me-2"></i>Export to CSV
+                                    </button>
+                                    <button id="exportPdfBtn" class="btn btn-outline-danger">
+                                        <i class="fas fa-file-pdf me-2"></i>Export to PDF
+                                    </button>
+                                    <button id="exportTxtBtn" class="btn btn-outline-primary">
+                                        <i class="fas fa-file-alt me-2"></i>Export to TXT
                                     </button>
                                 </div>
                             </div>
@@ -602,6 +653,220 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"></script>
+        <script>
+            // Aici vom stoca datele noastre, ca o simulare.
+            // În aplicația reală, acestea ar veni de la un server.
+            let allData = [];
+
+            // Funcția pentru a genera date simulate
+            function generateRandomData() {
+                allData = [];
+                const numRows = 200; // Mărim numărul de rânduri pentru a demonstra opțiunile de 20 și 40
+                for (let i = 0; i < numRows; i++) {
+                    const timestamp = new Date(Date.now() - i * 3600000); // Date din trecut, la interval de o oră
+                    const temp = (Math.random() * 15 + 20).toFixed(2);
+                    const oxygen = (Math.random() * 10 + 90).toFixed(2);
+                    const pulse = Math.floor(Math.random() * 50) + 70;
+                    allData.push({
+                        timestamp: timestamp, // Păstrăm obiectul Date pentru filtrare
+                        displayTimestamp: timestamp.toLocaleString(), // String pentru afișare
+                        temp: temp,
+                        oxygen: oxygen,
+                        pulse: pulse
+                    });
+                }
+                // Sortăm datele în ordine cronologică inversă (de la cea mai nouă la cea mai veche)
+                allData.sort((a, b) => b.timestamp - a.timestamp);
+                filterData(); // Apelăm filtrarea inițială
+            }
+
+            // Funcția care randează datele în tabel
+            function renderTable(dataToDisplay) {
+                const tbody = document.getElementById('results-table-body');
+                tbody.innerHTML = ''; // Golim tabelul
+
+                // Verificăm dacă există date de afișat
+                if (dataToDisplay.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No data found matching the filters.</td></tr>`;
+                    return;
+                }
+
+                dataToDisplay.forEach(row => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `
+                    <td>${row.displayTimestamp}</td>
+                    <td>${row.temp}</td>
+                    <td>${row.oxygen}</td>
+                    <td>${row.pulse}</td>
+                `;
+                    tbody.appendChild(tr);
+                });
+            }
+
+            // Funcția de filtrare
+            function filterData() {
+                const limitFilter = document.getElementById('limit-filter').value;
+                const sensorFilter = document.getElementById('sensor-filter').value;
+                const dateRangeFilter = document.getElementById('date-range-filter').value;
+                const startDate = document.getElementById('start-date').value;
+                const endDate = document.getElementById('end-date').value;
+
+                let filteredData = allData;
+
+                // Filtrarea după numărul de înregistrări (limit)
+                if (limitFilter !== 'all') {
+                    const limit = parseInt(limitFilter, 10);
+                    filteredData = filteredData.slice(0, limit);
+                }
+
+                // Filtrarea după data
+                if (dateRangeFilter !== 'all') {
+                    const now = new Date();
+                    let filterStartDate;
+                    let filterEndDate;
+
+                    if (dateRangeFilter === 'today') {
+                        filterStartDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+                        filterEndDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
+                    } else if (dateRangeFilter === 'week') {
+                        filterStartDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
+                        filterEndDate = now;
+                    } else if (dateRangeFilter === 'month') {
+                        filterStartDate = new Date(now.getFullYear(), now.getMonth(), 1);
+                        filterEndDate = now;
+                    } else if (dateRangeFilter === 'custom') {
+                        filterStartDate = new Date(startDate);
+                        filterEndDate = new Date(endDate);
+                    }
+
+                    filteredData = filteredData.filter(row => {
+                        return row.timestamp >= filterStartDate && row.timestamp <= filterEndDate;
+                    });
+                }
+
+                // Filtrarea după senzor (ascunde coloane)
+                const columns = ['timestamp-col', 'temp-col', 'oxygen-col', 'pulse-col'];
+                const headers = document.querySelectorAll('th');
+
+                headers.forEach(header => header.classList.remove('d-none'));
+
+                if (sensorFilter !== 'all') {
+                    const columnMap = {
+                        'temp': 'temp-col',
+                        'oxygen': 'oxygen-col',
+                        'pulse': 'pulse-col'
+                    };
+                    const colToHide = columns.filter(col => col !== columnMap[sensorFilter] && col !== 'timestamp-col');
+
+                    colToHide.forEach(colClass => {
+                        const header = document.querySelector(`th.${colClass}`);
+                        if (header) {
+                            header.classList.add('d-none');
+                        }
+                    });
+                }
+
+                renderTable(filteredData);
+
+                // După randare, ascunde celulele corespunzătoare
+                const rows = document.querySelectorAll('#results-table-body tr');
+                if (sensorFilter !== 'all') {
+                    const columnMap = {
+                        'temp': 'temp-col',
+                        'oxygen': 'oxygen-col',
+                        'pulse': 'pulse-col'
+                    };
+                    const colIndexToHide = columns.filter(col => col !== columnMap[sensorFilter] && col !== 'timestamp-col').map(col => columns.indexOf(col));
+
+                    rows.forEach(row => {
+                        const cells = row.querySelectorAll('td');
+                        colIndexToHide.forEach(index => {
+                            if (cells[index]) {
+                                cells[index].classList.add('d-none');
+                            }
+                        });
+                    });
+                }
+            }
+
+            // Funcția pentru a afișa/ascunde câmpurile de dată personalizate
+            document.getElementById('date-range-filter').addEventListener('change', (e) => {
+                const isCustom = e.target.value === 'custom';
+                document.getElementById('custom-date-start-container').classList.toggle('d-none', !isCustom);
+                document.getElementById('custom-date-end-container').classList.toggle('d-none', !isCustom);
+                filterData();
+            });
+
+            // Așteptăm ca DOM-ul să fie încărcat
+            document.addEventListener('DOMContentLoaded', () => {
+                generateRandomData();
+
+                // Adăugăm evenimentele pentru butoanele de export
+                document.getElementById('exportCsvBtn').addEventListener('click', () => {
+                    let csvContent = "data:text/csv;charset=utf-8,";
+                    const table = document.querySelector('table');
+                    const rows = table.querySelectorAll('tr');
+
+                    rows.forEach(row => {
+                        const visibleCols = Array.from(row.querySelectorAll('td, th')).filter(cell => !cell.classList.contains('d-none'));
+                        const rowData = visibleCols.map(cell => cell.innerText).join(',');
+                        csvContent += rowData + "\r\n";
+                    });
+
+                    const encodedUri = encodeURI(csvContent);
+                    const link = document.createElement("a");
+                    link.setAttribute("href", encodedUri);
+                    link.setAttribute("download", "data.csv");
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+
+                document.getElementById('exportPdfBtn').addEventListener('click', () => {
+                    const doc = new window.jspdf.jsPDF();
+                    const table = document.querySelector('table');
+
+                    const head = Array.from(table.querySelectorAll('thead th')).filter(th => !th.classList.contains('d-none')).map(th => th.innerText);
+                    const body = Array.from(table.querySelectorAll('tbody tr')).map(row =>
+                        Array.from(row.querySelectorAll('td')).filter(td => !td.classList.contains('d-none')).map(td => td.innerText)
+                    );
+
+                    doc.autoTable({
+                        head: [head],
+                        body: body
+                    });
+                    doc.save('data.pdf');
+                });
+
+                document.getElementById('exportTxtBtn').addEventListener('click', () => {
+                    let txtContent = "";
+                    const table = document.querySelector('table');
+                    const rows = table.querySelectorAll('tr');
+
+                    rows.forEach(row => {
+                        const visibleCols = Array.from(row.querySelectorAll('td, th')).filter(cell => !cell.classList.contains('d-none'));
+                        const rowData = visibleCols.map(cell => cell.innerText).join('\t');
+                        txtContent += rowData + "\r\n";
+                    });
+
+                    const blob = new Blob([txtContent], { type: 'text/plain' });
+                    const link = document.createElement("a");
+                    link.href = URL.createObjectURL(blob);
+                    link.download = "data.txt";
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                });
+
+                // Adăugăm evenimentele de filtrare
+                document.getElementById('limit-filter').addEventListener('change', filterData);
+                document.getElementById('sensor-filter').addEventListener('change', filterData);
+                document.getElementById('date-range-filter').addEventListener('change', filterData);
+                document.getElementById('start-date').addEventListener('change', filterData);
+                document.getElementById('end-date').addEventListener('change', filterData);
+            });
+        </script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
