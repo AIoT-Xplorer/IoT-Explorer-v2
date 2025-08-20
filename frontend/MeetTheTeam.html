@@ -71,7 +71,14 @@
       align-items: center;
       justify-content: center;
       padding: 60px 20px;
+
+      
+      background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+                  url("fundal.jpg") no-repeat center center;
+      background-size: cover;
+      border-radius: 12px;
     }
+
     .team-container {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -95,15 +102,9 @@
     }
 
     .team-photo img {
-    width: 100%;
-    height: 300px;   
-    object-fit: cover; 
-    border-radius: 16px;
-    display: block;
-    transition: transform 0.3s ease;
-}
-    .team-photo img {
       width: 100%;
+      height: 300px;   
+      object-fit: cover; 
       border-radius: 16px;
       display: block;
       transition: transform 0.3s ease;
@@ -197,7 +198,7 @@
       <div class="team-member">
         <a href="pagina_membru1.html">
           <div class="team-photo">
-            <img src="adelin.jpg" alt="Adelin Vinulescu" class="team-photo"> 
+            <img src="adelin.jpg" alt="Adelin Vinulescu"> 
           </div>
         </a>
         <div class="team-name">Adelin Vinulescu</div>
@@ -207,7 +208,7 @@
       <div class="team-member">
         <a href="pagina_membru2.html">
           <div class="team-photo">
-            <img src="alessia.jpg" alt="Alessia Gioanca" class="team-photo">
+            <img src="alessia.jpg" alt="Alessia Gioanca">
           </div>
         </a>
         <div class="team-name">Alessia Gioanca</div>
