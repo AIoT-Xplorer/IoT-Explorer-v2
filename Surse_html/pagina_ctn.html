@@ -12,6 +12,35 @@
         <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700&display=swap" rel="stylesheet">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
+       <style>
+        html, main {
+            height: 100%;
+            margin: 0;
+            overflow-y: auto; /* Adaugă bara de scroll verticală */
+        }
+        
+        .content-wrapper {
+            min-height: 100vh;
+            padding-bottom: 80px; /* Spațiu pentru footer */
+            box-sizing: border-box;
+        }
+        
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-y: auto; /* Scroll pentru conținut */
+            max-height: calc(100vh - 80px); /* Înălțime minus footer */
+        }
+
+        /* Pentru conținut lung */
+        .scrollable-content {
+            max-height: calc(100vh - 120px);
+            overflow-y: scroll;
+            padding: 20px;
+        }
+         </style>
+
         <style>
             body {
                 background: url("../img/fundal_jumatate.png") no-repeat center center fixed;
@@ -26,8 +55,8 @@
                 background: #e0f7fa !important;
                 transition: 0.2s;
             }
-            .btn-nav {
-                background-color: #00796b;
+            .btn-next {
+                background-color: #3bb1b1;
                 color: white;
                 border: none;
                 padding: 12px 24px;
@@ -37,14 +66,13 @@
                 text-decoration: none;
                 display: inline-block;
             }
-            .btn-nav:hover {
+            .btn-next:hover {
                 background-color: #005a4f;
                 transform: translateY(-2px);
                 box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }
-        </style>
-        <style>
-       .btn-outline-success:hover {
+
+            .btn-outline-success:hover {
             border: 1px solid #fff;
         }
 
@@ -55,13 +83,12 @@
         .navbar-nav .nav-item:last-child {
             margin-right: 0;
         }
-
-    </style>
+        </style>
     </head>
 
     <body>
         <header>
-           <nav
+          <nav
             class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
            >
             <div class="container">
@@ -137,6 +164,8 @@
            </nav>
         </header>
         <main>
+            <div class="content-wrapper">
+                 <div class="main-content">
             <div class="container" style="height: 80vh; position: relative;">
                 <!-- Primul text, sus stânga -->
                 <div style="position: absolute; top: 32px; left: 0; width: 600px;">
@@ -152,7 +181,7 @@
                             border-bottom: 4px solid #3bb1b1;
                         "
                     >
-                        Catana Marius-Ionut
+                       Catana Marius-Ionut
                     </div>
                 </div>
                 <!-- Al doilea text, poziționabil unde vrei -->
@@ -191,30 +220,33 @@
                     </div>
                 </div>
             </div>
-            <div style="position: fixed; top: 60%; left: 65%; transform: translate(-50%, -50%); width: 250px;">
+            <div style="position: absolute; top: 60%; left: 65%; transform: translate(-50%, -50%); width: 250px;">
                 <div style="position: relative;">
                     <img src="../img/Poza_Ctn.jpeg" alt="Profil imagine" style="width: 100%; height: 350px; object-fit: cover; border-radius: 12px; border: 4px solid #3bb1b1;">
-                    <div style="position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px;">
-                        <a href="https://facebook.com/" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #3bb1b1; font-size: 1.3rem;">
+                    <div style="position: fixed; bottom: -50px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px;">
+                        <a href="https://www.facebook.com/share/1JMkvXUtJS/" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #3bb1b1; font-size: 1.3rem;">
                             <i class="fab fa-facebook-f"></i>
                         </a>
-                        <a href="https://github.com/" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #3bb1b1; font-size: 1.3rem;">
+                        <a href="https://github.com/CatanaIonut" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #3bb1b1; font-size: 1.3rem;">
                             <i class="fab fa-github"></i>
                         </a>
-                        <a href="https://linkedin.com/" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #3bb1b1; font-size: 1.3rem;">
+                        <a href="www.linkedin.com/in/ionut-catana-166691354" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #3bb1b1; font-size: 1.3rem;">
                             <i class="fab fa-linkedin-in"></i>
                         </a>
-                        <a href="https://instagram.com/" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #3bb1b1; font-size: 1.3rem;">
+                        <a href="https://www.instagram.com/ionut.katana?igsh=cHZkN2FjNjBydmEy" target="_blank" style="display: inline-flex; align-items: center; justify-content: center; width: 40px; height: 40px; border-radius: 50%; background: #fff; box-shadow: 0 2px 8px rgba(0,0,0,0.08); color: #3bb1b1; font-size: 1.3rem;">
                             <i class="fab fa-instagram"></i>
                         </a>
                     </div>
                 </div>
             </div>
-            <!-- Buton Next către pagina CTN -->
-            <div style="position: fixed; bottom: 50px; left: 30px;">
-                <a href="pagina_Daria.html" class="btn-nav">
-                     <i class="fas fa-arrow-left"></i> Prev
+            
+              <!-- Buton Previous către pagina Daria -->
+            <div style="position: absolute; bottom: 50px; left: 30px;">
+                <a href="pagina_daria.html" class="btn-next">
+                    <i class="fas fa-arrow-left"></i> Previous
                 </a>
+            </div>
+             </div>
             </div>
         </main>
 
