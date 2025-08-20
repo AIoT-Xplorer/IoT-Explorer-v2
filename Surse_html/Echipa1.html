@@ -1,221 +1,250 @@
-
-
 <!doctype html>
 <!-- DE AICI -->
 <html lang="en">
-    <head>
-        <title>IoT - Team β</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
+<head>
+  <title>IoT - Team β</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
-        <!-- Bootstrap CSS v5.2.1 -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        />
+  <!-- Bootstrap CSS v5.3.2 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
 
-          <style>
-        html, main {
-            height: 100%;
-            margin: 0;
-            overflow-y: auto; /* Adaugă bara de scroll verticală */
+  <!-- Font robotic (Orbitron) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&display=swap" rel="stylesheet">
+
+  <style>
+    html, main { height:100%; margin:0; overflow-y:auto; }
+    .content-wrapper { min-height:100vh; padding-bottom:80px; box-sizing:border-box; }
+    .main-content { padding:20px; max-width:1200px; margin:0 auto; overflow-y:auto; max-height:calc(100vh - 80px); }
+    .btn-outline-success:hover { border:1px solid #fff; }
+
+    body{
+      background: url("../img/fundal_jumatate.png") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .navbar-nav .nav-item{ margin-right:2rem; }
+    .navbar-nav .nav-item:last-child{ margin-right:0; }
+
+    /* === HELLO sequence === */
+    #hello-sequence{
+      position:absolute;
+      /* personalizează liber poziția și dimensiunea */
+      top:200px; left:60px; width:340px; height:340px;
+      pointer-events:none; z-index:5;
+    }
+    #hello-sequence .frame{
+      position:absolute; inset:0; display:grid; place-items:center;
+    }
+
+    /* Variabilă CSS --scale controlată din JS per-cadru (uniformizare vizuală) */
+    #hello-sequence img{
+      --scale: 1;
+      position:absolute; inset:0; margin:auto;
+      width:100%; height:100%; object-fit:contain;
+
+      /* fade + pop-in */
+      opacity:0;
+      transition: opacity .7s ease-in-out;
+      transform: scale(calc(var(--scale) * 0.985));
+
+      /* cyanize + glow */
+      filter:
+        hue-rotate(170deg)
+        saturate(240%)
+        brightness(1.05)
+        drop-shadow(0 10px 18px rgba(0,255,255,.35));
+    }
+
+    /* Efect de mișcare pe TOATE imaginile când sunt vizibile */
+    #hello-sequence img.show{
+      opacity:1;
+      animation: drift 2.6s ease-in-out infinite alternate;
+    }
+
+    /* drift păstrează scala per-cadru și adaugă o oscilație verticală subtilă */
+    @keyframes drift {
+      0%   { transform: translateY(2px)  scale(var(--scale)); }
+      100% { transform: translateY(-6px) scale(var(--scale)); }
+    }
+
+    /* Cuvântul HELLO sub imagine */
+    #hello-word{
+      position:absolute; left:50%; transform:translateX(-50%);
+      bottom:-44px; display:flex; gap:.28em;
+      font-family:'Orbitron', system-ui, sans-serif; font-weight:900; font-size:2.9rem;
+      letter-spacing:.04em; user-select:none;
+    }
+    #hello-word .bit{
+      opacity:0; transform:translateY(12px) scale(.94);
+      transition:opacity .4s ease, transform .4s ease;
+      background: linear-gradient(180deg, #b7feff, #22d1ee 60%, #0fb9c5);
+      -webkit-background-clip: text; background-clip: text; color: transparent;
+      text-shadow: 0 0 14px rgba(34,209,238,.4);
+    }
+    #hello-word .bit.show{ opacity:1; transform:translateY(0) scale(1); }
+  </style>
+</head>
+
+<body>
+<header>
+  <nav class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); ">
+    <div class="container">
+      <a class="navbar-brand" href="Echipa1.html">
+        <img src="/img/IoT - Team B.png" height="60" alt="logo">
+      </a>
+      <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Meet_the_Team.html">Meet the Team</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Our_project.html">Our Project</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Dashboard_proiect.html">Dashboard Project</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Contact_us.html">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link active" href="news.html">News & Updates</a></li>
+        </ul>
+        <form class="d-flex my-2 my-lg-0">
+          <input class="form-control me-sm-2" type="text" placeholder="Search"/>
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color:#00796b; color:#e0f7fa;">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <div class="content-wrapper">
+    <div class="main-content">
+      <div class="container" style="height:80vh; position:relative;">
+        <!-- Titlu -->
+        <div style="position:absolute; top:32px; left:0; width:600px;">
+          <div style="font-family: montserrat, sans-serif; font-size:2.5rem; font-weight:bold; color:#00796b; text-shadow:2px 2px #e0f7fa; padding-bottom:16px; border-bottom:4px solid #3bb1b1;">
+            IoT-Xplorers Team β
+          </div>
+        </div>
+
+        <!-- Descriere -->
+        <div style="position:absolute; top:28%; left:-8px">
+          <textarea class="form-control" rows="7" style="background:none; border:none; resize:none; width:640px; height:120px;" placeholder="Descriere" disabled>Textul descrierii aici...</textarea>
+        </div>
+
+        <!-- Logo dreapta -->
+        <div style="position:absolute; top:28%; right:10%;">
+          <img src="/img/IoT - Team B.png" alt="Imagine" style="max-width:200px; margin-bottom:20px;">
+        </div>
+
+        <!-- === SECVENȚA HELLO === -->
+        <div id="hello-sequence">
+          <div class="frame">
+            <img id="hello-image" alt="Hello frame">
+          </div>
+          <div id="hello-word"></div>
+        </div>
+        <!-- === /HELLO === -->
+
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer style="background-color: rgb(59, 177, 177); position: fixed; bottom:0; width:100%; left:0; color:#e0f7fa; text-align:center; padding:10px;">
+  <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
+</footer>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+
+<script>
+  (function () {
+    const img  = document.getElementById('hello-image');
+    const word = document.getElementById('hello-word');
+
+    // Cadre (L de două ori) + scalare per-cadru (L e mărit puțin mai mult)
+    const frames = [
+      { src: '/img/H.png', letter: 'H', scale: 1.00 },
+      { src: '/img/E.png', letter: 'E', scale: 1.00 },
+      { src: '/img/L.png', letter: 'L', scale: 1.20 }, // L #1 – mai mare ca înainte
+      { src: '/img/L.png', letter: 'L', scale: 1.20 }, // L #2 – la fel
+      { src: '/img/O.png', letter: 'O', scale: 0.80 }
+    ];
+
+    // timpi
+    const stepMs    = 1700; // interval între cadre
+    const fadeMs    = 700;  // egal cu transition pe opacity
+    const imgLeadMs = 120;  // litera apare DUPĂ ce începe fade-ul imaginii
+
+    // preîncărcare imagini
+    frames.forEach(f => { const t = new Image(); t.src = f.src; });
+
+    function buildEmptyWord(){
+      word.innerHTML = '';
+      'HELLO'.split('').forEach(() => {
+        const span = document.createElement('span');
+        span.className = 'bit';
+        word.appendChild(span);
+      });
+    }
+
+    function resetWordAnimation(){
+      Array.from(word.children).forEach(s => {
+        s.classList.remove('show');
+        s.textContent = '';
+      });
+    }
+
+    // Arată cadrul i și sincronizează litera i
+    function showFrameSync(i){
+      const f = frames[i];
+      const letterSpan = word.children[i];
+
+      // scoatem vizibilitatea curentă
+      img.classList.remove('show');
+
+      // setăm scala per-cadru
+      img.style.setProperty('--scale', f.scale.toString());
+
+      // schimbăm sursa, apoi pornim fade+drift la următorul frame
+      img.src = f.src;
+      requestAnimationFrame(() => {
+        img.classList.add('show');
+
+        // litera apare la scurt timp după ce imaginea a intrat în fade
+        setTimeout(() => {
+          if (letterSpan) {
+            letterSpan.textContent = f.letter;
+            letterSpan.classList.add('show');
+          }
+        }, imgLeadMs);
+      });
+    }
+
+    function play(){
+      buildEmptyWord();
+      resetWordAnimation();
+
+      let i = 0;
+      showFrameSync(i);
+
+      const timer = setInterval(() => {
+        i++;
+        if (i < frames.length) {
+          showFrameSync(i);
+        } else {
+          clearInterval(timer);
+          // ultima imagine rămâne animată (drift), textul HELLO rămâne complet
         }
-        
-        .content-wrapper {
-            min-height: 100vh;
-            padding-bottom: 80px; /* Spațiu pentru footer */
-            box-sizing: border-box;
-        }
-        
-        .main-content {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            overflow-y: auto; /* Scroll pentru conținut */
-            max-height: calc(100vh - 80px); /* Înălțime minus footer */
-        }
+      }, stepMs);
+    }
 
-        /* Pentru conținut lung */
-        .scrollable-content {
-            max-height: calc(100vh - 120px);
-            overflow-y: scroll;
-            padding: 20px;
-        }
-     </style>
-
-    <style>
-       .btn-outline-success:hover {
-            border: 1px solid #fff;
-        }
-
-    </style>
-    <style>
-            body {
-                background: url("../img/fundal2.png") no-repeat center center fixed;
-                background-size: cover;
-            }
-            .btn-outline-success:hover {
-                border: 1px solid #fff;
-            }
-            .caseta-link:hover textarea,
-            .caseta-link:active textarea {
-             border-color: #00796b !important;
-             background: #e0f7fa !important;
-                transition: 0.2s;
-            }
-              .navbar-nav .nav-item {
-            margin-right: 2.0rem;
-        }
-
-        .navbar-nav .nav-item:last-child {
-            margin-right: 0;
-        }
-        
-        </style>
- 
-    </head>
-
-    <body>
-        <header>
-           <nav
-            class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
-           >
-            <div class="container">
-                <a class="navbar-brand" href="Echipa1.html">
-                    <img src = "/img/IoT - Team B.png" height="60">
-                </a>
-                <button
-                    class="navbar-toggler d-lg-none"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapsibleNavId"
-                    aria-controls="collapsibleNavId"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                         <li class="nav-item">
-                            <a class="nav-link active" href="index.html" aria-current="page" style="font-family: montserrat, sans-serif;"
-                                >Home
-                                <span class="visually-hidden">(current)</span></a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: montserrat, sans-serif;"
-                                >Meet the Team
-                                <span class="visually-hidden">(current)</span></a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Our_project.html" aria-current="page" style="font-family: montserrat, sans-serif;">Our Project
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Dashboard_proiect.html" aria-current="page" style="font-family: montserrat, sans-serif;">Dashboard Project
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>
-                        
-                        
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: montserrat, sans-serif;">Contact Us
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                            </li>
-
-                         <li class="nav-item">
-                            <a class="nav-link active" href="news.html" aria-current="page" style="font-family: montserrat, sans-serif;">News & Updates
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>   
-                    </ul>
-                    <form class="d-flex my-2 my-lg-0">
-                        <input
-                            class="form-control me-sm-2"
-                            type="text"
-                            placeholder="Search"
-                        />
-                        <button
-                            class="btn btn-outline-success my-2 my-sm-0"
-                            type="submit"
-                            style="background-color: #00796b; color: #e0f7fa;"                            
-                        >
-                            Search
-                        </button>
-                    </form>
-                </div>
-            </div>
-           </nav>
-        </header>
-        <main>    
-             <div class="content-wrapper">
-                 <div class="main-content">
-                    
-
-                     <div class="container" style="height: 80vh; position: relative;">
-                <!-- Primul text, sus stânga -->
-                <div style="position: absolute; top: 32px; left: 0; width: 600px;">
-                    <div 
-                         style="
-                                font-family: montserrat, sans-serif;
-                                font-size: 2.5rem;
-                                font-weight: bold;
-                                color: #00796b;
-                                text-shadow: 2px 2px #e0f7fa;
-                                padding-bottom: 16px;
-                            border-bottom: 4px solid #3bb1b1;
-                            "
-                    >
-                       IoT-Xplorers Team β
-                    </div>
-                </div>
-
-                    <div style="position: absolute; top: 28%; left: -8px">
-                        
-                        <textarea class="form-control" rows="7" style="background:none; overflow: hidden; font-family: montserrat, sans-serif;border:none;;resize: none; width: 600px; min-width: 640px; max-width: 800px; height: 120px; min-height: 120px; max-height: 120px;" placeholder="Descriere" disabled>Textul descrierii aici?????????????????????????????  ???????????????????.....ss
-                            ????????????????????
-                            ?????????????????????
-                            ???????????????
-                            ??????????????????????
-                        </textarea>
-                     </div>
-                   <div style="position: absolute; top: 28%; right: 10%;">
-                    <img src="/img/IoT - Team B.png" alt="Imagine" style="max-width: 200px; margin-bottom: 20px;">
-                     </div>  
-                 </div> 
-                    </div> 
-            </main>
-            <footer  style= "background-color: rgb(59, 177, 177); position: fixed; bottom: 0;width: 100%;left:0; color: #e0f7fa; text-align: center; padding: 10px;">
-            <p class="mb-0">© 2025  AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
-        </footer>
-       
-
-                  
-        <!-- Bootstrap JavaScript Libraries -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
-
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
-    </body>
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', play);
+    } else {
+      play();
+    }
+  })();
+</script>
+</body>
 </html>
 <!-- Pana AICI -->
-
- 
