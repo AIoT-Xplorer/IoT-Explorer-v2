@@ -1,20 +1,58 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
     <title>About our project</title>
-    <link rel="icon" href="logo_team.png" type="image/png">
+    <link rel="icon" href="src/logo_team.png" type="image/png">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
-        body,
-        html {
-            height: 100%;
-            margin: 0;
+        body {
+            padding-top: 140px;
+            scroll-behavior: smooth;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        header.hide {
+            transform: translateY(-100%);
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #385e45;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: none;
+            cursor: pointer;
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        #backToTop:hover {
+            background-color: #2b4635;
         }
 
         .main-content {
@@ -50,16 +88,7 @@
             color: white;
             padding: 1rem;
             text-align: center;
-            background-color: #385e45;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            position: absolute;
             width: 100%;
-            height: 10%;
-            margin-top: 1%;
-            bottom: 0px;
-            top: 99%;
         }
 
         .justified-text {
@@ -78,16 +107,59 @@
             clear: both;
         }
 
+        .Dashboard,
+        .updates,
+        .resources,
+        .results,
+        .sensors-used {
+            width: 90%;
+            min-height: 80vh;
+        }
+
         @media screen and (max-width: 600px) {
             .column {
                 width: 100%;
             }
         }
+
+        .main-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1050;
+        }
+
+        /* Added new rule for chart sizing */
+        #sensorChart {
+            max-height: 300px;
+        }
+
+        .sensor-card {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sensor-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .sensor-img {
+            height: 100px;
+            object-fit: contain;
+        }
+
+        .pdf-link {
+            transition: transform 0.2s;
+        }
+
+        .pdf-link:hover {
+            transform: scale(1.05);
+        }
     </style>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
-<header>
+<header class="fixed-top bg-white shadow-sm">
     <div class="top-bar">
         <div class="container d-flex justify-content-between align-items-center">
             <div class="social-icons">
@@ -95,8 +167,7 @@
                 <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
             </div>
 
-            <img src="logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid" style="max-width: 100px;">
-
+            <img src="src/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid" style="max-width: 100px;">
 
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center me-3">
@@ -113,7 +184,7 @@
         </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg main-nav">
+    <nav class="navbar navbar-expand-lg navbar-light bg-white">
         <div class="container">
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -121,69 +192,591 @@
             </button>
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Home</a>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="gamma_home.html">Project's home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#results-section">Results</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#sensors-used-section">Sensors used and method</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="gamma_home.html">Project's home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Results</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sensors used and method</a>
-                    </li>
-
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPublications" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            Our team
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownPublications">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOurTeam" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Our team</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownOurTeam">
                             <li><a class="dropdown-item" href="gamma_dobrin.html">Dobrin Vasile</a></li>
                             <li><a class="dropdown-item" href="gamma_nicolae.html">Petriia Iulian-Nicolae</a></li>
                         </ul>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Updates & News</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Resources</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="https://aiot-xplorer.eu/index.php/contact-us">Contact us</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#updates-section">Updates & News</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#resources-section">Resources</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://aiot-xplorer.eu/index.php/contact-us">Contact
+                            us</a></li>
                 </ul>
             </div>
         </div>
     </nav>
 </header>
+<button id="backToTop" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
 
 
 <body>
 
-    <div class="row">
-        <div class="column">Flux cameră</div>
-        
-        <div class="column">Stare senzori</div>
-        
-        <div class="column">Grafice</div>
-        
-    </div>
+    <div class="container-fluid p-0">
+        <div class="row m-0">
 
-    </main>
-    <footer class="footer-bar">
-        <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of
-            IoT Explorer Program</p>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-        crossorigin="anonymous"></script>
+            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+                <div class="card shadow-sm p-3 Dashboard w-100" id="dashboard-section">
+                    <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        This dashboard is displaying randomly generated data for demonstration purposes.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
+                        <i class="bi bi-info-circle-fill me-2"></i>
+                        !! TODO: Adjust to look better !!
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                    <div class="card-body">
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-        crossorigin="anonymous"></script>
+                        <h4 class="mb-4 text-center">Dashboard</h4>
+
+                        <div class="row g-4">
+                            <div class="col-md-4 text-center">
+                                <h5>Flux Camera</h5>
+                                <div class="border rounded p-2" style="height:200px; background:#ccc;">
+                                    <span class="text-muted">Camera preview placeholder</span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 text-center">
+                                <h5>Status Senzori</h5>
+                                <div class="d-flex flex-column align-items-center">
+                                    <div class="form-check form-switch my-2">
+                                        <input class="form-check-input" type="checkbox" id="sensor1" checked>
+                                        <label class="form-check-label" for="sensor1">Temperature sensor</label>
+                                    </div>
+                                    <div class="form-check form-switch my-2">
+                                        <input class="form-check-input" type="checkbox" id="sensor2">
+                                        <label class="form-check-label" for="sensor2">Oxygen sensor</label>
+                                    </div>
+                                    <div class="form-check form-switch my-2">
+                                        <input class="form-check-input" type="checkbox" id="sensor3">
+                                        <label class="form-check-label" for="sensor3">Pulse sensor</label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 text-center">
+                                <h5>Grafice Senzori</h5>
+                                <select id="timeRange" class="form-select mb-2 rounded-3">
+                                    <option value="day">Day</option>
+                                    <option value="month">Month</option>
+                                    <option value="year">Year</option>
+                                </select>
+
+                                <div class="btn-group mb-2">
+                                    <button class="btn btn-outline-success btn-sm active" data-sensor="all">All</button>
+                                    <button class="btn btn-outline-success btn-sm"
+                                        data-sensor="temp">Temperature</button>
+                                    <button class="btn btn-outline-success btn-sm" data-sensor="oxygen">Oxygen</button>
+                                    <button class="btn btn-outline-success btn-sm" data-sensor="pulse">Pulse</button>
+                                </div>
+
+                                <canvas id="sensorChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-0">
+                <div class="col-12 d-flex align-items-center justify-content-center bg-light"
+                    style="min-height: 100vh;">
+                    <div class="card text-center shadow-sm p-3 sensors-used w-100" id="sensors-used-section">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title">Sensors Used</h5>
+                            <div class="row w-100 justify-content-center mt-4">
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="card h-100 sensor-card">
+                                        <img src="src/gy-max30102-pulse-oximeter-heart-rate-sensor-module-purple-539538.png"
+                                            class="card-img-top sensor-img p-3" alt="MAX30102 Pulse Oximeter Sensor">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title">MAX30102</h6>
+                                            <p class="card-text">
+                                                A highly-sensitive pulse oximeter and heart-rate sensor. It measures
+                                                blood oxygen saturation (SpO₂) and pulse rate.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="card h-100 sensor-card">
+                                        <img src="src/res_59e1a158e76a0e6bac8d7cb752f16499.jpg"
+                                            class="card-img-top sensor-img p-3" alt="Micro Camera Module">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title">Camera Micro</h6>
+                                            <p class="card-text">
+                                                A compact camera for real-time video streaming, essential for visual
+                                                monitoring of the environment.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="card h-100 sensor-card">
+                                        <img src="src/modul-amplificator-microfon-cu-agc-max9814.jpg"
+                                            class="card-img-top sensor-img p-3" alt="Microphone Sensor Module">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title">Microphone</h6>
+                                            <p class="card-text">
+                                                An audio sensor used to detect sounds, providing a key layer of acoustic
+                                                monitoring.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-3 col-md-6 mb-4">
+                                    <div class="card h-100 sensor-card">
+                                        <img src="src/mlx90614esf-infrared-temperature-sensor.jpg"
+                                            class="card-img-top sensor-img p-3" alt="Temperature Sensor">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title">Temperature Sensor</h6>
+                                            <p class="card-text">
+                                                Measures ambient temperature, providing crucial environmental data to
+                                                complement other sensor readings.
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-0">
+                <div class="col-12 d-flex align-items-center justify-content-center bg-light"
+                    style="min-height: 100vh;">
+                    <div class="card text-center shadow-sm p-3 updates w-100" id="updates-section">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title">Updates & News</h5>
+                            <div class="card news-item w-75 my-3 shadow-sm text-start"
+                                style="border-radius: 15px; border-left: 5px solid #385e45;">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">August 20, 2025</h6>
+                                    <h5 class="card-title">A function in working for the moment: a camera flux live</h5>
+                                    <p class="card-text">
+                                        For the moment, we are working on a live camera flux that will be
+                                        integrated into the dashboard. This will allow users to monitor real-time humans
+                                        that are in
+                                        need of help or to be resuscitate.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="card news-item w-75 my-3 shadow-sm text-start"
+                                style="border-radius: 15px; border-left: 5px solid #385e45;">
+                                <div class="card-body">
+                                    <h6 class="card-subtitle mb-2 text-muted">August 19, 2025</h6>
+                                    <h5 class="card-title">New Sensor Integration: Pulse Oximeter Live!</h5>
+                                    <p class="card-text">
+                                        We are excited to announce the successful integration of our new pulse
+                                        oximeter
+                                        sensor. You can now monitor real-time oxygen saturation (SpO₂) and pulse rate
+                                        data
+                                        directly on the dashboard. This enhancement provides a more comprehensive view
+                                        of
+                                        vital
+                                        signs, improving our health monitoring capabilities.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-0">
+
+                <div class="col-12 d-flex align-items-center justify-content-center bg-light"
+                    style="min-height: 100vh;">
+
+                    <div class="card text-center shadow-sm p-3 results w-100" id="results-section">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title">Results</h5>
+                            <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
+                                <i class="bi bi-info-circle-fill me-2"></i>
+                                !! TODO: Login in order to see the results !!
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="results-container w-100 mt-4">
+                                <p class="text-muted text-center">Data in this table is randomly generated for
+                                    demonstration purposes.</p>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-hover rounded overflow-hidden shadow-sm">
+                                        <thead class="bg-success text-white">
+                                            <tr>
+                                                <th scope="col">Timestamp</th>
+                                                <th scope="col">Temperature (°C)</th>
+                                                <th scope="col">Oxygen Saturation (%)</th>
+                                                <th scope="col">Pulse Rate (BPM)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="results-table-body">
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="d-flex justify-content-center mt-4">
+                                    <button id="exportCsvBtn" class="btn btn-outline-success">
+                                        <i class="fas fa-file-csv me-2"></i>Export to CSV
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row m-0">
+                <div class="col-12 d-flex align-items-center justify-content-center bg-light"
+                    style="min-height: 100vh;">
+                    <div class="card text-center shadow-sm p-3 resources w-100" id="resources-section">
+                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                            <h5 class="card-title mb-4">Resources</h5>
+                            <div class="row w-100 justify-content-center">
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card h-100 sensor-card">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title">MAX30102 Datasheet</h6>
+                                            <p class="card-text text-muted small">
+                                                Detailed technical specifications for the MAX30102 Pulse Oximeter and
+                                                Heart-Rate Sensor.
+                                            </p>
+                                            <a href="src/MAX30102.pdf" target="_blank"
+                                                class="btn btn-outline-primary mt-2 pdf-link">
+                                                <i class="fas fa-file-pdf me-2"></i>View PDF
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card h-100 sensor-card">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title">ESP32-CAM Module</h6>
+                                            <p class="card-text text-muted small">
+                                                Technical documentation for the camera module used in the project.
+                                            </p>
+                                            <a href="src/ESP32-CAM_datasheet.pdf" target="_blank"
+                                                class="btn btn-outline-primary mt-2 pdf-link">
+                                                <i class="fas fa-file-pdf me-2"></i>View PDF
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card h-100 sensor-card">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title">Microphone Datasheet</h6>
+                                            <p class="card-text text-muted small">
+                                                Specifications and usage guide for the MAX9814 microphone amplifier
+                                                module.
+                                            </p>
+                                            <a href="src/MAX9814.PDF" target="_blank"
+                                                class="btn btn-outline-primary mt-2 pdf-link">
+                                                <i class="fas fa-file-pdf me-2"></i>View PDF
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 col-md-6 mb-4">
+                                    <div class="card h-100 sensor-card">
+                                        <div class="card-body text-center">
+                                            <h6 class="card-title">Temperature Sensor Datasheet</h6>
+                                            <p class="card-text text-muted small">
+                                                Comprehensive details on the MLX90614 Infrared Temperature Sensor.
+                                            </p>
+                                            <a href="src/MLX90614-Datasheet-Melexis.pdf" target="_blank"
+                                                class="btn btn-outline-primary mt-2 pdf-link">
+                                                <i class="fas fa-file-pdf me-2"></i>View PDF
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer-bar">
+            <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame
+                of
+                2025
+                IoT Explorer Program</p>
+        </footer>
+
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+            crossorigin="anonymous"></script>
 </body>
 
 </html>
+<script>
+    let lastScroll = 0;
+    const header = document.querySelector("header");
+    const backToTop = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        // Show/hide header based on scroll direction
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            header.classList.add("hide"); // scrolling down
+        } else {
+            header.classList.remove("hide"); // scrolling up
+        }
+        lastScroll = currentScroll;
+
+        // Show/hide "Back to Top" button
+        if (currentScroll > 300) {
+            backToTop.style.display = "block";
+        } else {
+            backToTop.style.display = "none";
+        }
+    });
+
+    // Scroll to top when button clicked
+    backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+</script>
+
+<script>
+    const ctx = document.getElementById('sensorChart').getContext('2d');
+    const sensor1Checkbox = document.getElementById('sensor1');
+    const sensor2Checkbox = document.getElementById('sensor2');
+    const sensor3Checkbox = document.getElementById('sensor3');
+    let datasets = [];
+
+    // Function to generate random data for a specified number of points and value range
+    function generateRandomData(points, min, max) {
+        return Array.from({ length: points }, () =>
+            (Math.random() * (max - min) + min).toFixed(1)
+        );
+    }
+
+    // Function to get labels based on the selected time range
+    function getLabels(range) {
+        if (range === 'day') return Array.from({ length: 24 }, (_, i) => `${i}:00`);
+        if (range === 'month') return Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);
+        if (range === 'year') return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    }
+
+    // Function to create all initial datasets
+    function createAllDatasets(points) {
+        return [
+            {
+                label: 'Sensor 1 (Temperature)',
+                data: generateRandomData(points, 20, 35),
+                borderColor: '#e74c3c',
+                backgroundColor: 'rgba(231, 76, 60, 0.2)',
+                fill: true,
+                tension: 0.3,
+                yAxisID: 'y',
+                sensorId: 'sensor1',
+                dataType: 'temp'
+            },
+            {
+                label: 'Sensor 2 (Oxygen)',
+                data: generateRandomData(points, 90, 100),
+                borderColor: '#3498db',
+                backgroundColor: 'rgba(52, 152, 219, 0.2)',
+                fill: true,
+                tension: 0.3,
+                yAxisID: 'y1',
+                sensorId: 'sensor2',
+                dataType: 'oxygen'
+            },
+            {
+                label: 'Sensor 3 (Pulse)',
+                data: generateRandomData(points, 60, 120),
+                borderColor: '#2ecc71',
+                backgroundColor: 'rgba(46, 204, 113, 0.2)',
+                fill: true,
+                tension: 0.3,
+                yAxisID: 'y2',
+                sensorId: 'sensor3',
+                dataType: 'pulse'
+            }
+        ];
+    }
+
+    let initialLabels = getLabels('year');
+    datasets = createAllDatasets(initialLabels.length);
+
+    let chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: initialLabels,
+            datasets: datasets.filter(ds => ds.dataType === 'temp')
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: { mode: 'index', intersect: false },
+            plugins: {
+                legend: { display: false }
+            }
+        }
+    });
+
+    // Function to update the chart based on checkbox states
+    function updateChartFromCheckboxes() {
+        const activeDatasets = [];
+        const timeRange = document.getElementById('timeRange').value;
+        const labels = getLabels(timeRange);
+        const points = labels.length;
+
+        const newDatasets = createAllDatasets(points);
+
+        if (sensor1Checkbox.checked) {
+            activeDatasets.push(newDatasets.find(ds => ds.sensorId === 'sensor1'));
+        }
+        if (sensor2Checkbox.checked) {
+            activeDatasets.push(newDatasets.find(ds => ds.sensorId === 'sensor2'));
+        }
+        if (sensor3Checkbox.checked) {
+            activeDatasets.push(newDatasets.find(ds => ds.sensorId === 'sensor3'));
+        }
+
+        chart.data.labels = labels;
+        chart.data.datasets = activeDatasets;
+        chart.update();
+
+        // Deactivate all sensor buttons
+        document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active'));
+    }
+
+    // Function to update the chart based on button clicks
+    function updateChartFromButtons(sensorType) {
+        const activeDatasets = [];
+        const timeRange = document.getElementById('timeRange').value;
+        const labels = getLabels(timeRange);
+        const points = labels.length;
+
+        const newDatasets = createAllDatasets(points);
+
+        // Uncheck all sensor checkboxes
+        document.getElementById('sensor1').checked = false;
+        document.getElementById('sensor2').checked = false;
+        document.getElementById('sensor3').checked = false;
+
+        if (sensorType === 'all') {
+            activeDatasets.push(...newDatasets);
+            // Also check all the checkboxes
+            document.getElementById('sensor1').checked = true;
+            document.getElementById('sensor2').checked = true;
+            document.getElementById('sensor3').checked = true;
+        } else {
+            const dataset = newDatasets.find(ds => ds.dataType === sensorType);
+            if (dataset) {
+                activeDatasets.push(dataset);
+                // Check the corresponding checkbox
+                document.getElementById(dataset.sensorId).checked = true;
+            }
+        }
+
+        chart.data.labels = labels;
+        chart.data.datasets = activeDatasets;
+        chart.update();
+    }
+
+
+    // Event listeners for sensor checkboxes
+    sensor1Checkbox.addEventListener('change', updateChartFromCheckboxes);
+    sensor2Checkbox.addEventListener('change', updateChartFromCheckboxes);
+    sensor3Checkbox.addEventListener('change', updateChartFromCheckboxes);
+
+    // Event listener for time range selector
+    document.getElementById('timeRange').addEventListener('change', () => {
+        // This will handle updates from both checkboxes and buttons
+        const activeSensorButton = document.querySelector('.btn-group button.active');
+        if (activeSensorButton) {
+            updateChartFromButtons(activeSensorButton.dataset.sensor);
+        } else {
+            updateChartFromCheckboxes();
+        }
+    });
+
+    document.querySelectorAll('.btn-group button').forEach(button => {
+        button.addEventListener('click', function () {
+            document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active'));
+            this.classList.add('active');
+            const sensorType = this.dataset.sensor;
+            updateChartFromButtons(sensorType);
+        });
+    });
+
+    // New JavaScript for the Results section
+    document.addEventListener('DOMContentLoaded', (event) => {
+        const tableBody = document.getElementById('results-table-body');
+        const exportCsvBtn = document.getElementById('exportCsvBtn');
+        let generatedData = [];
+
+        // Function to generate and populate the table with data
+        function populateTable() {
+            tableBody.innerHTML = '';
+            generatedData = [];
+            const now = new Date();
+            const numRows = 50; // Generate 50 rows of data for a good demo
+
+            for (let i = 0; i < numRows; i++) {
+                const timestamp = new Date(now.getTime() - i * 60000).toLocaleString();
+                const temp = (Math.random() * (35 - 20) + 20).toFixed(1);
+                const oxygen = (Math.random() * (100 - 90) + 90).toFixed(1);
+                const pulse = (Math.random() * (120 - 60) + 60).toFixed(0);
+
+                const row = `
+                    <tr>
+                        <td>${timestamp}</td>
+                        <td>${temp}</td>
+                        <td>${oxygen}</td>
+                        <td>${pulse}</td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+                generatedData.push({ timestamp, temp, oxygen, pulse });
+            }
+        }
+
+        // Function to export data to CSV
+        function exportToCsv() {
+            const header = ['Timestamp', 'Temperature (°C)', 'Oxygen Saturation (%)', 'Pulse Rate (BPM)'];
+            let csv = header.join(',') + '\n';
+            generatedData.forEach(row => {
+                csv += `${row.timestamp},${row.temp},${row.oxygen},${row.pulse}\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", "sensor_data.csv");
+            link.style.visibility = 'hidden';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Call the function to populate the table on page load
+        populateTable();
+
+        // Add event listener for the export button
+        exportCsvBtn.addEventListener('click', exportToCsv);
+    });
+</script>
