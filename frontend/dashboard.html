@@ -19,7 +19,7 @@
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
-        .navbar .nav-link {
+         .navbar .nav-link {
             color: #000 !important;
             font-weight: 500;
             transition: color 0.3s ease;
@@ -95,14 +95,13 @@
             position: relative;
             overflow: hidden;
             text-align: center;
-            padding: 3rem 1rem; /* mai ingust */
+            padding: 2rem 1rem;
             color: #fff;
         }
 
         header.dashboard-header h1 {
             font-size: 2.5rem;
             font-weight: 700;
-            /* glow eliminat */
         }
 
         header.dashboard-header div.bg-circle {
@@ -127,6 +126,8 @@
             animation: float 8s infinite alternate-reverse;
         }
 
+
+
         @keyframes float {
             0% {
                 transform: translateY(0) translateX(0);
@@ -135,6 +136,17 @@
             100% {
                 transform: translateY(20px) translateX(20px);
             }
+        }
+
+        .live-title {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            border: 2px solid #1565c0;
+            border-radius: 12px;
+            background-color: rgba(21, 101, 192, 0.1);
+            color: #1565c0;
+            font-weight: 700;
+            box-shadow: 0 4px 8px rgba(21, 101, 192, 0.2);
         }
     </style>
 </head>
@@ -153,29 +165,22 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto">
-                        <!-- Home -->
                         <li class="nav-item">
                             <a class="nav-link active" href="index.html">Home</a>
                         </li>
-                        <!-- About Project -->
                         <li class="nav-item">
                             <a class="nav-link" href="about-project-delta.html">About Project</a>
                         </li>
-                        <!-- Dashboard -->
                         <li class="nav-item">
                             <a class="nav-link" href="dashboard.html">Dashboard</a>
                         </li>
-                        <!-- Meet the Team (Dropdown) -->
                         <li class="nav-item">
                             <a class="nav-link" href="Team.html">Meet the Team</a>
                         </li>
-                        <!-- Contact -->
                         <li class="nav-item">
                             <a class="nav-link" href="Contact_us.html">Contact Us</a>
                         </li>
                     </ul>
-
-                    <!-- Sign In button -->
                     <div class="d-flex">
                         <a href="signin.html" class="btn btn-dark ms-2">Sign In</a>
                     </div>
@@ -192,6 +197,12 @@
     </header>
 
     <main class="container my-5">
+
+        <!-- Live Data Title -->
+        <div class="text-center mb-4">
+            <h3 class="live-title">Live data</h3>
+        </div>
+
         <div class="row g-4 justify-content-center">
             <!-- Temperature -->
             <div class="col-md-4 col-sm-6">
@@ -222,8 +233,14 @@
             </div>
         </div>
 
+
+        <!-- Titlu Last 24 Hours -->
+         <div class="text-center mt-5 ">
+            <h3 class="live-title">Last 24 hours</h3>
+        </div>
+
         <!-- Grafic panel -->
-        <div class="row g-4 mt-5">
+        <div class="row g-4 mt-3">
             <div class="col-md-4 col-sm-6">
                 <div class="card shadow-sm p-3">
                     <h5 class="card-title text-center">🌡️ Temperature</h5>
