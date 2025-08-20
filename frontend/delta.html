@@ -11,6 +11,16 @@
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
 
     <style>
+        html, body {
+            height: 100%; /* ocupă toată înălțimea */
+        }
+        body {
+            display: flex;
+            flex-direction: column; /* header + main + footer în coloană */
+        }
+        main {
+            flex: 1; /* împinge footerul jos */
+        }
         .btn-outline-success:hover {
             border: 1px solid #fff;
         }
@@ -31,8 +41,6 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-
-
                         <li class="nav-item">
                             <a class="nav-link active" href="index.html" style="font-family: montserrat, sans-serif;">
                                 Home
@@ -64,19 +72,19 @@
                             </a>
                         </li>
                     </ul>
-                    <form class="d-flex my-2 my-lg-0">
-                        <input class="form-control me-sm-2" type="text" placeholder="Search" />
-                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"
-                            style="background-color: #00796b; color: #e0f7fa;">
-                            Search
-                        </button>
-                    </form>
+
+                    <!-- Sign In button -->
+                    <div class="d-flex">
+                        <a href="signin.html" class="btn btn-dark ms-2">Sign In</a>
+                    </div>
                 </div>
             </div>
         </nav>
     </header>
 
-    <main></main>
+    <main>
+        <!-- conținutul paginii -->
+    </main>
 
     <!-- Footer -->
     <footer class="footer-bar text-center text-white py-3" style="background-color: #000;">
