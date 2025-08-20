@@ -157,6 +157,25 @@
             transform: scale(1.05);
         }
 
+        .green-switch .form-check-input:checked {
+            background-color: #198754;
+            border-color: #198754;
+        }
+
+        .green-switch .form-check-input:checked:focus {
+            box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
+        }
+
+        .sensor-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            text-align: left;
+        }
+
 
         .btn-outline-primary {
             --bs-btn-color: #225E3E;
@@ -298,17 +317,25 @@
                             <div class="col-md-4 text-center">
                                 <h5>Status Senzori</h5>
                                 <div class="d-flex flex-column align-items-center">
-                                    <div class="form-check form-switch my-2">
-                                        <input class="form-check-input" type="checkbox" id="sensor1" checked>
-                                        <label class="form-check-label" for="sensor1">Temperature sensor</label>
+                                    <div class="sensor-box">
+                                        <div class="form-check form-switch green-switch">
+                                            <input class="form-check-input" type="checkbox" id="sensor1" checked>
+                                            <label class="form-check-label" for="sensor1">Temperature sensor</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-switch my-2">
-                                        <input class="form-check-input" type="checkbox" id="sensor2">
-                                        <label class="form-check-label" for="sensor2">Oxygen sensor</label>
+
+                                    <div class="sensor-box">
+                                        <div class="form-check form-switch green-switch">
+                                            <input class="form-check-input" type="checkbox" id="sensor2">
+                                            <label class="form-check-label" for="sensor2">Oxygen sensor</label>
+                                        </div>
                                     </div>
-                                    <div class="form-check form-switch my-2">
-                                        <input class="form-check-input" type="checkbox" id="sensor3">
-                                        <label class="form-check-label" for="sensor3">Pulse sensor</label>
+
+                                    <div class="sensor-box">
+                                        <div class="form-check form-switch green-switch">
+                                            <input class="form-check-input" type="checkbox" id="sensor3">
+                                            <label class="form-check-label" for="sensor3">Pulse sensor</label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -358,7 +385,7 @@
                                 </div>
                                 <div class="col-lg-3 col-md-6 mb-4">
                                     <div class="card h-100 sensor-card">
-                                        <img src="src/res_59e1a158e76a0e6bac8d7cb752f16499.jpg"
+                                        <img src="src/espcam.png"
                                             class="card-img-top sensor-img p-3" alt="Micro Camera Module">
                                         <div class="card-body text-center">
                                             <h6 class="card-title">Camera Micro</h6>
