@@ -9,6 +9,11 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
+
+        * {
+            font-family: 'Montserrat', sans-serif;
+        }
+        
         body {
             background: linear-gradient(90deg, #ffffff, #87CEEB);
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -25,8 +30,19 @@
             transition: color 0.3s ease;
         }
 
+        .navbar {
+            background: linear-gradient(90deg, #ffffff, #87CEEB);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar .nav-link {
+            color: #000 !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
         .navbar .nav-link:hover {
-            color: #005f99 !important;
+            color: #003f66 !important;
         }
 
         .navbar-brand img {
@@ -126,8 +142,6 @@
             animation: float 8s infinite alternate-reverse;
         }
 
-
-
         @keyframes float {
             0% {
                 transform: translateY(0) translateX(0);
@@ -165,22 +179,29 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavId">
                     <ul class="navbar-nav me-auto">
+                        <!-- Home -->
                         <li class="nav-item">
                             <a class="nav-link active" href="index.html">Home</a>
                         </li>
+                        <!-- About Project -->
                         <li class="nav-item">
                             <a class="nav-link" href="about-project-delta.html">About Project</a>
                         </li>
+                        <!-- Dashboard -->
                         <li class="nav-item">
                             <a class="nav-link" href="dashboard.html">Dashboard</a>
                         </li>
+                        <!-- Meet the Team (Dropdown) -->
                         <li class="nav-item">
                             <a class="nav-link" href="Team.html">Meet the Team</a>
                         </li>
+                        <!-- Contact -->
                         <li class="nav-item">
-                            <a class="nav-link" href="Contact_us.html">Contact Us</a>
+                            <a class="nav-link" href="contact-us.html">Contact Us</a>
                         </li>
                     </ul>
+
+                    <!-- Sign In button -->
                     <div class="d-flex">
                         <a href="signin.html" class="btn btn-dark ms-2">Sign In</a>
                     </div>
