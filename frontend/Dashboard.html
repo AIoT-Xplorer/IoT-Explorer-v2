@@ -140,6 +140,35 @@
       margin-bottom: 30px;
       box-shadow: 0 0 20px rgba(0,255,195,0.2);
     }
+
+    /* === Buton Irrigation === */
+    .irrigation-btn {
+      background: linear-gradient(45deg, #4caf50, #00ffc3);
+      color: #000;
+      font-size: 1.5rem;
+      font-weight: bold;
+      padding: 15px 40px;
+      border-radius: 50px;
+      box-shadow: 0 0 20px rgba(0,255,195,0.4);
+      transition: all 0.3s ease;
+    }
+    .irrigation-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(0,255,195,0.6);
+    }
+    .irrigation-on {
+      background: linear-gradient(45deg, #00c3ff, #0066ff);
+      color: #fff;
+    }
+
+    /* Efect blinking */
+    .blink {
+      animation: blinkEffect 1s infinite alternate;
+    }
+    @keyframes blinkEffect {
+      0%   { background: linear-gradient(45deg, #ff4d4d, #ff9999); color:#fff; }
+      100% { background: linear-gradient(45deg, #4caf50, #00ffc3); color:#000; }
+    }
   </style>
 </head>
 <body>
@@ -194,13 +223,6 @@
         </div>
         <div class="col-6 col-md-4 col-lg-2">
           <div class="card-custom">
-            <i class="fas fa-faucet"></i>
-            <div class="card-value">OFF</div>
-            <div class="card-label">Irrigation</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <div class="card-custom">
             <i class="fas fa-thermometer-half"></i>
             <div class="card-value">-- °C</div>
             <div class="card-label">Temperature</div>
@@ -214,6 +236,14 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- BUTON IRRIGATION SEPARAT -->
+    <div class="container text-center my-5">
+      <h3 class="mb-3">Irrigation Control</h3>
+      <button id="irrigationBtn" class="btn btn-lg irrigation-btn">
+        <i class="fas fa-faucet"></i> Start Irrigation
+      </button>
     </div>
 
     <!-- ===== CHARTS SECTION ===== -->
@@ -292,6 +322,35 @@
     createChart(document.getElementById('soilChart'), 'Soil Moisture', '%', '#4bc0c0', 'rgba(75,192,192,0.2)');
     createChart(document.getElementById('lightChart'), 'Ambient Light', 'lux', '#ffcd56', 'rgba(255,205,86,0.2)');
     createChart(document.getElementById('airChart'), 'Air Quality', 'AQI', '#9966ff', 'rgba(153,102,255,0.2)');
+
+    // === IRRIGATION BUTTON SCRIPT ===
+    const irrigationBtn = document.getElementById("irrigationBtn");
+    let needsWater = true; // simulare senzor
+    let irrigationOn = false;
+
+    if (needsWater) {
+      irrigationBtn.classList.add("blink");
+    }
+
+    irrigationBtn.addEventListener("click", () => {
+      irrigationOn = !irrigationOn;
+
+      if (irrigationOn) {
+        irrigationBtn.classList.remove("blink");
+        irrigationBtn.classList.add("irrigation-on");
+        irrigationBtn.innerHTML = '<i class="fas fa-faucet"></i> Irrigation ON';
+        console.log("Irrigation system started!");
+        // aici trimiți request la backend să pornească pompa
+      } else {
+        irrigationBtn.classList.remove("irrigation-on");
+        irrigationBtn.innerHTML = '<i class="fas fa-faucet"></i> Start Irrigation';
+        console.log("Irrigation system stopped!");
+        // aici trimiți request la backend să oprească pompa
+        if (needsWater) {
+          irrigationBtn.classList.add("blink");
+        }
+      }
+    });
   </script>
 </body>
 </html>
