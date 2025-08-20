@@ -87,8 +87,8 @@
         .resources,
         .results,
         .sensors-used {
-            width: 90%;
-            min-height: 80vh;
+            width: 100%;
+            min-height: 100vh;
         }
 
         header {
@@ -160,9 +160,90 @@
             /* This ensures the images cover the area without distortion */
             width: 100%;
         }
+
+        /* Stil pentru noul buton de temă */
+        #themeToggle {
+            position: fixed;
+            bottom: 80px;
+            /* Poziționat deasupra butonului backToTop */
+            right: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #themeToggle:hover {
+            background-color: #ddd;
+            transform: scale(1.1);
+        }
+
+        /* Stiluri pentru tema întunecată */
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card-text,
+        .dark-mode .card-subtitle {
+            color: #b0b0b0 !important;
+        }
+
+        .dark-mode .navbar,
+        .dark-mode .fixed-top {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .nav-link,
+        .dark-mode .top-bar a,
+        .dark-mode .top-bar span {
+            color: #e0e0e0 !important;
+        }
+
+        .dark-mode .btn-outline-success {
+            color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+        }
+
+        .dark-mode .btn-outline-success:hover {
+            background-color: #4CAF50 !important;
+            color: #1e1e1e !important;
+        }
+
+        .dark-mode #themeToggle {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .carousel-section {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .bg-light {
+            background-color: #121212 !important;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
+<button id="themeToggle" title="Toggle theme">
+    <i class="fas fa-moon"></i>
+</button>
 <button id="backToTop" title="Go to top">
     <i class="fas fa-arrow-up"></i>
 </button>
@@ -285,6 +366,8 @@
                 </div>
             </div>
         </div>
+
+
         <section class="carousel-section">
             <div class="container">
                 <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -295,29 +378,57 @@
                             aria-label="Slide 2"></button>
                         <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="2"
                             aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="3"
+                            aria-label="Slide 4"></button>
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active">
-                            <img src="src/team_full_kick_off_meet.jpg" class="d-block w-100" alt="Kick off meeting">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>Kick-off meeting</h5>
-                                <p>Our first meeting when we have discussed the project in general.</p>
+                            <div class="card shadow-sm rounded-3">
+                                <img src="src/team_full_kick_off_meet.jpg" class="card-img-top" alt="Kick off meeting">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Kick-off meeting</h5>
+                                    <p>Our first meeting when we have discussed the project in general.</p>
+                                </div>
                             </div>
                         </div>
-                        <div class="carousel-item">
-                            <img src="src/team_full_1.jpg" class="d-block w-100" alt="Mentor-photo">
-                            <div class="carousel-caption d-none d-md-block">
-                                <h5>During the development of the front-end</h5>
-                                <p>Us with our mentor, Founder of IoT-Explorer Ana-Maria Drăgulinescu</p>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="src/catana.jpg" class="d-block w-100"
-                                alt="During the development of the front-end">
-                            <div class="carousel-caption d-none d-md-block">
 
+                        <div class="carousel-item">
+                            <div class="card shadow-sm rounded-3">
+                                <img src="src/team_full_1.jpg" class="card-img-top" alt="Mentor-photo">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>During the development of the front-end</h5>
+                                    <p>Us with our mentor, Founder of IoT-Explorer Ana-Maria Drăgulinescu</p>
+                                </div>
                             </div>
                         </div>
+
+                        <div class="carousel-item">
+                            <div class="card p-3 shadow-sm rounded-3">
+                                <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+                                    <div class="col">
+                                        <img src="src/catana.jpg" class="d-block w-100 rounded-3 shadow"
+                                            alt="Imagine 1">
+                                    </div>
+                                    <div class="col">
+                                        <img src="src/photo_1.jpg" class="d-block w-100 rounded-3 shadow"
+                                            alt="Imagine 2">
+                                    </div>
+                                    <div class="col">
+                                        <img src="src/photo_2.jpg" class="d-block w-100 rounded-3 shadow"
+                                            alt="Imagine 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <div class="card p-3 shadow-sm rounded-3">
+                                <div class="d-flex justify-content-center">
+                                    <img src="src/photo_3.jpg" class="w-50 rounded-3 shadow" alt="Imagine 4">
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel"
                         data-bs-slide="prev">
@@ -332,65 +443,58 @@
                 </div>
             </div>
         </section>
-        <div class="row m-0">
-            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
-                <div class="card text-center shadow-sm p-3 resources w-100" id="resources-section">
+
+
+        <section id="resources-section">
+            <div class="container">
+                <div class="card text-center shadow-sm p-3 resources w-100">
                     <div class="card-body d-flex flex-column align-items-center justify-content-center">
                         <h5 class="card-title mb-4">Resources</h5>
+                        <p class="mb-4">If you want to learn more about the project and its architecture, you can
+                            download the technical documents below:</p>
                         <div class="row w-100 justify-content-center">
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100 sensor-card">
                                     <div class="card-body text-center">
-                                        <h6 class="card-title">MAX30102 Datasheet</h6>
+                                        <h6 class="card-title">Docker Installation Guide</h6>
                                         <p class="card-text text-muted small">
-                                            Detailed technical specifications for the MAX30102 Pulse Oximeter and
-                                            Heart-Rate Sensor.
+                                            Detailed guide for installing Docker and Docker Compose on a server with
+                                            Ubuntu 24.04 LTS.
                                         </p>
-                                        <a href="src/MAX30102.pdf" target="_blank"
-                                            class="btn btn-outline-primary mt-2 pdf-link">
+                                        <a href="src/Instalare_Docker_Docker_si_Compose.pdf" target="_blank"
+                                            class="btn btn-outline-success mt-2 pdf-link">
                                             <i class="fas fa-file-pdf me-2"></i>View PDF
                                         </a>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100 sensor-card">
                                     <div class="card-body text-center">
-                                        <h6 class="card-title">ESP32-CAM Module</h6>
+                                        <h6 class="card-title">Platform Configuration with Docker</h6>
                                         <p class="card-text text-muted small">
-                                            Technical documentation for the camera module used in the project.
+                                            The necessary steps for configuring and launching the laboratory platform
+                                            with Docker, Caddy, and Mosquitto.
                                         </p>
-                                        <a href="src/ESP32-CAM_datasheet.pdf" target="_blank"
-                                            class="btn btn-outline-primary mt-2 pdf-link">
+                                        <a href="src/Configurare_Docker.pdf" target="_blank"
+                                            class="btn btn-outline-success mt-2 pdf-link">
                                             <i class="fas fa-file-pdf me-2"></i>View PDF
                                         </a>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <div class="card h-100 sensor-card">
                                     <div class="card-body text-center">
-                                        <h6 class="card-title">Microphone Datasheet</h6>
+                                        <h6 class="card-title">Frontend Platform Documentation V2</h6>
                                         <p class="card-text text-muted small">
-                                            Specifications and usage guide for the MAX9814 microphone amplifier
-                                            module.
+                                            Details on building the low-code frontend platform with team submenus and
+                                            MQTT integration.
                                         </p>
-                                        <a href="src/MAX9814.PDF" target="_blank"
-                                            class="btn btn-outline-primary mt-2 pdf-link">
-                                            <i class="fas fa-file-pdf me-2"></i>View PDF
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">Temperature Sensor Datasheet</h6>
-                                        <p class="card-text text-muted small">
-                                            Comprehensive details on the MLX90614 Infrared Temperature Sensor.
-                                        </p>
-                                        <a href="src/MLX90614-Datasheet-Melexis.pdf" target="_blank"
-                                            class="btn btn-outline-primary mt-2 pdf-link">
+                                        <a href="src/PLATFORMA_LABORATOR_FRONTEND_V2.pdf" target="_blank"
+                                            class="btn btn-outline-success mt-2 pdf-link">
                                             <i class="fas fa-file-pdf me-2"></i>View PDF
                                         </a>
                                     </div>
@@ -400,14 +504,14 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </main>
+        </section>
 
-    <footer class="footer-bar">
-        <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of
-            2025
-            IoT Explorer Program</p>
-    </footer>
+        <footer class="footer-bar">
+            <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame
+                of
+                2025
+                IoT Explorer Program</p>
+        </footer>
 
 
 </body>
@@ -450,4 +554,33 @@
     backToTop.addEventListener("click", () => {
         window.scrollTo({ top: 0, behavior: "smooth" });
     });
+
+    // Noul cod JavaScript pentru temă (începe aici)
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            body.classList.add('dark-mode');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            body.classList.remove('dark-mode');
+            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    });
+    // Noul cod JavaScript pentru temă (se termină aici)
 </script>
