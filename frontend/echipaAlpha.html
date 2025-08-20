@@ -9,16 +9,63 @@
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <!-- Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome for Social Icons -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
 
   <style>
-    html, body {
+    html {
+      scroll-behavior: smooth;
+    }
+    body {
       height: 100%;
       margin: 0;
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'Montserrat', sans-serif;
       background: #000;
     }
 
+    /* ===== NAVBAR (păstrat din versiunea anterioară) ===== */
+    .navbar {
+      background: linear-gradient(to right, #fff, #4caf50);
+      position: relative;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .navbar::after {
+      content: "";
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(to right, #00ffc3, #4caf50, #00ffc3);
+      box-shadow: 0 0 10px #00ffc3;
+    }
+    .navbar-nav .nav-link {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 600;
+      position: relative;
+      transition: color 0.3s;
+    }
+    .navbar-nav .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 0;
+      height: 2px;
+      background: #00ffc3;
+      transition: width 0.3s ease;
+      box-shadow: 0 0 8px #00ffc3;
+    }
+    .navbar-nav .nav-link:hover {
+      color: #00ffc3 !important;
+    }
+    .navbar-nav .nav-link:hover::after {
+      width: 100%;
+    }
+
+    /* ===== HERO ===== */
     .hero {
       min-height: 100vh;
       position: relative;
@@ -27,22 +74,20 @@
       justify-content: center;
       text-align: center;
       color: #fff;
-      background:
-        url('https://media.istockphoto.com/id/956366756/photo/tree-growth-three-steps-in-nature-and-beautiful-morning-lighting.jpg?s=612x612&w=0&k=20&c=0RR1skhLmMxHxbVMClJAi3XOtQ1fnfjUNusssi_3La4=')
-        center center / cover no-repeat;
+      background: url('https://media.istockphoto.com/id/956366756/photo/tree-growth-three-steps-in-nature-and-beautiful-morning-lighting.jpg?s=612x612&w=0&k=20&c=0RR1skhLmMxHxbVMClJAi3XOtQ1fnfjUNusssi_3La4=') 
+                  center center / cover no-repeat fixed;
+      overflow: hidden;
     }
-
     .hero::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.85) 0%,
-        rgba(0,0,0,0.3) 100%
-      );
+      background: linear-gradient(to bottom, rgba(0,0,0,0.9) 0%, rgba(0,0,0,0) 100%);
       z-index: 0;
+      opacity: 1;
+      transition: opacity 0.8s ease-out;
     }
+    
 
     .hero-content {
       position: relative;
@@ -50,240 +95,112 @@
       padding: 0 2rem;
       display: inline-block;
     }
-
     .hero-title {
       font-size: clamp(3rem, 8vw, 7rem);
       letter-spacing: 3px;
       text-transform: uppercase;
-      text-shadow:
-        0 0 10px rgba(0, 255, 200, 0.212),
-        0 0 22px rgba(0, 255, 200, 0.393);
+      font-family: 'Orbitron', sans-serif;
+      text-shadow: 0 0 10px rgba(0,255,200,0.8), 0 0 22px rgba(0,255,200,0.6);
+      animation: fadeInZoom 2s ease forwards, pulseGlow 3s infinite ease-in-out 2s;
+      opacity: 0;
+      transform: scale(0.8);
     }
 
-    .animated-border {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
+    /* Intrare cu fade + zoom */
+    @keyframes fadeInZoom {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
     }
 
-    .animated-border rect {
-      width: 100%;
-      height: 100%;
-      fill: none;
-      stroke: #00ffc3;
-      stroke-width: 3px;
-      stroke-dasharray: 200 400;
-      stroke-dashoffset: 0;
-      rx: 12;
-      ry: 12;
-      animation: moveBorder 3s linear infinite;
+    /* Glow pulsant */
+    @keyframes pulseGlow {
+      0% { text-shadow: 0 0 10px rgba(0,255,200,0.8), 0 0 20px rgba(0,255,200,0.6), 0 0 40px rgba(0,255,200,0.4); }
+      50% { text-shadow: 0 0 20px rgba(0,255,200,1), 0 0 40px rgba(0,255,200,0.8), 0 0 80px rgba(0,255,200,0.6); }
+      100% { text-shadow: 0 0 10px rgba(0,255,200,0.8), 0 0 20px rgba(0,255,200,0.6), 0 0 40px rgba(0,255,200,0.4); }
     }
 
-    @keyframes moveBorder {
-      to {
-        stroke-dashoffset: -800;
-      }
-    }
-
-    .btn-outline-success:hover {
-      border: 1px solid #fff;
-    }
-
+    /* ===== FOOTER ===== */
     footer.footer-bar {
-      background: #0d0d0d;
+      background: linear-gradient(to right, #0d0d0d, #1a1a1a);
       color: #e0e0e0;
       text-align: center;
       padding: 15px 10px;
       font-family: "Segoe UI", sans-serif;
       font-size: 16px;
+      border-top: 1px solid rgba(0,255,200,0.3);
+    }
+    .footer-social a {
+      color: #e0e0e0;
+      margin: 0 0.5rem;
+      font-size: 1.4rem;
+      transition: color 0.3s, transform 0.3s;
+    }
+    .footer-social a:hover {
+      color: #00ffc3;
+      transform: scale(1.2);
     }
   </style>
 </head>
 
-<head>
-        <title>Main</title>
-    <link rel="icon" href="logo_team.png" type="image/png">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-        crossorigin="anonymous"
-    />
-
-        <style>
-            body, html {
-                height: 100%;
-                margin: 0;
-            }
-            .main-content {
-                background-color: #f0f0f0; 
-                padding: 2rem;
-                min-height: calc(100% - 70px); 
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-            }
-            .share-section {
-                margin-top: 2rem;
-            }
-
-            .profile-card {
-                width: 90%;
-                max-width: 900px;
-                box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-                border: none;
-            }
-            .profile-img {
-                width: 150px;
-                height: 150px;
-                object-fit: cover;
-                border-radius: 50%;
-                border: 2px solid #ddd;
-            }
-            .footer-bar {
-                background-color: #385e45; 
-                color: white;
-                padding: 1rem;
-                text-align: center;
-            }
-            .justified-text {
-                text-align: justify;
-                line-height: 1.6;
-     }
-        </style>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    </head>
-
-    <header>
-            <div class="top-bar">
-                <div class="container d-flex justify-content-between align-items-center">
-                    <div class="social-icons">
-                        <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                    
-                    <img src="https://aiot-xplorer.eu/images/Template/design-fara-titlu.png" alt="AIoT Explorer Logo"  class="logo-img img-fluid" style="max-width: 80px;"> 
-
-
-                    <div class="d-flex align-items-center">
-                        <div class="d-flex align-items-center me-3">
-                            <i class="far fa-envelope me-2 text-secondary"></i>
-                            <span class="text-secondary">contact@team-alpha.eu</span>
-                        </div>
-                        
-                        <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-outline-success">
-                            <i class="fas fa-sign-in-alt"></i> Sign In
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <nav class="navbar navbar-expand-lg main-nav">
-                <div class="container">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                        
-                    </div>
-                </div>
-            </nav>
-        </header>
-
-
-
 <body>
+  <!-- HEADER -->
   <header>
-    <nav class="navbar navbar-expand-md"
-         style="background: linear-gradient(to right, #bcefa3, rgb(74, 163, 59));">
-      <div class="container d-flex align-items-center justify-content-between">
-
-        <!-- Mobile toggle on the left -->
-        <button
-          class="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#collapsibleNavId"
-          aria-controls="collapsibleNavId"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
+    <nav class="navbar navbar-expand-md">
+      <div class="container">
+        <a class="navbar-brand" href="Echipa1.html">
+          <img src="https://bing.com/th/id/BCO.80b95b4a-660f-46fb-9c45-37b2e1f10752.png" height="60" alt="Team A Logo">
+        </a>
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" 
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" 
+                aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-
-        <!-- Centered nav links -->
-        <div class="collapse navbar-collapse justify-content-center" id="collapsibleNavId">
-          <ul class="navbar-nav">
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                href="Meet_the_Team.html"
-                aria-current="page"
-                style="font-family: Montserrat, sans-serif;"
-              >
-                Meet the Team
-                <span class="visually-hidden">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                href="Our_project.html"
-                style="font-family: Montserrat, sans-serif;"
-              >
-                Our Project
-                <span class="visually-hidden">(current)</span>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a
-                class="nav-link active"
-                href="Contact_us.html"
-                style="font-family: Montserrat, sans-serif;"
-              >
-                Contact Us
-                <span class="visually-hidden">(current)</span>
-              </a>
-            </li>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav ms-auto mt-2 mt-lg-0">
+            <li class="nav-item"><a class="nav-link active" href="Meet_the_Team.html">Meet the Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="About_Project.html">About the Project</a></li>
+            <li class="nav-item"><a class="nav-link" href="Dashboard.html">Dashboard</a></li>
+            <li class="nav-item"><a class="nav-link" href="Resources.html">Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="Contact_us.html">Contact Us</a></li>
           </ul>
         </div>
-
-        <!-- Logo on the right -->
-        <a class="navbar-brand ms-3 order-last" href="Echipa1.html">
-          <img
-            src="https://bing.com/th/id/BCO.80b95b4a-660f-46fb-9c45-37b2e1f10752.png"
-            height="60"
-            alt="Team A Logo"
-          >
-        </a>
       </div>
     </nav>
   </header>
 
-  <section class="hero">
+  <!-- HERO -->
+  <section class="hero" id="hero">
     <div class="hero-content">
       <h1 class="hero-title">Team Alpha</h1>
-      <svg class="animated-border">
-        <rect x="0" y="0" width="100%" height="100%" />
-      </svg>
     </div>
   </section>
 
+  <!-- FOOTER -->
   <footer class="footer-bar">
-    <p class="mb-0">
-      © 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform
+    <p class="mb-2">
+      © 2025 AIoT-Explorer – part of the unified, multi-tenant IoT platform
       developed in the frame of 2025 IoT Explorer Program
     </p>
+    <div class="footer-social">
+      <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
   </footer>
 
+  <!-- Bootstrap Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"></script>
+
+  <!-- Script pentru fade-out gradient la scroll -->
+  <script>
+    window.addEventListener("scroll", () => {
+      const hero = document.querySelector(".hero");
+      if (window.scrollY > 100) {
+        hero.classList.add("scrolled");
+      } else {
+        hero.classList.remove("scrolled");
+      }
+    });
+  </script>
 </body>
 </html>
-```
