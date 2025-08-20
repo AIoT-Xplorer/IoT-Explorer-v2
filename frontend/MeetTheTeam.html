@@ -67,16 +67,49 @@
     /* ===== TEAM SECTION ===== */
     .team-section {
       flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       padding: 60px 20px;
-
-      
       background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
-                  url("fundal.jpg") no-repeat center center;
+                  url("images/fundal_meet_the_team.jpg") no-repeat center center;
       background-size: cover;
       border-radius: 12px;
+    }
+
+    /* ===== TEAM HEADER TITLE ===== */
+    .team-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+
+    .team-title {
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      font-family: 'Orbitron', sans-serif;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+      color: #fff;
+      text-shadow: 0 0 10px rgba(0,255,200,0.8),
+                   0 0 20px rgba(0,255,200,0.6);
+      animation: fadeInZoom 2s ease forwards, pulseGlow 3s infinite ease-in-out 2s;
+      opacity: 0;
+      transform: scale(0.8);
+    }
+
+    /* Animație apariție */
+    @keyframes fadeInZoom {
+      0% { opacity: 0; transform: scale(0.8); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+
+    /* Glow pulsant */
+    @keyframes pulseGlow {
+      0% { text-shadow: 0 0 10px rgba(0,255,200,0.8),
+                    0 0 20px rgba(0,255,200,0.6),
+                    0 0 40px rgba(0,255,200,0.4); }
+      50% { text-shadow: 0 0 20px rgba(0,255,200,1),
+                     0 0 40px rgba(0,255,200,0.8),
+                     0 0 80px rgba(0,255,200,0.6); }
+      100% { text-shadow: 0 0 10px rgba(0,255,200,0.8),
+                     0 0 20px rgba(0,255,200,0.6),
+                     0 0 40px rgba(0,255,200,0.4); }
     }
 
     .team-container {
@@ -85,6 +118,7 @@
       gap: 40px;
       width: 100%;
       max-width: 1000px;
+      margin: 0 auto;
     }
 
     .team-member {
@@ -141,6 +175,7 @@
       font-size: 1.3rem;
       font-weight: 600;
       color: #f0fdf4;
+      margin-top: 15px;
     }
 
     /* ===== FOOTER ===== */
@@ -171,7 +206,7 @@
     <nav class="navbar navbar-expand-md">
       <div class="container">
         <a class="navbar-brand" href="echipaAlpha.html">
-          <img src="logo.png" height="60" alt="Team A Logo">
+          <img src="images/logo.png" height="60" alt="Team A Logo">
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" 
@@ -180,11 +215,12 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link active" href="Meet_the_Team.html">Meet the Team</a></li>
+             <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="MeetTheTeam.html">Meet the Team</a></li>
             <li class="nav-item"><a class="nav-link" href="About_Project.html">About the Project</a></li>
             <li class="nav-item"><a class="nav-link" href="Dashboard.html">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="Resources.html">Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="Contact_us.html">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact_us.html">Contact Us</a></li>
           </ul>
         </div>
       </div>
@@ -193,12 +229,16 @@
 
   <!-- ===== TEAM SECTION ===== -->
   <section class="team-section">
+    <div class="team-header">
+      <h1 class="team-title">Meet the Team</h1>
+    </div>
+
     <div class="team-container">
       <!-- Membru 1 -->
       <div class="team-member">
         <a href="pagina_membru1.html">
           <div class="team-photo">
-            <img src="adelin.jpg" alt="Adelin Vinulescu"> 
+            <img src="images/adelin.jpg" alt="Adelin Vinulescu"> 
           </div>
         </a>
         <div class="team-name">Adelin Vinulescu</div>
@@ -208,7 +248,7 @@
       <div class="team-member">
         <a href="pagina_membru2.html">
           <div class="team-photo">
-            <img src="alessia.jpg" alt="Alessia Gioanca">
+            <img src="images/alessia.jpg" alt="Alessia Gioanca">
           </div>
         </a>
         <div class="team-name">Alessia Gioanca</div>
