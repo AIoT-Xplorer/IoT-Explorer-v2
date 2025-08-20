@@ -1,5 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<head>
+    <title>Main</title>
+    <link rel="icon" href="logo_team.png" type="image/png">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <!-- Bootstrap CSS -->
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    />
+    <link 
+        rel="stylesheet" 
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    >
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* HEADER BAR */
+        .top-bar {
+            background-color: #f8f9fa;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo-img {
+          height: 40px;   /* înălțime fixă mică */
+          width: auto;    /* păstrează proporțiile */
+        }
+
+        .email-text {
+            font-size: 0.95rem;
+            color: #555;
+        }
+
+        .btn-signin {
+            border: 1px solid #28a745;
+            color: #28a745;
+            transition: all 0.3s ease;
+        }
+
+        .btn-signin:hover {
+            background-color: #28a745;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header>
+        <div class="top-bar">
+            <div class="container d-flex justify-content-between align-items-center">
+                <!-- Email stânga -->
+                <div class="d-flex align-items-center">
+                    <i class="far fa-envelope me-2 text-secondary"></i>
+                    <span class="email-text">contact@aiot-xplorer.eu</span>
+                </div>
+
+                <!-- Logo centrat -->
+                <div class="text-center flex-grow-1">
+                    <img src="AIoT_Explorer.png" alt="AIoT Explorer Logo" class="logo-img">
+                </div>
+
+                <!-- Sign In dreapta -->
+                <div>
+                    <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-signin">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+</body>
+
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -74,7 +155,7 @@
       justify-content: center;
       text-align: center;
       color: #fff;
-      background: url('https://media.istockphoto.com/id/956366756/photo/tree-growth-three-steps-in-nature-and-beautiful-morning-lighting.jpg?s=612x612&w=0&k=20&c=0RR1skhLmMxHxbVMClJAi3XOtQ1fnfjUNusssi_3La4=') 
+      background: url('Fundal_Cartoon_1.png') 
                   center center / cover no-repeat fixed;
       overflow: hidden;
     }
@@ -147,7 +228,7 @@
   <header>
     <nav class="navbar navbar-expand-md">
       <div class="container">
-        <a class="navbar-brand" href="Echipa1.html">
+        <a class="navbar-brand" href="echipaAlpha.html">
           <img src="https://bing.com/th/id/BCO.80b95b4a-660f-46fb-9c45-37b2e1f10752.png" height="60" alt="Team A Logo">
         </a>
         <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" 
