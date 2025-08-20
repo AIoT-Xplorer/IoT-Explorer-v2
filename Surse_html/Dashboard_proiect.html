@@ -1,59 +1,173 @@
 <!doctype html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <title>AIoT-Explorer | Glove Dashboard</title>
 
     <!-- Bootstrap 5 -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-      crossorigin="anonymous"
-    />
-
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
+      /* ====== EDIT HERE: mută titlul + butoanele mai jos/sus ====== */
+      :root { --accordion-offset: 96px; } /* ex: 64px, 120px, 8rem */
+
       html, body { height: 100%; }
-      body {
+      body{
         background: url("../img/fundal2.png") no-repeat center center fixed;
         background-size: cover;
+        font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        color:#0f172a;
       }
-      .content-wrapper { min-height: 100vh; padding-bottom: 84px; box-sizing: border-box; }
-      .main-content { padding: 16px; max-width: 1200px; margin: 0 auto; }
 
-      .card { border-radius: 16px; box-shadow: 0 6px 16px rgba(0,0,0,.08); }
+      .content-wrapper{
+        min-height: 100vh;
+        padding: 18px 12px 96px;
+        display: flex; justify-content: center;
+      }
+      .main-content{
+        width: 100%; max-width: 1200px;
+        padding: 8px 6px;
+        background: transparent; /* fără fundal global */
+      }
+
+      /* ====== TITLU PAGINĂ ====== */
+      .page-head{
+        text-align:center;
+        margin: 0 auto 8px;
+      }
+      .page-title{
+        font-weight: 900;
+        font-size: clamp(28px, 4vw, 46px);
+        letter-spacing: .01em;
+        color:#0f172a;
+        margin: 0;
+        line-height: 1.05;
+      }
+      .page-title .accent{
+        background: linear-gradient(90deg, #06b6d4, #0ea5a8);
+        -webkit-background-clip: text;
+        background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+      .page-title::after{
+        content:"";
+        display:block;
+        width: 84px; height: 3px;
+        margin: 10px auto 0;
+        background: linear-gradient(90deg, #06b6d4, #0ea5a8);
+        border-radius: 2px;
+        opacity:.9;
+      }
+
+      /* containerul titlu+butoane+panouri */
+      .accordion-block{
+        margin-top: var(--accordion-offset); /* <<< controlează poziția */
+      }
+
+
+      /* ====== Butoane accordion – mari, centrate, cyan ====== */
+      .accordion{ --btn-maxw: 760px; }
+      .accordion .accordion-item{
+        background: transparent; border: 0; margin-bottom: 6px;
+      }
+      .accordion .accordion-button{
+        max-width: var(--btn-maxw);
+        margin: 10px auto;
+        justify-content: center;
+
+        background: linear-gradient(180deg, rgba(16,185,193,.12), rgba(14,165,168,.08));
+        color: #0f172a;
+        border: 2px solid rgba(14,165,168,.35);
+        border-radius: 16px !important;
+        box-shadow: 0 6px 18px rgba(0,0,0,.05);
+        font-weight: 800;
+        letter-spacing: .01em;
+        padding: 1rem 1.25rem;
+        transition: transform .12s ease, box-shadow .12s ease, border-color .2s ease, background .2s ease;
+      }
+      .accordion .accordion-button:hover{
+        transform: translateY(-1px);
+        box-shadow: 0 12px 28px rgba(14,165,168,.18);
+        border-color: rgba(14,165,168,.55);
+        background: linear-gradient(180deg, rgba(16,185,193,.2), rgba(14,165,168,.12));
+      }
+      .accordion .accordion-button:active{
+        transform: translateY(0);
+        box-shadow: 0 4px 10px rgba(14,165,168,.15) inset;
+      }
+      .accordion .accordion-button:not(.collapsed){
+        background: linear-gradient(180deg, rgba(16,185,193,.22), rgba(14,165,168,.15));
+        border-color: rgba(14,165,168,.7);
+      }
+      .accordion-button::after{
+        filter: hue-rotate(160deg) saturate(160%);
+        transition: transform .25s ease;
+      }
+
+      /* ====== Panou local (glass) doar în jurul conținutului ====== */
+      .glass-panel{
+        width: min(96%, 980px);
+        margin: 10px auto 16px;
+        padding: 12px 12px;
+        background: rgba(255,255,255,.44);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,.55);
+        border-radius: 14px;
+        box-shadow: 0 8px 22px rgba(0,0,0,.06);
+        opacity: 0; transform: translateY(6px);
+        transition: opacity .25s ease, transform .25s ease;
+      }
+      .accordion-collapse.show .glass-panel{
+        opacity: 1; transform: translateY(0);
+      }
+
+      /* Carduri minimal din panoul local */
+      .card{
+        border-radius: 12px;
+        background: rgba(255,255,255,0.86);
+        border: 1px solid rgba(17,24,39,0.06);
+        box-shadow: 0 2px 10px rgba(0,0,0,.03);
+        margin-bottom: 12px;
+      }
+      .card:last-child{ margin-bottom: 0; }
+      .card-header{
+        background: transparent;
+        border-bottom: 1px solid rgba(17,24,39,0.06);
+        padding: .65rem .9rem;
+      }
+      .card-body{ padding: .9rem; }
+
+      .status-dot{ width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:8px; }
+      .status-ok{ background:#22c55e; } .status-warn{ background:#f59e0b; } .status-bad{ background:#ef4444; }
       .metric { font-variant-numeric: tabular-nums; }
 
-      /* Characters area */
-      .char-stream {
-        min-height: 88px;
-        max-height: 160px;
-        overflow-y: auto;
-        white-space: pre-wrap;
-        border-radius: 10px;
-        background: rgba(255,255,255,.75);
+      .char-stream{
+        min-height: 84px; max-height: 160px; overflow-y: auto;
+        white-space: pre-wrap; border-radius: 10px;
+        background: rgba(248,250,252,.75);
         padding: 10px 12px;
+        border: 1px solid rgba(17,24,39,0.06);
       }
-      .big-char {
-        font-size: clamp(56px, 8vw, 92px);
-        line-height: 1;
-        font-weight: 800;
-        letter-spacing: .03em;
+      .big-char{
+        font-size: clamp(56px, 7vw, 96px);
+        font-weight: 800; line-height: .95; color:#0f172a;
+        letter-spacing: .01em;
       }
-      .status-dot { width:10px; height:10px; border-radius:50%; display:inline-block; margin-right:8px; }
-      .status-ok { background:#22c55e; }
-      .status-warn { background:#f59e0b; }
-      .status-bad { background:#ef4444; }
 
-      footer.sticky-footer { position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030; }
+      .progress .progress-bar{
+        background: linear-gradient(90deg, #06b6d4, #0ea5a8);
+      }
+
+      footer.sticky-footer{ position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030; }
     </style>
   </head>
   <body>
-    <!-- Header / Navbar -->
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177));">
       <div class="container">
         <a class="navbar-brand" href="Echipa1.html">
@@ -71,7 +185,10 @@
             <li class="nav-item"><a class="nav-link" href="Contact_us.html">Contact Us</a></li>
             <li class="nav-item"><a class="nav-link" href="news.html">News & Updates</a></li>
           </ul>
-          <form class="d-flex"><input class="form-control me-2" placeholder="Search"/><button class="btn btn-outline-success" style="background:#00796b;color:#e0f7fa;">Search</button></form>
+          <form class="d-flex">
+            <input class="form-control me-2" placeholder="Search"/>
+            <button class="btn btn-outline-success" style="background:#00796b;color:#e0f7fa;">Search</button>
+          </form>
         </div>
       </div>
     </nav>
@@ -81,94 +198,127 @@
       <div class="content-wrapper">
         <div class="main-content">
 
-          <!-- Top controls + status -->
-          <div class="row g-3 align-items-stretch mb-3">
-            <div class="col-lg-8">
-              <div class="card h-100">
-                <div class="card-body d-flex flex-wrap gap-2 align-items-center">
-                  <div class="me-auto">
-                    <div class="fw-semibold">Glove status</div>
-                    <div class="small text-muted">Stream flex sensors (5) + IMU</div>
-                  </div>
-                  <div id="connStatus" class="badge text-bg-success px-3 py-2">
-                    <span class="status-dot status-ok"></span>Connected (demo)
-                  </div>
-                  <div class="btn-group">
-                    <button id="btnConnect" class="btn btn-outline-primary">Connect</button>
-                    <button id="btnPause" class="btn btn-outline-secondary">Pause</button>
-                    <button id="btnClear" class="btn btn-outline-danger">Clear</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="card h-100">
-                <div class="card-body">
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div>
-                      <div class="fw-semibold">Recognition latency</div>
-                      <div class="small text-muted">last pipeline cycle</div>
+          <!-- Titlu + butoane + panouri (mutate împreună cu --accordion-offset) -->
+          <section id="accordionBlock" class="accordion-block">
+            <header class="page-head">
+              <h1 class="page-title">
+                AIoT <span class="accent">Glove Dashboard</span>
+              </h1>
+            </header>
+
+            <div class="accordion" id="dashAccordion">
+              <!-- PERFORMANCE -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accPerformance" aria-expanded="false" aria-controls="accPerformance">
+                    Performance
+                  </button>
+                </h2>
+                <div id="accPerformance" class="accordion-collapse collapse" data-bs-parent="#dashAccordion">
+                  <div class="glass-panel">
+                    <div class="card mb-3">
+                      <div class="card-body d-flex flex-wrap gap-2 align-items-center">
+                        <div class="me-auto">
+                          <div class="fw-semibold">Glove status</div>
+                          <div class="small text-muted">Stream flex sensors (5) + IMU</div>
+                        </div>
+                        <div id="connStatus" class="badge text-bg-success px-3 py-2">
+                          <span class="status-dot status-ok"></span>Connected (demo)
+                        </div>
+                        <div class="btn-group">
+                          <button id="btnConnect" class="btn btn-outline-primary">Connect</button>
+                          <button id="btnPause" class="btn btn-outline-secondary">Pause</button>
+                          <button id="btnClear" class="btn btn-outline-danger">Clear</button>
+                        </div>
+                      </div>
                     </div>
-                    <div class="display-6 metric" id="latencyMs">— ms</div>
-                  </div>
-                  <div class="progress mt-2" role="progressbar" aria-label="Confidence" aria-valuemin="0" aria-valuemax="100">
-                    <div id="confBar" class="progress-bar" style="width: 0%">0%</div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
-          <!-- Charts -->
-          <div class="row g-3">
-            <div class="col-lg-7">
-              <div class="card">
-                <div class="card-header bg-white">
-                  <strong>Flex sensors – real‑time</strong>
-                  <span class="text-muted small">(Finger 1..5, 0–100%)</span>
+                    <div class="card">
+                      <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center">
+                          <div>
+                            <div class="fw-semibold">Recognition latency</div>
+                            <div class="small text-muted">last pipeline cycle</div>
+                          </div>
+                          <div class="display-6 metric" id="latencyMs">— ms</div>
+                        </div>
+                        <div class="progress mt-3" role="progressbar" aria-label="Confidence" aria-valuemin="0" aria-valuemax="100">
+                          <div id="confBar" class="progress-bar" style="width: 0%">0%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div><!-- /.glass-panel -->
                 </div>
-                <div class="card-body"><canvas id="flexRealtime"></canvas></div>
               </div>
-            </div>
 
-            <div class="col-lg-5">
-              <div class="card">
-                <div class="card-header bg-white">
-                  <strong>Flex snapshot – current</strong>
-                  <span class="text-muted small">(bars update each tick)</span>
-                </div>
-                <div class="card-body"><canvas id="flexBars"></canvas></div>
-              </div>
-            </div>
-          </div>
+              <!-- SENSOR DATA -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accSensors" aria-expanded="false" aria-controls="accSensors">
+                    Sensor Data
+                  </button>
+                </h2>
+                <div id="accSensors" class="accordion-collapse collapse" data-bs-parent="#dashAccordion">
+                  <div class="glass-panel">
+                    <div class="card mb-3">
+                      <div class="card-header">
+                        <strong>Flex sensors – real-time</strong>
+                        <span class="text-muted small">(Finger 1..5, 0–100%)</span>
+                      </div>
+                      <div class="card-body" style="height: 320px;">
+                        <canvas id="flexRealtime"></canvas>
+                      </div>
+                    </div>
 
-          <!-- Characters / Output area -->
-          <div class="row g-3 mt-1">
-            <div class="col-lg-8">
-              <div class="card">
-                <div class="card-header bg-white d-flex align-items-center justify-content-between">
-                  <strong>Recognized text</strong>
-                  <div class="btn-group btn-group-sm">
-                    <button id="btnBackspace" class="btn btn-outline-secondary" title="Backspace">⌫</button>
-                    <button id="btnSpace" class="btn btn-outline-secondary" title="Space">⎵</button>
-                    <button id="btnCopy" class="btn btn-outline-secondary" title="Copy">Copy</button>
-                  </div>
-                </div>
-                <div class="card-body">
-                  <div class="char-stream" id="textStream" aria-live="polite"></div>
+                    <div class="card">
+                      <div class="card-header">
+                        <strong>Flex snapshot – current</strong>
+                        <span class="text-muted small">(bars update each tick)</span>
+                      </div>
+                      <div class="card-body" style="height: 280px;">
+                        <canvas id="flexBars"></canvas>
+                      </div>
+                    </div>
+                  </div><!-- /.glass-panel -->
                 </div>
               </div>
-            </div>
-            <div class="col-lg-4">
-              <div class="card text-center">
-                <div class="card-header bg-white"><strong>Last character</strong></div>
-                <div class="card-body">
-                  <div id="bigChar" class="big-char">—</div>
-                  <div class="small text-muted">confidence <span id="confPct">0%</span></div>
+
+              <!-- RECOGNITION OUTPUT -->
+              <div class="accordion-item">
+                <h2 class="accordion-header">
+                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accOutput" aria-expanded="false" aria-controls="accOutput">
+                    Recognition Output
+                  </button>
+                </h2>
+                <div id="accOutput" class="accordion-collapse collapse" data-bs-parent="#dashAccordion">
+                  <div class="glass-panel">
+                    <div class="card mb-3 text-center">
+                      <div class="card-header"><strong>Last character</strong></div>
+                      <div class="card-body d-flex flex-column justify-content-center">
+                        <div id="bigChar" class="big-char mb-2">—</div>
+                        <div class="small text-muted">confidence <span id="confPct">0%</span></div>
+                      </div>
+                    </div>
+
+                    <div class="card">
+                      <div class="card-header d-flex align-items-center justify-content-between">
+                        <strong>Recognized text</strong>
+                        <div class="btn-group btn-group-sm">
+                          <button id="btnBackspace" class="btn btn-outline-secondary" title="Backspace">⌫</button>
+                          <button id="btnSpace" class="btn btn-outline-secondary" title="Space">⎵</button>
+                          <button id="btnCopy" class="btn btn-outline-secondary" title="Copy">Copy</button>
+                        </div>
+                      </div>
+                      <div class="card-body">
+                        <div class="char-stream" id="textStream" aria-live="polite"></div>
+                      </div>
+                    </div>
+                  </div><!-- /.glass-panel -->
                 </div>
               </div>
-            </div>
-          </div>
+
+            </div><!-- /accordion -->
+          </section>
 
         </div>
       </div>
@@ -183,21 +333,10 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-    <!-- Dashboard Logic -->
+    <!-- Dashboard Logic (identic ca funcționalitate) -->
     <script>
-      /**
-       * DATA CONTRACT (plug your glove here)
-       * Send frames as JSON strings via WebSocket or Web Serial and call handleFrame(data):
-       * {
-       *   t: Number (ms timestamp),
-       *   flex: [f1,f2,f3,f4,f5] values from 0..100 (percent flexion),
-       *   imu: { ax, ay, az, gx, gy, gz }, // optional
-       *   char: { value: 'A', confidence: 0..1, latencyMs: 0..200 }
-       * }
-       */
-
-      // ---------- Chart helpers ----------
-      const MAX_POINTS = 120; // ~ last 24s at 200ms
+      /** CHARTS **/
+      const MAX_POINTS = 120;
       const fingerNames = ["Thumb","Index","Middle","Ring","Pinky"];
 
       const ctxRealtime = document.getElementById('flexRealtime').getContext('2d');
@@ -211,87 +350,62 @@
         'rgba(32,201,151,0.9)'
       ];
 
-      // Line datasets per finger
       const lineDatasets = fingerNames.map((name, i) => ({
-        label: name,
-        data: [],
-        borderColor: palette[i],
-        backgroundColor: palette[i],
-        borderWidth: 2,
-        pointRadius: 0,
-        tension: .2
+        label: name, data: [], borderColor: palette[i], backgroundColor: palette[i],
+        borderWidth: 2, pointRadius: 0, tension: .2
       }));
 
       const lineChart = new Chart(ctxRealtime, {
         type: 'line',
         data: { labels: [], datasets: lineDatasets },
         options: {
-          animation: false,
-          responsive: true,
-          maintainAspectRatio: false,
+          animation: false, responsive: true, maintainAspectRatio: false,
           scales: {
             x: { ticks: { display: false } },
             y: { min: 0, max: 100, title: { display: true, text: 'Flex %' } }
           },
-          plugins: {
-            legend: { position: 'bottom' },
-            tooltip: { mode: 'nearest', intersect: false }
-          }
+          plugins: { legend: { position: 'bottom' }, tooltip: { mode: 'nearest', intersect: false } }
         }
       });
 
       const barChart = new Chart(ctxBars, {
         type: 'bar',
-        data: {
-          labels: fingerNames,
-          datasets: [{
-            label: 'Current flex %',
-            data: [0,0,0,0,0]
-          }]
-        },
+        data: { labels: fingerNames, datasets: [{ label: 'Current flex %', data: [0,0,0,0,0] }] },
         options: {
-          animation: { duration: 0 },
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: { y: { min:0, max:100 } },
-          plugins: { legend: { display:false } }
+          animation: { duration: 0 }, responsive: true, maintainAspectRatio: false,
+          scales: { y: { min:0, max:100 } }, plugins: { legend: { display:false } }
         }
       });
 
       function pushFlex(values) {
         const now = new Date();
         lineChart.data.labels.push(now.toLocaleTimeString());
-        lineChart.data.labels.length > MAX_POINTS && lineChart.data.labels.shift();
+        if (lineChart.data.labels.length > MAX_POINTS) lineChart.data.labels.shift();
         values.forEach((v, i) => {
           lineChart.data.datasets[i].data.push(v);
-          if (lineChart.data.datasets[i].data.length > MAX_POINTS) {
-            lineChart.data.datasets[i].data.shift();
-          }
+          if (lineChart.data.datasets[i].data.length > MAX_POINTS) lineChart.data.datasets[i].data.shift();
         });
         lineChart.update('none');
 
-        // bars
         barChart.data.datasets[0].data = values;
         barChart.update('none');
       }
 
-      // ---------- Characters area ----------
-      const bigChar = document.getElementById('bigChar');
-      const textStream = document.getElementById('textStream');
-      const confBar = document.getElementById('confBar');
-      const confPct = document.getElementById('confPct');
+      /** OUTPUT **/
+      const bigChar   = document.getElementById('bigChar');
+      const textStream= document.getElementById('textStream');
+      const confBar   = document.getElementById('confBar');
+      const confPct   = document.getElementById('confPct');
       const latencyMs = document.getElementById('latencyMs');
 
       function updateRecognition(char, confidence, latency) {
-        bigChar.textContent = char || '—';
+        if (bigChar) bigChar.textContent = char || '—';
         const pct = Math.round((confidence || 0) * 100);
-        confBar.style.width = pct + '%';
-        confBar.textContent = pct + '%';
-        confPct.textContent = pct + '%';
-        latencyMs.textContent = (latency ?? 0) + ' ms';
+        if (confBar) { confBar.style.width = pct + '%'; confBar.textContent = pct + '%'; }
+        if (confPct) { confPct.textContent = pct + '%'; }
+        if (latencyMs) { latencyMs.textContent = (latency ?? 0) + ' ms'; }
 
-        if (char) {
-          // Debounce repeated characters if confidence low
+        if (char && textStream) {
           const last = textStream.dataset.lastChar || '';
           if (!(char === last && pct < 70)) {
             textStream.textContent += char;
@@ -302,22 +416,25 @@
       }
 
       // Controls
-      document.getElementById('btnBackspace').addEventListener('click', () => {
+      const btnBackspace = document.getElementById('btnBackspace');
+      const btnSpace = document.getElementById('btnSpace');
+      const btnCopy = document.getElementById('btnCopy');
+
+      btnBackspace && btnBackspace.addEventListener('click', () => {
         textStream.textContent = textStream.textContent.slice(0, -1);
       });
-      document.getElementById('btnSpace').addEventListener('click', () => {
+      btnSpace && btnSpace.addEventListener('click', () => {
         textStream.textContent += ' ';
       });
-      document.getElementById('btnCopy').addEventListener('click', async () => {
+      btnCopy && btnCopy.addEventListener('click', async () => {
         await navigator.clipboard.writeText(textStream.textContent);
       });
 
-      // ---------- Demo data generator (remove when wiring to device) ----------
+      /** DEMO generator **/
       let paused = false;
       let demoInterval = null;
 
       function randWalk(prev, speed = 8) {
-        // keep between 0..100 with a gentle random walk
         return Math.max(0, Math.min(100, prev + (Math.random() - 0.48) * speed));
       }
 
@@ -331,10 +448,9 @@
           flexState = flexState.map((v, i) => randWalk(v, 10 - i));
           pushFlex(flexState.map(v => Math.round(v)));
 
-          // fake recognition occasionally
           if (Math.random() < 0.35) {
             const ch = alphabet[Math.floor(Math.random()*alphabet.length)];
-            const confidence = Math.random()*0.5 + 0.5; // 50..100%
+            const confidence = Math.random()*0.5 + 0.5;
             const latency = Math.floor(30 + Math.random()*60);
             updateRecognition(ch, confidence, latency);
           } else {
@@ -344,15 +460,13 @@
       }
       function stopDemo(){ if (demoInterval) clearInterval(demoInterval); }
 
-      // ---------- Hook up top buttons ----------
+      // Top buttons
       const btnConnect = document.getElementById('btnConnect');
       const btnPause   = document.getElementById('btnPause');
       const btnClear   = document.getElementById('btnClear');
       const connStatus = document.getElementById('connStatus');
 
-      btnConnect.addEventListener('click', async () => {
-        // Replace this with Web Serial / WebSocket connect as needed
-        // Example skeletons below.
+      btnConnect && btnConnect.addEventListener('click', async () => {
         if (btnConnect.dataset.mode !== 'demo') {
           btnConnect.dataset.mode = 'demo';
           connStatus.className = 'badge text-bg-success px-3 py-2';
@@ -366,59 +480,38 @@
         }
       });
 
-      btnPause.addEventListener('click', () => {
+      btnPause && btnPause.addEventListener('click', () => {
         paused = !paused;
         btnPause.textContent = paused ? 'Resume' : 'Pause';
       });
 
-      btnClear.addEventListener('click', () => {
-        // clear charts & text
+      btnClear && btnClear.addEventListener('click', () => {
         lineChart.data.labels = [];
         lineChart.data.datasets.forEach(d => d.data = []);
         lineChart.update();
         barChart.data.datasets[0].data = [0,0,0,0,0];
         barChart.update();
-        textStream.textContent = '';
-        bigChar.textContent = '—';
+        if (textStream) textStream.textContent = '';
+        if (bigChar) bigChar.textContent = '—';
         updateRecognition(null, 0, null);
       });
 
-      // Auto-start demo so the page feels alive
+      // Auto-start demo
       startDemo();
 
-      // ---------- OPTIONAL: WebSocket wiring example ----------
-      // function connectWS(url) {
-      //   const ws = new WebSocket(url);
-      //   ws.onopen = () => { connStatus.className = 'badge text-bg-success px-3 py-2'; connStatus.innerHTML = '<span class="status-dot status-ok"></span>Connected (WS)'; };
-      //   ws.onclose = () => { connStatus.className = 'badge text-bg-secondary px-3 py-2'; connStatus.innerHTML = '<span class="status-dot status-warn"></span>Disconnected'; };
-      //   ws.onmessage = (evt) => { handleFrame(JSON.parse(evt.data)); };
-      // }
+      // Resize charts when an accordion panel becomes visible
+      document.querySelectorAll('.accordion-collapse').forEach(el => {
+        el.addEventListener('shown.bs.collapse', () => {
+          try { lineChart.resize(); } catch(e){}
+          try { barChart.resize(); } catch(e){}
+        });
+      });
+      window.addEventListener('resize', () => {
+        try { lineChart.resize(); } catch(e){}
+        try { barChart.resize(); } catch(e){}
+      });
 
-      // ---------- OPTIONAL: Web Serial wiring example ----------
-      // async function connectSerial() {
-      //   const port = await navigator.serial.requestPort();
-      //   await port.open({ baudRate: 115200 });
-      //   connStatus.className = 'badge text-bg-success px-3 py-2';
-      //   connStatus.innerHTML = '<span class="status-dot status-ok"></span>Connected (Serial)';
-      //   const decoder = new TextDecoderStream();
-      //   const inputDone = port.readable.pipeTo(decoder.writable);
-      //   const inputStream = decoder.readable;
-      //   const reader = inputStream.getReader();
-      //   let buf = '';
-      //   while (true) {
-      //     const { value, done } = await reader.read();
-      //     if (done) break;
-      //     buf += value;
-      //     let idx;
-      //     while ((idx = buf.indexOf('\n')) >= 0) {
-      //       const line = buf.slice(0, idx).trim();
-      //       buf = buf.slice(idx + 1);
-      //       if (line) handleFrame(JSON.parse(line));
-      //     }
-      //   }
-      // }
-
-      // Core frame handler
+      // For device integration
       function handleFrame(frame) {
         if (!frame) return;
         if (Array.isArray(frame.flex)) {
