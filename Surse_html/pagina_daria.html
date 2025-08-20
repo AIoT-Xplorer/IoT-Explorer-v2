@@ -13,6 +13,34 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
         <style>
+        html, main {
+            height: 100%;
+            margin: 0;
+            overflow-y: auto; /* Adaugă bara de scroll verticală */
+        }
+        
+        .content-wrapper {
+            min-height: 100vh;
+            padding-bottom: 80px; /* Spațiu pentru footer */
+            box-sizing: border-box;
+        }
+        
+        .main-content {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            overflow-y: auto; /* Scroll pentru conținut */
+            max-height: calc(100vh - 80px); /* Înălțime minus footer */
+        }
+
+        /* Pentru conținut lung */
+        .scrollable-content {
+            max-height: calc(100vh - 120px);
+            overflow-y: scroll;
+            padding: 20px;
+        }
+         </style>
+        <style>
             body {
                 background: url("../img/fundal_jumatate.png") no-repeat center center fixed;
                 background-size: cover;
@@ -137,6 +165,8 @@
            </nav>
         </header>
         <main>
+            <div class="content-wrapper">
+        <div class="main-content">
             <div class="container" style="height: 80vh; position: relative;">
                 <!-- Primul text, sus stânga -->
                 <div style="position: absolute; top: 32px; left: 0; width: 600px;">
@@ -191,7 +221,7 @@
                     </div>
                 </div>
             </div>
-            <div style="position: fixed; top: 60%; left: 65%; transform: translate(-50%, -50%); width: 250px;">
+            <div style="position: absolute; top: 60%; left: 65%; transform: translate(-50%, -50%); width: 250px;">
                 <div style="position: relative;">
                     <img src="../img/Poza_Daria.jpeg" alt="Profil imagine" style="width: 100%; height: 350px; object-fit: cover; border-radius: 12px; border: 4px solid #3bb1b1;">
                     <div style="position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); display: flex; gap: 16px;">
@@ -211,10 +241,12 @@
                 </div>
             </div>
             <!-- Buton Next către pagina CTN -->
-            <div style="position: fixed; bottom: 50px; right: 30px;">
+            <div style="position: absolute; bottom: 50px; right: 30px;">
                 <a href="pagina_ctn.html" class="btn-nav">
                     Next <i class="fas fa-arrow-right"></i>
                 </a>
+            </div>
+              </div>
             </div>
         </main>
 
