@@ -220,6 +220,83 @@
             --bs-alert-border-color: #225E3E;
             --bs-alert-link-color: #225E3E;
         }
+
+        /* Stil pentru noul buton de temă */
+        #themeToggle {
+            position: fixed;
+            bottom: 80px;
+            /* Poziționat deasupra butonului backToTop */
+            right: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #themeToggle:hover {
+            background-color: #ddd;
+            transform: scale(1.1);
+        }
+
+        /* Stiluri pentru tema întunecată */
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card-text,
+        .dark-mode .card-subtitle {
+            color: #b0b0b0 !important;
+        }
+
+        .dark-mode .navbar,
+        .dark-mode .fixed-top {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .nav-link,
+        .dark-mode .top-bar a,
+        .dark-mode .top-bar span {
+            color: #e0e0e0 !important;
+        }
+
+        .dark-mode .btn-outline-success {
+            color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+        }
+
+        .dark-mode .btn-outline-success:hover {
+            background-color: #4CAF50 !important;
+            color: #1e1e1e !important;
+        }
+
+        .dark-mode #themeToggle {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .carousel-section {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .bg-light {
+            background-color: #121212 !important;
+        }
     </style>
 </head>
 
@@ -279,6 +356,9 @@
         </div>
     </nav>
 </header>
+<button id="themeToggle" title="Toggle theme">
+    <i class="fas fa-moon"></i>
+</button>
 <button id="backToTop" title="Go to top">
     <i class="fas fa-arrow-up"></i>
 </button>
@@ -1129,4 +1209,33 @@
         // Add event listener for the export button
         exportCsvBtn.addEventListener('click', exportToCsv);
     });
+
+    //  Noul cod JavaScript pentru temă (începe aici)
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            body.classList.add('dark-mode');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            body.classList.remove('dark-mode');
+            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    });
+    // Noul cod JavaScript pentru temă (se termină aici)
 </script>
