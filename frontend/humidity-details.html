@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Humidity Details</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet" />
+
+    <style>
+        * { font-family: 'Montserrat', sans-serif; }
+        body { margin: 0; display: flex; flex-direction: column; min-height: 100vh; background: linear-gradient(90deg, #ffffff, #87CEEB); color: #333; }
+        .navbar { background: linear-gradient(90deg, #ffffff, #87CEEB); box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); }
+        .navbar .nav-link { color: #000 !important; font-weight: 500; transition: color 0.3s ease; }
+        .navbar .nav-link:hover { color: #003f66 !important; }
+        .navbar-brand img { transition: transform 0.3s ease; }
+        .navbar-brand img:hover { transform: scale(1.1); }
+        .page-header { background: linear-gradient(135deg, #1565c0, #87CEEB); position: relative; overflow: hidden; text-align: center; padding: 2rem 1rem; color: #fff; }
+        .page-header h1 { font-size: 2.5rem; font-weight: 700; margin: 0; }
+        .bg-circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.1); }
+        .circle1 { top: -50px; left: -50px; width: 200px; height: 200px; animation: float 6s infinite alternate; }
+        .circle2 { bottom: -60px; right: -60px; width: 250px; height: 250px; animation: float 8s infinite alternate-reverse; }
+        @keyframes float { 0% {transform: translateY(0) translateX(0);} 100% {transform: translateY(20px) translateX(20px);} }
+        .card { border: none; border-radius: 20px; background: white; box-shadow: 0px 10px 25px rgba(21,101,192,0.25); padding: 1.5rem; }
+        footer { background: #003f66; color: #fff; font-size: 0.9rem; letter-spacing: 0.5px; padding: 1rem 0; text-align: center; margin-top: auto; }
+        table { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0px 4px 15px rgba(0,0,0,0.1); }
+        th { background-color: #1565c0; color: #fff; text-align: center; }
+        td { text-align: center; }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-md">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="Delta_Logo.png" height="60" alt="Logo">
+            </a>
+            <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"><span class="navbar-toggler-icon"></span></button>
+            <div class="collapse navbar-collapse" id="collapsibleNavId">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="dashboard.html">Dashboard</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <header class="page-header">
+        <h1>Humidity Details</h1>
+        <div class="bg-circle circle1"></div>
+        <div class="bg-circle circle2"></div>
+    </header>
+
+    <main class="container my-5">
+        <div class="card">
+            <h3 class="text-center mb-4">Humidity Data </h3>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Humidity (%)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="humidityTable"></tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p class="mb-0">© 2025 AIoT-Explorer - Humidity Data</p>
+    </footer>
+
+    <script>
+        const humidityRecords = [
+            { date: "2025-08-23", time: "00:00", value: 60 },
+            { date: "2025-08-23", time: "03:00", value: 62 },
+            { date: "2025-08-23", time: "06:00", value: 65 },
+            { date: "2025-08-23", time: "09:00", value: 68 },
+            { date: "2025-08-23", time: "12:00", value: 70 },
+            { date: "2025-08-23", time: "15:00", value: 66 },
+            { date: "2025-08-23", time: "18:00", value: 64 },
+            { date: "2025-08-23", time: "21:00", value: 61 }
+        ];
+        const humidityTable = document.getElementById("humidityTable");
+        humidityRecords.forEach(rec => {
+            humidityTable.innerHTML += `<tr><td>${rec.date}</td><td>${rec.time}</td><td>${rec.value}</td></tr>`;
+        });
+    </script>
+</body>
+</html>
