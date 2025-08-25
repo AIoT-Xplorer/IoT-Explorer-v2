@@ -7,8 +7,10 @@
 
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
   <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Montserrat&display=swap" rel="stylesheet">
+
   <!-- Font Awesome -->
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
@@ -87,7 +89,6 @@
       transform: translateY(-5px);
       box-shadow: 0 0 30px rgba(0,255,195,0.4);
     }
-
     .section-title {
       font-size: clamp(2rem, 4vw, 3rem);
       font-family: 'Orbitron', sans-serif;
@@ -97,11 +98,28 @@
       text-shadow: 0 0 10px rgba(0,255,200,0.8),
                    0 0 20px rgba(0,255,200,0.6);
     }
-
     .section-content {
       font-size: 1.1rem;
-      line-height: 1.7;
+      line-height: 1.8;
       text-align: justify;
+    }
+
+    /* ===== LIST STYLING ===== */
+    .custom-list {
+      list-style: none;
+      padding: 0;
+    }
+    .custom-list li {
+      margin-bottom: 12px;
+      display: flex;
+      align-items: flex-start;
+    }
+    .custom-list i {
+      color: #00ffc3;
+      margin-right: 12px;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+      margin-top: 3px;
     }
 
     /* ===== FOOTER ===== */
@@ -126,7 +144,6 @@
   </style>
 </head>
 <body>
-
   <!-- ===== HEADER / NAVBAR ===== -->
   <header>
     <nav class="navbar navbar-expand-md">
@@ -134,19 +151,19 @@
         <a class="navbar-brand" href="echipaAlpha.html">
           <img src="Images/Logo_Team_Alpha.jpeg" height="60" alt="Team A Logo">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" 
-                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" 
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId"
                 aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
           <ul class="navbar-nav ms-auto">
             <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="Meet_the_Team.html">Meet the Team</a></li>
+            <li class="nav-item"><a class="nav-link" href="MeetTheTeam.html">Meet the Team</a></li>
             <li class="nav-item"><a class="nav-link active" href="About_The_Project.html">About the Project</a></li>
             <li class="nav-item"><a class="nav-link" href="Dashboard.html">Dashboard</a></li>
             <li class="nav-item"><a class="nav-link" href="Resources.html">Resources</a></li>
-            <li class="nav-item"><a class="nav-link" href="Contact_us.html">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link" href="contact_us.html">Contact Us</a></li>
           </ul>
         </div>
       </div>
@@ -155,46 +172,64 @@
 
   <!-- ===== ABOUT SECTION ===== -->
   <main class="about-section">
-
     <div class="section-block">
       <h2 class="section-title">Overview</h2>
       <p class="section-content">
-        []
+        The project is an IoT-based smart monitoring and irrigation device for potted plants.  
+        It continuously measures:
+      </p>
+      <ul class="custom-list">
+        <li><i class="fas fa-tint"></i> Soil moisture → detects when watering is needed</li>
+        <li><i class="fas fa-temperature-high"></i> Ambient temperature & humidity → ensures optimal growth</li>
+        <li><i class="fas fa-wind"></i> Air quality (VOC/CO₂) → checks proper circulation</li>
+        <li><i class="fas fa-sun"></i> Light intensity → verifies plant receives enough light</li>
+      </ul>
+      <p class="section-content">
+        The system can automatically water the plant using a pump when the soil becomes too dry, while also allowing remote monitoring and manual control via Wi-Fi and cloud integration.
       </p>
     </div>
 
     <div class="section-block">
       <h2 class="section-title">Objectives</h2>
-      <p class="section-content">
-        []
-      </p>
+      <ul class="custom-list">
+        <li><i class="fas fa-chart-line"></i> Monitor soil moisture, temperature, humidity, light, and optionally air quality.</li>
+        <li><i class="fas fa-robot"></i> Automate irrigation when soil drops below threshold with safety limits.</li>
+        <li><i class="fas fa-cloud"></i> Remote access: cloud dashboards, graphs, and manual irrigation commands.</li>
+        <li><i class="fas fa-shield-alt"></i> Reliability & safety: fail-safes, OTA updates, and optional water level sensor.</li>
+      </ul>
     </div>
 
     <div class="section-block">
       <h2 class="section-title">Technologies</h2>
-      <p class="section-content">
-        []
-      </p>
+      <ul class="custom-list">
+        <li><i class="fas fa-microchip"></i> ESP32 DevKit v1 (Wi-Fi microcontroller)</li>
+        <li><i class="fas fa-tint"></i> Capacitive Soil Moisture Sensor</li>
+        <li><i class="fas fa-sun"></i> BH1750 light sensor</li>
+        <li><i class="fas fa-thermometer-half"></i> BME280/BME680 for temp, humidity, VOC</li>
+        <li><i class="fas fa-water"></i> Peristaltic pump + MOSFET driver</li>
+        <li><i class="fas fa-plug"></i> 12V power supply + buck converter</li>
+        <li><i class="fas fa-code"></i> Software: Arduino IDE/PlatformIO, MQTT, Cloud dashboards (Adafruit IO, Blynk, ThingsBoard)</li>
+      </ul>
     </div>
 
     <div class="section-block">
       <h2 class="section-title">Future Plans</h2>
-      <p class="section-content">
-        []
-      </p>
+      <ul class="custom-list">
+        <li><i class="fas fa-seedling"></i> Expand system for larger gardens with multiple zones.</li>
+        <li><i class="fas fa-tasks"></i> Centralized dashboard for all irrigation zones.</li>
+        <li><i class="fas fa-cloud-sun-rain"></i> Integrate weather forecasts for smarter watering.</li>
+        <li><i class="fas fa-solar-panel"></i> Explore solar-powered sustainable setups.</li>
+      </ul>
     </div>
-
   </main>
 
   <!-- ===== FOOTER ===== -->
   <footer class="footer-bar">
     <p class="mb-2">
-      © 2025 AIoT-Explorer – part of the unified, multi-tenant IoT platform
-      developed in the frame of the 2025 IoT Explorer Program
+      © 2025 AIoT-Explorer – part of the unified, multi-tenant IoT platform developed in the frame of the 2025 IoT Explorer Program
     </p>
     <div class="footer-social">
       <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
     </div>
   </footer>
 
