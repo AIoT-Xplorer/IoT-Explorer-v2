@@ -13,8 +13,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 
     <style>
-      /* ====== EDIT HERE: mută titlul + butoanele mai jos/sus ====== */
-      :root { --accordion-offset: 96px; } /* ex: 64px, 120px, 8rem */
+      :root { --accordion-offset: 96px; }
 
       html, body { height: 100%; }
       body{
@@ -32,62 +31,35 @@
       .main-content{
         width: 100%; max-width: 1200px;
         padding: 8px 6px;
-        background: transparent; /* fără fundal global */
+        background: transparent;
       }
 
-      /* ====== TITLU PAGINĂ ====== */
-      .page-head{
-        text-align:center;
-        margin: 0 auto 8px;
-      }
+      /* ====== TITLU ====== */
+      .page-head{ text-align:center; margin: 0 auto 8px; }
       .page-title{
-        font-weight: 900;
-        font-size: clamp(28px, 4vw, 46px);
-        letter-spacing: .01em;
-        color:#0f172a;
-        margin: 0;
-        line-height: 1.05;
+        font-weight: 900; font-size: clamp(28px, 4vw, 46px);
+        letter-spacing: .01em; color:#0f172a; margin: 0; line-height: 1.05;
       }
       .page-title .accent{
         background: linear-gradient(90deg, #06b6d4, #0ea5a8);
-        -webkit-background-clip: text;
-        background-clip: text;
-        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
       }
       .page-title::after{
-        content:"";
-        display:block;
-        width: 84px; height: 3px;
-        margin: 10px auto 0;
-        background: linear-gradient(90deg, #06b6d4, #0ea5a8);
-        border-radius: 2px;
-        opacity:.9;
+        content:""; display:block; width: 84px; height: 3px; margin: 10px auto 0;
+        background: linear-gradient(90deg, #06b6d4, #0ea5a8); border-radius: 2px; opacity:.9;
       }
 
-      /* containerul titlu+butoane+panouri */
-      .accordion-block{
-        margin-top: var(--accordion-offset); /* <<< controlează poziția */
-      }
+      .accordion-block{ margin-top: var(--accordion-offset); }
 
-
-      /* ====== Butoane accordion – mari, centrate, cyan ====== */
+      /* ====== Acordeon ====== */
       .accordion{ --btn-maxw: 760px; }
-      .accordion .accordion-item{
-        background: transparent; border: 0; margin-bottom: 6px;
-      }
+      .accordion .accordion-item{ background: transparent; border: 0; margin-bottom: 6px; }
       .accordion .accordion-button{
-        max-width: var(--btn-maxw);
-        margin: 10px auto;
-        justify-content: center;
-
+        max-width: var(--btn-maxw); margin: 10px auto; justify-content: center;
         background: linear-gradient(180deg, rgba(16,185,193,.12), rgba(14,165,168,.08));
-        color: #0f172a;
-        border: 2px solid rgba(14,165,168,.35);
-        border-radius: 16px !important;
+        color: #0f172a; border: 2px solid rgba(14,165,168,.35); border-radius: 16px !important;
         box-shadow: 0 6px 18px rgba(0,0,0,.05);
-        font-weight: 800;
-        letter-spacing: .01em;
-        padding: 1rem 1.25rem;
+        font-weight: 800; letter-spacing: .01em; padding: 1rem 1.25rem;
         transition: transform .12s ease, box-shadow .12s ease, border-color .2s ease, background .2s ease;
       }
       .accordion .accordion-button:hover{
@@ -96,50 +68,34 @@
         border-color: rgba(14,165,168,.55);
         background: linear-gradient(180deg, rgba(16,185,193,.2), rgba(14,165,168,.12));
       }
-      .accordion .accordion-button:active{
-        transform: translateY(0);
-        box-shadow: 0 4px 10px rgba(14,165,168,.15) inset;
-      }
+      .accordion .accordion-button:active{ transform: translateY(0); box-shadow: 0 4px 10px rgba(14,165,168,.15) inset; }
       .accordion .accordion-button:not(.collapsed){
         background: linear-gradient(180deg, rgba(16,185,193,.22), rgba(14,165,168,.15));
         border-color: rgba(14,165,168,.7);
       }
-      .accordion-button::after{
-        filter: hue-rotate(160deg) saturate(160%);
-        transition: transform .25s ease;
-      }
+      .accordion-button::after{ filter: hue-rotate(160deg) saturate(160%); transition: transform .25s ease; }
 
-      /* ====== Panou local (glass) doar în jurul conținutului ====== */
+      /* ====== Panouri "glass" ====== */
       .glass-panel{
         width: min(96%, 980px);
-        margin: 10px auto 16px;
-        padding: 12px 12px;
-        background: rgba(255,255,255,.44);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255,255,255,.55);
-        border-radius: 14px;
+        margin: 10px auto 16px; padding: 12px 12px;
+        background: rgba(255,255,255,.44); backdrop-filter: blur(10px);
+        border: 1px solid rgba(255,255,255,.55); border-radius: 14px;
         box-shadow: 0 8px 22px rgba(0,0,0,.06);
         opacity: 0; transform: translateY(6px);
         transition: opacity .25s ease, transform .25s ease;
       }
-      .accordion-collapse.show .glass-panel{
-        opacity: 1; transform: translateY(0);
-      }
+      .accordion-collapse.show .glass-panel{ opacity: 1; transform: translateY(0); }
+      .glass-panel.always-on{ opacity: 1; transform: none; } /* pentru panoul permanent */
 
-      /* Carduri minimal din panoul local */
+      /* Carduri */
       .card{
-        border-radius: 12px;
-        background: rgba(255,255,255,0.86);
-        border: 1px solid rgba(17,24,39,0.06);
-        box-shadow: 0 2px 10px rgba(0,0,0,.03);
+        border-radius: 12px; background: rgba(255,255,255,0.86);
+        border: 1px solid rgba(17,24,39,0.06); box-shadow: 0 2px 10px rgba(0,0,0,.03);
         margin-bottom: 12px;
       }
       .card:last-child{ margin-bottom: 0; }
-      .card-header{
-        background: transparent;
-        border-bottom: 1px solid rgba(17,24,39,0.06);
-        padding: .65rem .9rem;
-      }
+      .card-header{ background: transparent; border-bottom: 1px solid rgba(17,24,39,0.06); padding: .65rem .9rem; }
       .card-body{ padding: .9rem; }
 
       .status-dot{ width:9px; height:9px; border-radius:50%; display:inline-block; margin-right:8px; }
@@ -149,19 +105,15 @@
       .char-stream{
         min-height: 84px; max-height: 160px; overflow-y: auto;
         white-space: pre-wrap; border-radius: 10px;
-        background: rgba(248,250,252,.75);
-        padding: 10px 12px;
+        background: rgba(248,250,252,.75); padding: 10px 12px;
         border: 1px solid rgba(17,24,39,0.06);
       }
       .big-char{
-        font-size: clamp(56px, 7vw, 96px);
-        font-weight: 800; line-height: .95; color:#0f172a;
-        letter-spacing: .01em;
+        font-size: clamp(56px, 7vw, 96px); font-weight: 800; line-height: .95;
+        color:#0f172a; letter-spacing: .01em;
       }
 
-      .progress .progress-bar{
-        background: linear-gradient(90deg, #06b6d4, #0ea5a8);
-      }
+      .progress .progress-bar{ background: linear-gradient(90deg, #06b6d4, #0ea5a8); }
 
       footer.sticky-footer{ position: fixed; bottom: 0; left: 0; right: 0; z-index: 1030; }
     </style>
@@ -198,16 +150,14 @@
       <div class="content-wrapper">
         <div class="main-content">
 
-          <!-- Titlu + butoane + panouri (mutate împreună cu --accordion-offset) -->
+          <!-- Titlu + Acordeon (primele două butoane păstrate) -->
           <section id="accordionBlock" class="accordion-block">
             <header class="page-head">
-              <h1 class="page-title">
-                AIoT <span class="accent">Glove Dashboard</span>
-              </h1>
+              <h1 class="page-title">AIoT <span class="accent">Glove Dashboard</span></h1>
             </header>
 
             <div class="accordion" id="dashAccordion">
-              <!-- PERFORMANCE -->
+              <!-- 1) PERFORMANCE -->
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accPerformance" aria-expanded="false" aria-controls="accPerformance">
@@ -251,7 +201,7 @@
                 </div>
               </div>
 
-              <!-- SENSOR DATA -->
+              <!-- 2) SENSOR DATA (rămâne buton) -->
               <div class="accordion-item">
                 <h2 class="accordion-header">
                   <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accSensors" aria-expanded="false" aria-controls="accSensors">
@@ -283,41 +233,35 @@
                 </div>
               </div>
 
-              <!-- RECOGNITION OUTPUT -->
-              <div class="accordion-item">
-                <h2 class="accordion-header">
-                  <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#accOutput" aria-expanded="false" aria-controls="accOutput">
-                    Recognition Output
-                  </button>
-                </h2>
-                <div id="accOutput" class="accordion-collapse collapse" data-bs-parent="#dashAccordion">
-                  <div class="glass-panel">
-                    <div class="card mb-3 text-center">
-                      <div class="card-header"><strong>Last character</strong></div>
-                      <div class="card-body d-flex flex-column justify-content-center">
-                        <div id="bigChar" class="big-char mb-2">—</div>
-                        <div class="small text-muted">confidence <span id="confPct">0%</span></div>
-                      </div>
-                    </div>
+              <!-- 3) (Recognition Output eliminat din acordeon) -->
+            </div><!-- /accordion -->
+          </section>
 
-                    <div class="card">
-                      <div class="card-header d-flex align-items-center justify-content-between">
-                        <strong>Recognized text</strong>
-                        <div class="btn-group btn-group-sm">
-                          <button id="btnBackspace" class="btn btn-outline-secondary" title="Backspace">⌫</button>
-                          <button id="btnSpace" class="btn btn-outline-secondary" title="Space">⎵</button>
-                          <button id="btnCopy" class="btn btn-outline-secondary" title="Copy">Copy</button>
-                        </div>
-                      </div>
-                      <div class="card-body">
-                        <div class="char-stream" id="textStream" aria-live="polite"></div>
-                      </div>
-                    </div>
-                  </div><!-- /.glass-panel -->
+          <!-- ====== RECOGNITION OUTPUT – PERMANENT (nu mai e buton, doar "chenarele") ====== -->
+          <section aria-label="Recognition Output - Always Visible">
+            <div class="glass-panel always-on">
+              <div class="card mb-3 text-center">
+                <div class="card-header"><strong>Last character</strong></div>
+                <div class="card-body d-flex flex-column justify-content-center">
+                  <div id="bigChar" class="big-char mb-2">—</div>
+                  <div class="small text-muted">confidence <span id="confPct">0%</span></div>
                 </div>
               </div>
 
-            </div><!-- /accordion -->
+              <div class="card">
+                <div class="card-header d-flex align-items-center justify-content-between">
+                  <strong>Recognized text</strong>
+                  <div class="btn-group btn-group-sm">
+                    <button id="btnBackspace" class="btn btn-outline-secondary" title="Backspace">⌫</button>
+                    <button id="btnSpace" class="btn btn-outline-secondary" title="Space">⎵</button>
+                    <button id="btnCopy" class="btn btn-outline-secondary" title="Copy">Copy</button>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <div class="char-stream" id="textStream" aria-live="polite"></div>
+                </div>
+              </div>
+            </div>
           </section>
 
         </div>
@@ -333,7 +277,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-    <!-- Dashboard Logic (identic ca funcționalitate) -->
+    <!-- Dashboard Logic -->
     <script>
       /** CHARTS **/
       const MAX_POINTS = 120;
@@ -499,7 +443,7 @@
       // Auto-start demo
       startDemo();
 
-      // Resize charts when an accordion panel becomes visible
+      // Resize charts when panels open and on window resize
       document.querySelectorAll('.accordion-collapse').forEach(el => {
         el.addEventListener('shown.bs.collapse', () => {
           try { lineChart.resize(); } catch(e){}
@@ -511,7 +455,7 @@
         try { barChart.resize(); } catch(e){}
       });
 
-      // For device integration
+      // Device integration
       function handleFrame(frame) {
         if (!frame) return;
         if (Array.isArray(frame.flex)) {
