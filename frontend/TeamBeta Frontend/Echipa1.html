@@ -19,7 +19,7 @@
     .btn-outline-success:hover { border:1px solid #fff; }
 
     body{
-      background: url("../img/fundal_jumatate.png") no-repeat center center fixed;
+      background: url("/TeamBeta Frontend/img/fundal_jumatate.png") no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -30,7 +30,7 @@
     #hello-sequence{
       position:absolute;
       /* personalizează liber poziția și dimensiunea */
-      top:200px; left:60px; width:340px; height:340px;
+      top:28%; right:10%; width:340px; height:340px;
       pointer-events:none; z-index:5;
     }
     #hello-sequence .frame{
@@ -91,7 +91,7 @@
   <nav class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); ">
     <div class="container">
       <a class="navbar-brand" href="Echipa1.html">
-        <img src="/img/IoT - Team B.png" height="60" alt="logo">
+        <img src="/TeamBeta Frontend/img/IoT - Team B.png" height="60" alt="logo">
       </a>
       <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -117,7 +117,7 @@
 <main>
   <div class="content-wrapper">
     <div class="main-content">
-      <div class="container" style="height:80vh; position:relative;">
+      <div class="container" style="height:80vh; position:absolute;">
         <!-- Titlu -->
         <div style="position:absolute; top:32px; left:0; width:600px;">
           <div style="font-family: montserrat, sans-serif; font-size:2.5rem; font-weight:bold; color:#00796b; text-shadow:2px 2px #e0f7fa; padding-bottom:16px; border-bottom:4px solid #3bb1b1;">
@@ -127,13 +127,12 @@
 
         <!-- Descriere -->
         <div style="position:absolute; top:28%; left:-8px">
-          <textarea class="form-control" rows="7" style="background:none; border:none; resize:none; width:640px; height:120px;" placeholder="Descriere" disabled>Textul descrierii aici...</textarea>
+          <textarea class="form-control" rows="7" style="background:none;overflow-y: hidden; border:none; resize:none; width:600px; height:500px;" placeholder="Descriere" disabled>We are the AIoT-Xplorer - Team-Beta, a recently established subgroup of students within the IoT-Xplorer initiative from the National University of Science and Technology POLITEHNICA Bucharest. Our team brings together motivated and perseverant students, united by a common interest in innovation and collaboration, with the ambition to transform ideas into meaningful results.
+
+Although new, our team builds on a strong foundation of curiosity, adaptability, and teamwork. We are committed to learning through practice, contributing to the development of the IoT-Xplorer community, and pursuing impactful projects that connect research, education, and real-world applications.</textarea>
         </div>
 
-        <!-- Logo dreapta -->
-        <div style="position:absolute; top:28%; right:10%;">
-          <img src="/img/IoT - Team B.png" alt="Imagine" style="max-width:200px; margin-bottom:20px;">
-        </div>
+        
 
         <!-- === SECVENȚA HELLO === -->
         <div id="hello-sequence">
@@ -149,25 +148,25 @@
   </div>
 </main>
 
-<footer style="background-color: rgb(59, 177, 177); position: fixed; bottom:0; width:100%; left:0; color:#e0f7fa; text-align:center; padding:10px;">
+<footer style="background-color: rgb(59, 177, 177);z-index: 10; ; position: fixed; bottom:0; width:100%; left:0; color:#e0f7fa; text-align:center; padding:10px;">
   <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
 </footer>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-<script>
+<script style="z-index: 5;">
   (function () {
     const img  = document.getElementById('hello-image');
     const word = document.getElementById('hello-word');
 
     // Cadre (L de două ori) + scalare per-cadru (L e mărit puțin mai mult)
     const frames = [
-      { src: '/img/H.png', letter: 'H', scale: 1.00 },
-      { src: '/img/E.png', letter: 'E', scale: 1.00 },
-      { src: '/img/L.png', letter: 'L', scale: 1.20 }, // L #1 – mai mare ca înainte
-      { src: '/img/L.png', letter: 'L', scale: 1.20 }, // L #2 – la fel
-      { src: '/img/O.png', letter: 'O', scale: 0.80 }
+      { src: '/TeamBeta Frontend/img/H.png', letter: 'H', scale: 1.00 },
+      { src: '/TeamBeta Frontend/img/E.png', letter: 'E', scale: 1.00 },
+      { src: '/TeamBeta Frontend/img/L.png', letter: 'L', scale: 1.20 }, // L #1 – mai mare ca înainte
+      { src: '/TeamBeta Frontend/img/L.png', letter: 'L', scale: 1.20 }, // L #2 – la fel
+      { src: '/TeamBeta Frontend/img/O.png', letter: 'O', scale: 0.80 }
     ];
 
     // timpi
