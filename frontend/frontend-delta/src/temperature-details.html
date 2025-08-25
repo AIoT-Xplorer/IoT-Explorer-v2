@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Pressure Details</title>
+    <title>Temperature Details</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -37,25 +37,56 @@
         }
         .page-header h1 { font-size: 2.5rem; font-weight: 700; margin: 0; }
         .page-header .bg-circle { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.1); }
-        .circle1 { top: -50px; left: -50px; width: 200px; height: 200px; animation: float 6s infinite alternate; }
-        .circle2 { bottom: -60px; right: -60px; width: 250px; height: 250px; animation: float 8s infinite alternate-reverse; }
-        @keyframes float { 0% { transform: translateY(0) translateX(0);} 100% { transform: translateY(20px) translateX(20px);} }
-        .card { border: none; border-radius: 20px; background: white; box-shadow: 0px 10px 25px rgba(21,101,192,0.25); padding: 1.5rem; }
-        footer { background: #003f66; color: #fff; font-size: 0.9rem; letter-spacing: 0.5px; padding: 1rem 0; text-align: center; margin-top: auto; }
-        table { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); }
-        th { background-color: #1565c0; color: #fff; text-align: center; }
+        .page-header .circle1 {
+            top: -50px; left: -50px; width: 200px; height: 200px;
+            animation: float 6s infinite alternate;
+        }
+        .page-header .circle2 {
+            bottom: -60px; right: -60px; width: 250px; height: 250px;
+            animation: float 8s infinite alternate-reverse;
+        }
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(20px) translateX(20px); }
+        }
+        .card {
+            border: none; border-radius: 20px;
+            background: white;
+            box-shadow: 0px 10px 25px rgba(21, 101, 192, 0.25);
+            padding: 1.5rem;
+        }
+        footer {
+            background: #003f66; color: #fff; font-size: 0.9rem;
+            letter-spacing: 0.5px; padding: 1rem 0; text-align: center;
+            margin-top: auto;
+        }
+        table {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        th {
+            background-color: #1565c0;
+            color: #fff;
+            text-align: center;
+        }
         td { text-align: center; }
     </style>
 </head>
 
 <body>
+    <!-- Navbar -->
     <nav class="navbar navbar-expand-md">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="Delta_Logo.png" height="60" alt="Logo">
+                <img src="/frontend/frontend-delta/images/Delta_Logo.png" height="60" alt="Logo">
             </a>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
-                data-bs-target="#collapsibleNavId"><span class="navbar-toggler-icon"></span></button>
+                data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
@@ -65,48 +96,54 @@
         </div>
     </nav>
 
+    <!-- Page Header -->
     <header class="page-header">
-        <h1>Pressure Details</h1>
+        <h1>Temperature Details</h1>
         <div class="bg-circle circle1"></div>
         <div class="bg-circle circle2"></div>
     </header>
 
     <main class="container my-5">
         <div class="card">
-            <h3 class="text-center mb-4">Pressure Data </h3>
+            <h3 class="text-center mb-4">Temperature Data (Last 24h)</h3>
             <div class="table-responsive">
                 <table class="table table-striped">
                     <thead>
                         <tr>
                             <th>Date</th>
                             <th>Time</th>
-                            <th>Pressure (hPa)</th>
+                            <th>Temperature (°C)</th>
                         </tr>
                     </thead>
-                    <tbody id="pressureTable"></tbody>
+                    <tbody id="temperatureTable">
+                        <!-- Datele vor fi adăugate din JavaScript -->
+                    </tbody>
                 </table>
             </div>
         </div>
     </main>
 
     <footer>
-        <p class="mb-0">© 2025 AIoT-Explorer - Pressure Data</p>
+        <p class="mb-0">© 2025 AIoT-Explorer - Temperature Data</p>
     </footer>
 
     <script>
-        const pressureRecords = [
-            { date: "2025-08-23", time: "00:00", value: 1012 },
-            { date: "2025-08-23", time: "03:00", value: 1013 },
-            { date: "2025-08-23", time: "06:00", value: 1011 },
-            { date: "2025-08-23", time: "09:00", value: 1010 },
-            { date: "2025-08-23", time: "12:00", value: 1009 },
-            { date: "2025-08-23", time: "15:00", value: 1011 },
-            { date: "2025-08-23", time: "18:00", value: 1012 },
-            { date: "2025-08-23", time: "21:00", value: 1013 }
+        // Date exemplu
+        const tempRecords = [
+            { date: "2025-08-23", time: "00:00", value: 22 },
+            { date: "2025-08-23", time: "03:00", value: 21 },
+            { date: "2025-08-23", time: "06:00", value: 23 },
+            { date: "2025-08-23", time: "09:00", value: 24 },
+            { date: "2025-08-23", time: "12:00", value: 25 },
+            { date: "2025-08-23", time: "15:00", value: 26 },
+            { date: "2025-08-23", time: "18:00", value: 24 },
+            { date: "2025-08-23", time: "21:00", value: 23 }
         ];
-        const pressureTable = document.getElementById("pressureTable");
-        pressureRecords.forEach(rec => {
-            pressureTable.innerHTML += `<tr><td>${rec.date}</td><td>${rec.time}</td><td>${rec.value}</td></tr>`;
+
+        const tableBody = document.getElementById("temperatureTable");
+        tempRecords.forEach(rec => {
+            const row = `<tr><td>${rec.date}</td><td>${rec.time}</td><td>${rec.value}</td></tr>`;
+            tableBody.innerHTML += row;
         });
     </script>
 </body>

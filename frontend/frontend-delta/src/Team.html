@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Petrisor Andrei - IoT Explorer</title>
+    <title>Meet the Team - IoT Explorer</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
@@ -11,9 +11,6 @@
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
-
-    <!-- Font Awesome pentru iconite -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" />
 
     <style>
         * {
@@ -31,6 +28,7 @@
             flex-direction: column;
             color: #333;
             background: linear-gradient(90deg, #ffffff, #87CEEB);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .navbar {
@@ -48,6 +46,47 @@
             color: #003f66 !important;
         }
 
+        .team-header {
+            background: linear-gradient(135deg, #1565c0, #87CEEB);
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+            padding: 2rem 1rem;
+            color: #fff;
+        }
+
+        .team-header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .team-header .bg-circle {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .team-header .circle1 {
+            top: -50px;
+            left: -50px;
+            width: 200px;
+            height: 200px;
+            animation: float 6s infinite alternate;
+        }
+
+        .team-header .circle2 {
+            bottom: -60px;
+            right: -60px;
+            width: 250px;
+            height: 250px;
+            animation: float 8s infinite alternate-reverse;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0) translateX(0); }
+            100% { transform: translateY(20px) translateX(20px); }
+        }
+
         main {
             flex: 1;
             display: flex;
@@ -56,49 +95,35 @@
             padding: 50px 0;
         }
 
-        .profile-card {
+        .team-card {
             background: rgba(255, 255, 255, 0.95);
-            padding: 30px;
+            padding: 25px;
             border-radius: 20px;
-            max-width: 700px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
-            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .profile-card img {
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .team-card img {
             border-radius: 50%;
-            height: 220px;
-            width: 220px;
+            height: 200px;
+            width: 200px;
             object-fit: cover;
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
+            transition: transform 0.3s ease;
         }
 
-        .profile-card h2 {
+        .team-card img:hover {
+            transform: scale(1.05);
+        }
+
+        .team-card h5 {
             color: #005f99;
-            font-weight: 700;
-            margin-bottom: 15px;
-        }
-
-        .profile-card p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            color: #444;
-        }
-
-        .social-icons {
-            margin-top: 20px;
-        }
-
-        .social-icons a {
-            color: #005f99;
-            font-size: 1.8rem;
-            margin: 0 12px;
-            transition: color 0.3s ease, transform 0.2s ease;
-        }
-
-        .social-icons a:hover {
-            color: #003f66;
-            transform: scale(1.2);
+            margin-top: 10px;
         }
 
         footer {
@@ -109,6 +134,13 @@
             padding: 1rem 0;
             text-align: center;
         }
+
+        @media (max-width: 768px) {
+            .team-card img {
+                height: 150px;
+                width: 150px;
+            }
+        }
     </style>
 </head>
 
@@ -117,7 +149,7 @@
     <nav class="navbar navbar-expand-md">
         <div class="container">
             <a class="navbar-brand" href="index.html">
-                <img src="Delta_Logo.png" height="60" alt="Logo">
+                <img src="/frontend/frontend-delta/images/Delta_Logo.png" height="60" alt="Logo">
             </a>
             <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse"
                 data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false"
@@ -139,29 +171,49 @@
         </div>
     </nav>
 
+    <!-- Modern Team Header -->
+    <header class="team-header">
+        <h1>Meet the Team</h1>
+        <div class="bg-circle circle1"></div>
+        <div class="bg-circle circle2"></div>
+    </header>
+
     <!-- Main Content -->
     <main>
-        <div class="container">
-            <div class="profile-card mx-auto">
-                <img src="andrei.jpg" alt="Petrisor Andrei">
-                <h2>Petrisor Andrei</h2>
-                <p>
-                    Student pasionat de IoT și tehnologii embedded.  
-                    Contribuie la dezvoltarea platformei **AIoT-Explorer**, concentrându-se pe partea de senzori, comunicare
-                    și integrarea cu dashboard-ul web.  
-                    În timpul liber îi place să exploreze munții și să experimenteze cu proiecte DIY electronice.
-                </p>
-
-                <!-- Social Icons -->
-                <div class="social-icons">
-                    <a href="https://github.com/AndreiPtrs" target="_blank"><i class="fab fa-github"></i></a>
-                    <a href="https://linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
-                    <a href="https://www.instagram.com/andrei_petrisor04/" target="_blank"><i class="fab fa-instagram"></i></a>
-                    <a href="https://www.facebook.com/andrei.petrisor.1485" target="_blank"><i class="fab fa-facebook"></i></a>
-                </div>
+    <div class="container text-center">
+        <div class="row justify-content-center g-5">
+            <!-- Andrei -->
+            <div class="col-md-6 col-lg-4">
+                <a href="Petrisor-Andrei.html" class="card-link text-decoration-none">
+                    <div class="team-card">
+                        <img src="/frontend/frontend-delta/images/andrei.jpg" alt="Petrisor Andrei">
+                        <h5 class="fw-bold mt-3">Petrisor Andrei</h5>
+                    </div>
+                </a>
+            </div>
+            <!-- Gabriel -->
+            <div class="col-md-6 col-lg-4">
+                <a href="Petrisor-Gabriel.html" class="card-link text-decoration-none">
+                    <div class="team-card">
+                        <img src="/frontend/frontend-delta/images/gabi.jpg" alt="Petrisor Gabriel">
+                        <h5 class="fw-bold mt-3">Petrisor Gabriel</h5>
+                    </div>
+                </a>
             </div>
         </div>
-    </main>
+    </div>
+</main>
+
+<style>
+    .card-link {
+        display: block;
+        color: inherit;
+    }
+    .card-link:hover {
+        text-decoration: none;
+    }
+</style>
+
 
     <!-- Footer -->
     <footer>
