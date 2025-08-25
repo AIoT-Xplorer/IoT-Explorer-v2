@@ -299,6 +299,52 @@
         .dark-mode .bg-light {
             background-color: #121212 !important;
         }
+
+
+        /* Default look improvements for both themes */
+        .sensor-box {
+            border-radius: 0.5rem;
+            padding: 1rem;
+            margin: 0.5rem 0;
+            width: 100%;
+            text-align: left;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        /* Light mode (default) */
+        .sensor-box {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+        }
+
+        /* Dark mode overrides */
+        .dark-mode .sensor-box {
+            background-color: #1e1e1e;
+            /* match card color */
+            border: 1px solid #333;
+            /* softer border */
+        }
+
+        .dark-mode .form-check-label {
+            color: #e0e0e0;
+            /* light text */
+        }
+
+        .dark-mode .form-check-input {
+            background-color: #444;
+            /* default off background */
+            border-color: #666;
+        }
+
+        .dark-mode .form-check-input:checked {
+            background-color: #4CAF50;
+            /* green when ON */
+            border-color: #4CAF50;
+        }
+
+        .dark-mode .form-check-input:focus {
+            box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
+        }
     </style>
 </head>
 
