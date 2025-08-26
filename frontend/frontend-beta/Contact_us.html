@@ -105,58 +105,133 @@
   <body>
     <!-- NAVBAR -->
     <header>
-      <nav class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177));">
-      <div class="container">
-        <a class="navbar-brand" href="Echipa1.html">
-          <img src="/frontend/frontend-beta/img/IoT - Team B.png" height="60" alt="AIoT Explorer"/>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="nav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item"><a class="nav-link active" href="../../index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="Meet_the_Team.html">Meet the Team</a></li>
-            <li class="nav-item"><a class="nav-link" href="Our_project.html">Our Project</a></li>
-            <li class="nav-item"><a class="nav-link" href="Dashboard_proiect.html">Dashboard Project</a></li>
-            <li class="nav-item"><a class="nav-link" href="Contact_us.html">Contact Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="news.html">News & Updates</a></li>
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" placeholder="Search"/>
-            <button class="btn btn-outline-success" style="background:#00796b;color:#e0f7fa;">Search</button>
-          </form>
+
+      <div class="top-bar" style="background-color: white;">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="social-icons">
+                    <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <a class="navbar-brand" href="../../index.html">
+                <img src="/frontend/frontend-beta/img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid"
+                    style="max-width: 100px;">
+                </a>
+
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center me-3">
+                        <i class="far fa-envelope me-2 text-secondary"></i>
+                        <span class="text-secondary">contact@aiot-xplorer.eu</span>
+                    </div>
+
+                    <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-outline-success">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </nav>
-    </header>
 
-    <main>
+       <nav
+            class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
+           >
+            <div class="container">
+                <a class="navbar-brand" href="Echipa1.html">
+                    <img src = "/frontend/frontend-beta/img/IoT - Team B.png" height="60">
+                </a>
+                <button
+                    class="navbar-toggler d-lg-none"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId"
+                    aria-controls="collapsibleNavId"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                         <li class="nav-item">
+                            <a class="nav-link active" href="../../index.html" aria-current="page" style="font-family: montserrat, sans-serif;"
+                                >Home
+                                <span class="visually-hidden">(current)</span></a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: montserrat, sans-serif;"
+                                >Meet the Team
+                                <span class="visually-hidden">(current)</span></a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Our_project.html" aria-current="page" style="font-family: montserrat, sans-serif;">Our Project
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Dashboard_proiect.html" aria-current="page" style="font-family: montserrat, sans-serif;">Dashboard Project
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: montserrat, sans-serif;">Contact Us
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                            </li>
 
-      <div class="container" style="position:relative; min-height:80vh;">
+                         <li class="nav-item">
+                            <a class="nav-link active" href="news.html" aria-current="page" style="font-family: montserrat, sans-serif;">News & Updates
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>   
+                    </ul>
+                    <form class="d-flex my-2 my-lg-0">
+                        <input
+                            class="form-control me-sm-2"
+                            type="text"
+                            placeholder="Search"
+                        />
+                        <button
+                            class="btn btn-outline-success my-2 my-sm-0"
+                            type="submit"
+                            style="background-color: #00796b; color: #e0f7fa;"                            
+                        >
+                            Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+           </nav>
+        </header>
+
+    <main class="content-wrapper">
+
+      <div class="container" style="margin-left: 80px; padding-top: 32px;">
         <!-- Titlu -->
-        <div style="position:absolute; top:32px; left:0; width:600px;">
+        <div style="width:600px; margin-bottom: 24px;">
           <div 
             style="
-                                font-family: montserrat, sans-serif;
-                                font-size: 2.5rem;
-                                font-weight: bold;
-                                color: #00796b;
-                                text-shadow: 2px 2px #e0f7fa;
-                                padding-bottom: 16px;
-                            border-bottom: 4px solid #3bb1b1;
-                            " >
+                font-family: montserrat, sans-serif;
+                font-size: 2.5rem;
+                font-weight: bold;
+                color: #00796b;
+                text-shadow: 2px 2px #e0f7fa;
+                padding-bottom: 16px;
+                border-bottom: 4px solid #3bb1b1;
+            " >
             AIoT- Team β Contact
           </div>
         </div>
 
         <!-- Meta -->
-        <div style="position:absolute; top:120px; left:10px; width:600px; font-size:.8rem; color:#757575;">
+        <div style="width:600px; font-size:.8rem; color:#757575; margin-bottom: 40px;">
           Administrator / AIoT Explorers / 11 August 2025
         </div>
 
         <!-- Adresă -->
-        <div class="contact-item" style="position:absolute; top:160px; left:0; max-width:800px; --contact-text:0.9rem; --contact-icon:1.2rem;">
+        <div class="contact-item" style="max-width:800px; --contact-text:0.9rem; --contact-icon:1.2rem; margin-bottom: 30px;">
           <i class="bi bi-geo-alt-fill contact-icon"></i>
           <div>
             Faculty of Electronics, Telecommunications and Information Technology, Iuliu Maniu 1-3<br>
@@ -166,13 +241,13 @@
         </div>
 
         <!-- Email -->
-        <div class="contact-item" style="position:absolute; top:230px; left:0; max-width:800px; --contact-text:0.9rem; --contact-icon:1.2rem;">
+        <div class="contact-item" style="max-width:800px; --contact-text:0.9rem; --contact-icon:1.2rem; margin-bottom: 40px;">
           <i class="bi bi-envelope-fill contact-icon"></i>
           <a class="contact-link" href="mailto:contact@aiot-xplorer.eu">contact@aiot-xplorer.eu</a>
         </div>
 
-        <!-- FORMULARUL (poziționează tu cu top/left cum vrei) -->
-        <section class="contact-form-wrap" style="position:absolute; top:300px; left:0px; width:700px;">
+        <!-- FORMULARUL -->
+        <section class="contact-form-wrap" style="width:700px; margin-bottom: 100px;">
           <h2 class="h3 mb-1">Contact Form</h2>
           <p class="text-muted small mb-3">* Required field</p>
 
@@ -197,7 +272,7 @@
 
             <div class="mb-3">
               <label for="cfMessage" class="form-label">Message *</label>
-              <textarea id="cfMessage" name="message" rows="8" class="form-control" tabindex="4" required></textarea>
+              <textarea id="cfMessage" style="resize: none;" name="message" rows="8" class="form-control" tabindex="4" required></textarea>
               <div class="invalid-feedback">Please write your message.</div>
             </div>
 
@@ -214,7 +289,7 @@
       
     </main>
 
-    <footer style="background-color: rgb(59, 177, 177); position: fixed; bottom: 0; width: 100%; left: 0; color: #e0f7fa; text-align: center; padding: 10px;">
+    <footer style="background-color: rgb(59, 177, 177); position: fixed; bottom: 0px; width: 100%; left: 0; color: #e0f7fa; text-align: center; padding: 10px;">
       <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
     </footer>
 

@@ -19,7 +19,7 @@
       body{
         background: url("/frontend/frontend-beta/img/fundal2.png") no-repeat center center fixed;
         background-size: cover;
-        font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+        font-family: 'Orbitron', system-ui, sans-serif;
         color:#0f172a;
       }
 
@@ -121,31 +121,110 @@
     </style>
   </head>
   <body>
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177));">
-      <div class="container">
-        <a class="navbar-brand" href="Echipa1.html">
-          <img src="/frontend/frontend-beta/img/IoT - Team B.png" height="60" alt="AIoT Explorer"/>
-        </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="nav">
-          <ul class="navbar-nav me-auto">
-            <li class="nav-item"><a class="nav-link active" href="../../index.html">Home</a></li>
-            <li class="nav-item"><a class="nav-link" href="Meet_the_Team.html">Meet the Team</a></li>
-            <li class="nav-item"><a class="nav-link" href="Our_project.html">Our Project</a></li>
-            <li class="nav-item"><a class="nav-link" href="Dashboard_proiect.html">Dashboard Project</a></li>
-            <li class="nav-item"><a class="nav-link" href="Contact_us.html">Contact Us</a></li>
-            <li class="nav-item"><a class="nav-link" href="news.html">News & Updates</a></li>
-          </ul>
-          <form class="d-flex">
-            <input class="form-control me-2" placeholder="Search"/>
-            <button class="btn btn-outline-success" style="background:#00796b;color:#e0f7fa;">Search</button>
-          </form>
+
+      
+      <div class="top-bar" style="background-color: white;">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="social-icons">
+                    <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+                <a class="navbar-brand" href="../../index.html">
+                <img src="/frontend/frontend-beta/img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid"
+                    style="max-width: 100px;">
+                </a>
+
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center me-3">
+                        <i class="far fa-envelope me-2 text-secondary"></i>
+                        <span class="text-secondary">contact@aiot-xplorer.eu</span>
+                    </div>
+
+                    <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-outline-success">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </a>
+                </div>
+            </div>
         </div>
-      </div>
-    </nav>
+
+
+
+    <!-- Navbar -->
+    <nav
+            class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
+           >
+            <div class="container">
+                <a class="navbar-brand" href="Echipa1.html">
+                    <img src = "/frontend/frontend-beta/img/IoT - Team B.png" height="60">
+                </a>
+                <button
+                    class="navbar-toggler d-lg-none"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId"
+                    aria-controls="collapsibleNavId"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                         <li class="nav-item">
+                            <a class="nav-link active" href="../../index.html" aria-current="page" style="font-family: montserrat, sans-serif;"
+                                >Home
+                                <span class="visually-hidden">(current)</span></a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: montserrat, sans-serif;"
+                                >Meet the Team
+                                <span class="visually-hidden">(current)</span></a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Our_project.html" aria-current="page" style="font-family: montserrat, sans-serif;">Our Project
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Dashboard_proiect.html" aria-current="page" style="font-family: montserrat, sans-serif;">Dashboard Project
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>
+                        
+                        
+                        <li class="nav-item">
+                            <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: montserrat, sans-serif;">Contact Us
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                            </li>
+
+                         <li class="nav-item">
+                            <a class="nav-link active" href="news.html" aria-current="page" style="font-family: montserrat, sans-serif;">News & Updates
+                                <span class="visually-hidden">(current)</span>
+                            </a>
+                        </li>   
+                    </ul>
+                    <form class="d-flex my-2 my-lg-0">
+                        <input
+                            class="form-control me-sm-2"
+                            type="text"
+                            placeholder="Search"
+                        />
+                        <button
+                            class="btn btn-outline-success my-2 my-sm-0"
+                            type="submit"
+                            style="background-color: #00796b; color: #e0f7fa;"                            
+                        >
+                            Search
+                        </button>
+                    </form>
+                </div>
+            </div>
+           </nav>
+        </header>
 
     <!-- Main -->
     <main>
