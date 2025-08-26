@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>About Vasile</title>
+    <link rel="icon" href="../img/logo_team.png" type="image/png">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .main-content {
+            background-color: #f0f0f0;
+            padding: 2rem;
+            min-height: calc(100% - 70px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .share-section {
+            margin-top: 2rem;
+        }
+
+        .profile-card {
+            width: 90%;
+            max-width: 900px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        .footer-bar {
+            background-color: #385e45;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .justified-text {
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #385e45;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: none;
+            cursor: pointer;
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        #backToTop:hover {
+            background-color: #2b4635;
+        }
+
+
+        /* Stil pentru noul buton de temă */
+        #themeToggle {
+            position: fixed;
+            bottom: 80px;
+            /* Poziționat deasupra butonului backToTop */
+            right: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #themeToggle:hover {
+            background-color: #ddd;
+            transform: scale(1.1);
+        }
+
+        /* Stiluri pentru tema întunecată */
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card-text,
+        .dark-mode .card-subtitle {
+            color: #b0b0b0 !important;
+        }
+
+        .dark-mode .navbar,
+        .dark-mode .fixed-top {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .nav-link,
+        .dark-mode .top-bar a,
+        .dark-mode .top-bar span {
+            color: #e0e0e0 !important;
+        }
+
+        .dark-mode .btn-outline-dark {
+            color: #fff !important;
+            border-color: #fff !important;
+        }
+
+        .dark-mode .btn-outline-dark:hover {
+            background-color: #fff !important;
+            color: #000 !important;
+        }
+
+        .dark-mode #themeToggle {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .carousel-section {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .bg-light {
+            background-color: #121212 !important;
+        }
+
+        .dark-mode .main-content {
+            background-color: #121212 !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<header>
+    <div class="top-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="social-icons">
+                <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
+                <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
+            </div>
+
+            <img src="../img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid" style="max-width: 100px;">
+
+
+            <div class="d-flex align-items-center">
+                <div class="d-flex align-items-center me-3">
+                    <i class="far fa-envelope me-2 text-secondary"></i>
+                    <span class="text-secondary">contact@aiot-xplorer.eu</span>
+                </div>
+
+                <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-outline-success">
+                    <i class="fas fa-sign-in-alt"></i> Sign In
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html">Project's home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#results-section">Results</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#sensors-used-section">Sensors used
+                            and method</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOurTeam" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">Our team</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownOurTeam">
+                            <li><a class="dropdown-item" href="gamma_dobrin.html">Dobrin Vasile</a></li>
+                            <li><a class="dropdown-item" href="gamma_nicolae.html">Petriia Iulian-Nicolae</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="gamma_home.html#updates-section">Updates & News</a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="gamma_home.html#resources-section">Resources</a></li>
+                    <li class="nav-item"><a class="nav-link" href="https://aiot-xplorer.eu/index.php/contact-us">Contact
+                            us</a></li>
+                </ul>
+            </div>
+    </nav>
+</header>
+<button id="themeToggle" title="Toggle theme">
+    <i class="fas fa-moon"></i>
+</button>
+<button id="backToTop" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+
+
+<body>
+    <main class="main-content">
+
+        <div class="card profile-card">
+            <div class="row g-0">
+                <div class="col-md-4 d-flex flex-column align-items-center justify-content-center p-4">
+                    <img src="../img/user.png" class="img-fluid rounded-circle mb-3 profile-img" alt="Dobrin Vasile" />
+                    <h5 class="card-title text-center">Dobrin Vasile</h5>
+                </div>
+                <div class="col-md-8">
+                    <div class="card-body">
+                        <p class="card-text justified-text">
+                            I am a highly motivated Electronics and Telecommunications student, entering my 3rd year of
+                            studies at the Polytechnic University of Bucharest, with a strong foundation in <b>embedded
+                                systems, digital design, and hardware-software integration</b>.
+                            <br><br>
+                            Through my participation in programs such as <b>Google Romania AI & Tech Summer School,
+                                Infineon Summer School, Marvell ASIC Design Summer School, and Vodafone Innovation
+                                Hub</b>, I have gained exposure to both industry practices and cutting-edge
+                            technologies. I have also demonstrated adaptability and teamwork by actively engaging in
+                            <b>hackathons and technical clubs</b>, where I developed innovative solutions involving IoT,
+                            robotics, and digital systems.
+                            <br><br>
+                            Currently, I am expanding my expertise in <b>ARM Cortex architectures, Linux embedded
+                                systems, Machine Learning, and Computer Vision</b>, aiming to pursue a career where I
+                            can contribute to the development of intelligent and efficient embedded solutions.
+
+
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        </div>
+        </div>
+        </div>
+        </div>
+
+        <div class="share-section text-center mt-4" style="width: 100%; max-width: 900px; margin: 0 auto;">
+            <h6>See more details</h6>
+            <a href="https://www.linkedin.com/in/vasile-dobrin-2b0352265/" target="_blank"
+                class="btn btn-outline-primary mx-1">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+
+            <a href="https://github.com/DobrinVasile" target="_blank" class="btn btn-outline-dark mx-1">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+
+            <a href="https://www.instagram.com/vasi.dobrin.1/" target="_blank" class="btn btn-outline-danger mx-1">
+                <i class="fab fa-instagram"></i> Instagram
+            </a>
+        </div>
+
+
+    </main>
+    <footer class="footer-bar">
+        <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of
+            IoT Explorer Program</p>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+        integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+        integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let lastScroll = 0;
+        const header = document.querySelector("header");
+        const backToTop = document.getElementById("backToTop");
+
+        window.addEventListener("scroll", () => {
+            const currentScroll = window.pageYOffset;
+
+            // Show/hide header based on scroll direction
+            if (currentScroll > lastScroll && currentScroll > 100) {
+                header.classList.add("hide"); // scrolling down
+            } else {
+                header.classList.remove("hide"); // scrolling up
+            }
+            lastScroll = currentScroll;
+
+            // Show/hide "Back to Top" button
+            if (currentScroll > 300) {
+                backToTop.style.display = "block";
+            } else {
+                backToTop.style.display = "none";
+            }
+        });
+
+        // Scroll to top when button clicked
+        backToTop.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+
+    <script>//  Noul cod JavaScript pentru temă (începe aici)
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggleBtn = document.getElementById('themeToggle');
+            const body = document.body;
+
+            const savedTheme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+            if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+                body.classList.add('dark-mode');
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+            } else {
+                body.classList.remove('dark-mode');
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+            }
+
+            themeToggleBtn.addEventListener('click', () => {
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+        // Noul cod JavaScript pentru temă (se termină aici)</script>
+</body>
+
+</html>

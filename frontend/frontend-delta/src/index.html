@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Main</title>
+    <link rel="icon" href="src/logo_team.png" type="image/png">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
+
+    <style>
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .main-content {
+            background-color: #f0f0f0;
+            padding: 2rem;
+            min-height: calc(100% - 70px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .share-section {
+            margin-top: 2rem;
+        }
+
+        .profile-card {
+            width: 90%;
+            max-width: 900px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: none;
+        }
+
+        .profile-img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+        }
+
+        .footer-bar {
+            background-color: #385e45;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .justified-text {
+            text-align: justify;
+            line-height: 1.6;
+        }
+
+        #backToTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #385e45;
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            display: none;
+            cursor: pointer;
+            z-index: 1100;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease;
+        }
+
+        #backToTop:hover {
+            background-color: #2b4635;
+        }
+
+        .Dashboard,
+        .updates,
+        .resources,
+        .results,
+        .sensors-used {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        header.hide {
+            transform: translateY(-100%);
+        }
+
+        /* --- New Hero Section Styles --- */
+        .hero-section {
+            width: 100%;
+            height: 100vh;
+            background-image: url('src/team_full_1.jpg');
+            /* Updated line */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            /* Overlay for better text visibility */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-content h1 {
+            font-size: 4rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content p {
+            font-size: 1.5rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* --- Carousel Section Styles --- */
+        .carousel-section {
+            padding: 2rem 0;
+            background-color: #f8f9fa;
+        }
+
+        .carousel-item img {
+            height: 500px;
+            /* Set a fixed height for all images */
+            object-fit: cover;
+            /* This ensures the images cover the area without distortion */
+            width: 100%;
+        }
+
+        /* Stil pentru noul buton de temă */
+        #themeToggle {
+            position: fixed;
+            bottom: 80px;
+            /* Poziționat deasupra butonului backToTop */
+            right: 20px;
+            background-color: #f0f0f0;
+            color: #333;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+            z-index: 1100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #themeToggle:hover {
+            background-color: #ddd;
+            transform: scale(1.1);
+        }
+
+        /* Stiluri pentru tema întunecată */
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card {
+            background-color: #1e1e1e;
+            color: #e0e0e0;
+        }
+
+        .dark-mode .card-text,
+        .dark-mode .card-subtitle {
+            color: #b0b0b0 !important;
+        }
+
+        .dark-mode .navbar,
+        .dark-mode .fixed-top {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .nav-link,
+        .dark-mode .top-bar a,
+        .dark-mode .top-bar span {
+            color: #e0e0e0 !important;
+        }
+
+        .dark-mode .btn-outline-success {
+            color: #4CAF50 !important;
+            border-color: #4CAF50 !important;
+        }
+
+        .dark-mode .btn-outline-success:hover {
+            background-color: #4CAF50 !important;
+            color: #1e1e1e !important;
+        }
+
+        .dark-mode #themeToggle {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .dark-mode .carousel-section {
+            background-color: #1e1e1e !important;
+        }
+
+        .dark-mode .bg-light {
+            background-color: #121212 !important;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<button id="themeToggle" title="Toggle theme">
+    <i class="fas fa-moon"></i>
+</button>
+<button id="backToTop" title="Go to top">
+    <i class="fas fa-arrow-up"></i>
+</button>
+
+<body>
+    <header class="fixed-top bg-white shadow-sm">
+        <div class="top-bar">
+            <div class="container d-flex justify-content-between align-items-center">
+                <div class="social-icons">
+                    <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+
+                <img src="src/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid"
+                    style="max-width: 100px;">
+
+
+                <div class="d-flex align-items-center">
+                    <div class="d-flex align-items-center me-3">
+                        <i class="far fa-envelope me-2 text-secondary"></i>
+                        <span class="text-secondary">contact@aiot-xplorer.eu</span>
+                    </div>
+
+                    <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-outline-success">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <nav class="navbar navbar-expand-lg main-nav">
+            <div class="container">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://aiot-xplorer.eu/">Home</a>
+                        </li>
+
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownPublications" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                Teams
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdownPublications">
+                                <li><a class="dropdown-item" href="#">Alpha</a></li>
+                                <li><a class="dropdown-item" href="#">Beta</a></li>
+                                <li><a class="dropdown-item" href="gamma_team/gamma_home.html">Gamma</a></li>
+                                <li><a class="dropdown-item" href="#">Delta</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html#updates-section">Updates & News</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Resources</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="https://aiot-xplorer.eu/index.php/contact-us">Contact us</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+
+    <section class="hero-section">
+        <div class="hero-content">
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br><br>
+            <br>
+            <h1>AIoT Explorer</h1>
+
+            <p>Welcome to the forefront of innovation where Artificial Intelligence meets the Internet of Things.</p>
+        </div>
+    </section>
+
+    <main>
+        <div class="row m-0">
+            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+                <div class="card text-center shadow-sm p-3 updates w-100" id="updates-section">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <h5 class="card-title">Updates & News</h5>
+                        <div class="card news-item w-75 my-3 shadow-sm text-start"
+                            style="border-radius: 15px; border-left: 5px solid #385e45;">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">August 18, 2025</h6>
+                                <h5 class="card-title">Start working on the website for each team</h5>
+                                <p class="card-text">
+                                    We have started working on the website for each team, where we will showcase the
+                                    project details, team members, and updates. The website will be a central hub for
+                                    all information related to the AIoT-Explorer project.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card news-item w-75 my-3 shadow-sm text-start"
+                            style="border-radius: 15px; border-left: 5px solid #385e45;">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">August 11, 2025</h6>
+                                <h5 class="card-title">Our first meeting!</h5>
+                                <p class="card-text">
+                                    We had our first meeting with the team, where we discussed the project
+                                    requirements and the initial setup. We are excited to start working on the
+                                    AIoT-Explorer project!
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <section class="carousel-section">
+            <div class="container">
+                <div id="projectCarousel" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-indicators">
+                        <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="0" class="active"
+                            aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="1"
+                            aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="2"
+                            aria-label="Slide 3"></button>
+                        <button type="button" data-bs-target="#projectCarousel" data-bs-slide-to="3"
+                            aria-label="Slide 4"></button>
+                    </div>
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <div class="card shadow-sm rounded-3">
+                                <img src="src/team_full_kick_off_meet.jpg" class="card-img-top" alt="Kick off meeting">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>Kick-off meeting</h5>
+                                    <p>Our first meeting when we have discussed the project in general.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <div class="card shadow-sm rounded-3">
+                                <img src="src/team_full_1.jpg" class="card-img-top" alt="Mentor-photo">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>During the development of the front-end</h5>
+                                    <p>Us with our mentor, Founder of IoT-Explorer Ana-Maria Drăgulinescu</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <div class="card p-3 shadow-sm rounded-3">
+                                <div class="row row-cols-1 row-cols-md-3 g-4 justify-content-center">
+                                    <div class="col">
+                                        <img src="src/catana.jpg" class="d-block w-100 rounded-3 shadow"
+                                            alt="Imagine 1">
+                                    </div>
+                                    <div class="col">
+                                        <img src="src/photo_1.jpg" class="d-block w-100 rounded-3 shadow"
+                                            alt="Imagine 2">
+                                    </div>
+                                    <div class="col">
+                                        <img src="src/photo_2.jpg" class="d-block w-100 rounded-3 shadow"
+                                            alt="Imagine 3">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="carousel-item">
+                            <div class="card p-3 shadow-sm rounded-3">
+                                <div class="d-flex justify-content-center">
+                                    <img src="src/photo_3.jpg" class="w-50 rounded-3 shadow" alt="Imagine 4">
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel"
+                        data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#projectCarousel"
+                        data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <section id="resources-section">
+            <div class="container">
+                <div class="card text-center shadow-sm p-3 resources w-100">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <h5 class="card-title mb-4">Resources</h5>
+                        <p class="mb-4">If you want to learn more about the project and its architecture, you can
+                            download the technical documents below:</p>
+                        <div class="row w-100 justify-content-center">
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">Docker Installation Guide</h6>
+                                        <p class="card-text text-muted small">
+                                            Detailed guide for installing Docker and Docker Compose on a server with
+                                            Ubuntu 24.04 LTS.
+                                        </p>
+                                        <a href="src/Instalare_Docker_Docker_si_Compose.pdf" target="_blank"
+                                            class="btn btn-outline-success mt-2 pdf-link">
+                                            <i class="fas fa-file-pdf me-2"></i>View PDF
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">Platform Configuration with Docker</h6>
+                                        <p class="card-text text-muted small">
+                                            The necessary steps for configuring and launching the laboratory platform
+                                            with Docker, Caddy, and Mosquitto.
+                                        </p>
+                                        <a href="src/Configurare_Docker.pdf" target="_blank"
+                                            class="btn btn-outline-success mt-2 pdf-link">
+                                            <i class="fas fa-file-pdf me-2"></i>View PDF
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">Frontend Platform Documentation V2</h6>
+                                        <p class="card-text text-muted small">
+                                            Details on building the low-code frontend platform with team submenus and
+                                            MQTT integration.
+                                        </p>
+                                        <a href="src/PLATFORMA_LABORATOR_FRONTEND_V2.pdf" target="_blank"
+                                            class="btn btn-outline-success mt-2 pdf-link">
+                                            <i class="fas fa-file-pdf me-2"></i>View PDF
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer-bar">
+            <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame
+                of
+                2025
+                IoT Explorer Program</p>
+        </footer>
+
+
+</body>
+
+</html>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+    crossorigin="anonymous"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
+    integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
+    crossorigin="anonymous"></script>
+
+<script>
+    let lastScroll = 0;
+    const header = document.querySelector("header");
+    const backToTop = document.getElementById("backToTop");
+
+    window.addEventListener("scroll", () => {
+        const currentScroll = window.pageYOffset;
+
+        // Show/hide header based on scroll direction
+        if (currentScroll > lastScroll && currentScroll > 100) {
+            header.classList.add("hide"); // scrolling down
+        } else {
+            header.classList.remove("hide"); // scrolling up
+        }
+        lastScroll = currentScroll;
+
+        // Show/hide "Back to Top" button
+        if (currentScroll > 300) {
+            backToTop.style.display = "block";
+        } else {
+            backToTop.style.display = "none";
+        }
+    });
+
+    // Scroll to top when button clicked
+    backToTop.addEventListener("click", () => {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    // Noul cod JavaScript pentru temă (începe aici)
+    document.addEventListener('DOMContentLoaded', () => {
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const body = document.body;
+
+        const savedTheme = localStorage.getItem('theme');
+        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            body.classList.add('dark-mode');
+            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+        } else {
+            body.classList.remove('dark-mode');
+            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+        }
+
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            if (body.classList.contains('dark-mode')) {
+                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
+                localStorage.setItem('theme', 'dark');
+            } else {
+                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
+                localStorage.setItem('theme', 'light');
+            }
+        });
+    });
+    // Noul cod JavaScript pentru temă (se termină aici)
+</script>
