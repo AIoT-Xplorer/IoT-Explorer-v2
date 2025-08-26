@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Title</title>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!-- Bootstrap 5.3 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+
+    <style>
+      /* ===== quick knobs ===== */
+      :root{
+        /* catalog position/size */
+        --catalog-left: 10px;     /* distance from left */
+        --catalog-top: 520px;     /* distance from top (under description) */
+        --catalog-width: 520px;   /* catalog width */
+
+        /* footer height (kept fixed) */
+        --footer-h: 56px;
+      }
+
+      html, main { height: 100%; margin: 0; overflow-y: auto; }
+
+      .content-wrapper{
+        min-height: 100vh;
+        /* leave room for the fixed footer */
+        padding-bottom: calc(var(--footer-h) + 24px);
+        box-sizing: border-box;
+      }
+
+      .main-content{
+        padding: 20px;
+        max-width: 1200px;
+        margin: 0 auto;
+        /* ensure content is not clipped, leave room for footer */
+        padding-bottom: calc(var(--footer-h) + 24px) !important;
+        max-height: none !important;
+        overflow: visible !important;
+      }
+
+      /* ===== Catalog (smaller, left-aligned) ===== */
+      .catalog-pos{
+        position: absolute;
+        left: var(--catalog-left);
+        top: var(--catalog-top);
+        width: var(--catalog-width);
+        max-width: 95vw;
+        padding-bottom: 24px; /* extra space above footer */
+      }
+      .catalog-box{
+        background: rgba(255,255,255,.65);
+        border: 3px solid #3bb1b1;
+        border-radius: 14px;
+        backdrop-filter: blur(6px);
+        box-shadow: 0 10px 22px rgba(0,0,0,.08);
+        padding: 14px 16px;
+      }
+      .catalog-title{
+        font-family: montserrat, sans-serif;
+        font-weight: 700; font-size: 1.05rem; color: #00796b;
+        display: inline-flex; align-items: center; gap: .5rem;
+      }
+      .catalog-title::before{ content: ""; width: 9px; height: 9px; background:#3bb1b1; border-radius:50%; display:inline-block; }
+      .catalog-box .nav-pills .nav-link{ border-radius: 999px; font-weight: 600; padding: .3rem .8rem; }
+      .catalog-box .nav-pills .nav-link.active{ background: #3bb1b1; }
+      .catalog-box .card{ border-radius: 12px; border: 1px solid rgba(17,24,39,.08); box-shadow: 0 2px 8px rgba(0,0,0,.03); }
+      .catalog-box .card-body{ padding: .75rem .9rem; }
+      .tag{ display:inline-block; padding:.12rem .5rem; border-radius:999px; background:#e0f7fa; color:#006a67; font-size:.72rem; margin-right:.35rem; }
+    </style>
+
+    <style>
+      body {
+        background: url("../img/fundal_jumatate.png") no-repeat center center fixed;
+        background-size: cover;
+      }
+      .btn-outline-success:hover { border: 1px solid #fff; }
+      .btn-next { background-color: #3bb1b1; color: #fff; border: none; padding: 12px 24px; font-size: 1.1rem; border-radius: 25px; transition: all .3s ease; text-decoration: none; display: inline-block; }
+      .btn-next:hover { background-color: #005a4f; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,.2); }
+      .navbar-nav .nav-item { margin-right: 2rem; }
+      .navbar-nav .nav-item:last-child { margin-right: 0; }
+
+      /* ensure fixed footer has explicit height */
+      footer{ height: var(--footer-h); }
+    </style>
+  </head>
+
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59,177,177));">
+        <div class="container">
+          <a class="navbar-brand" href="Echipa1.html">
+            <img src="../img/IoT-Team B.png" height="60" alt="logo">
+          </a>
+          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="collapsibleNavId">
+            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+              <li class="nav-item"><a class="nav-link active" href="index.html" style="font-family: montserrat, sans-serif;">Home</a></li>
+              <li class="nav-item"><a class="nav-link active" href="Meet_the_Team.html" style="font-family: montserrat, sans-serif;">Meet the Team</a></li>
+              <li class="nav-item"><a class="nav-link active" href="Our_project.html" style="font-family: montserrat, sans-serif;">Our Project</a></li>
+              <li class="nav-item"><a class="nav-link active" href="Dashboard_proiect.html" style="font-family: montserrat, sans-serif;">Dashboard Project</a></li>
+              <li class="nav-item"><a class="nav-link active" href="Contact_us.html" style="font-family: montserrat, sans-serif;">Contact Us</a></li>
+              <li class="nav-item"><a class="nav-link active" href="news.html" style="font-family: montserrat, sans-serif;">News & Updates</a></li>
+            </ul>
+            <form class="d-flex my-2 my-lg-0">
+              <input class="form-control me-sm-2" type="text" placeholder="Search"/>
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color:#00796b;color:#e0f7fa;">Search</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main>
+      <div class="content-wrapper">
+        <div class="main-content">
+          <div class="container" style="height: 80vh; position: absolute;">
+
+            <!-- Title -->
+            <div style="position: absolute; top: 32px; left: 0; width: 600px;">
+              <div style="font-family: montserrat, sans-serif; font-size: 2.5rem; font-weight: bold; color: #00796b; text-shadow: 2px 2px #e0f7fa; padding-bottom: 16px; border-bottom: 4px solid #3bb1b1;">
+                AIoT - Glove
+              </div>
+            </div>
+
+            <!-- Meta -->
+            <div style="position: absolute; top: 120px; left: 10px; width: 600px;">
+              <div style="font-size: .8rem; font-family: Montserrat, sans-serif; text-align: left; color: #757575; padding-bottom: 16px;">
+                Administrator / AIoT Explorers / 11 August 2025
+              </div>
+            </div>
+
+            <!-- Description -->
+            <div style="position: absolute; top: 200px; left: 10px; width: 600px;">
+              <div style="font-size: 1rem; font-family: Montserrat, sans-serif; text-align: left; padding-bottom: 16px;">
+                <p>&ensp;&ensp;&ensp; Glove Sign is a portable prototype that translates one-hand gestures into characters/messages to support communication for people with speech impairments. The system uses a stretchable glove with five 2.2" bend sensors (one per finger), an on-board IMU (accelerometer + gyroscope) on Arduino Portenta, portable power, and an LCD1602 I2C display for instant feedback.</p>
+                <p>&ensp;&ensp;&ensp; Sensor data are filtered and normalized; then a recognition algorithm maps finger postures and hand orientation to letters or simple commands. The output is shown locally on the display and can be forwarded to a software dashboard for logging.</p>
+              </div>
+            </div>
+
+            <!-- Images -->
+            <img src="../img/IoT-Team B.png" alt="Imagine" style="position: absolute; top: 200px; right: 10px; max-width: 500px; margin-bottom: 20px;" height="200">
+            <img src="../img/IoT-Team B.png" alt="Imagine" style="position: absolute; top: 400px; right: 10px; max-width: 500px; margin-bottom: 20px;" height="200">
+
+            <!-- CATALOG: Components & Resources -->
+            <section id="catalog" class="catalog-pos">
+              <div class="catalog-box">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
+                  <div class="catalog-title">Catalog: Components &amp; Resources</div>
+                  <ul class="nav nav-pills" id="catalogTabs" role="tablist">
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link active" id="tab-comp" data-bs-toggle="pill" data-bs-target="#pane-comp" type="button" role="tab" aria-controls="pane-comp" aria-selected="true">Components</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                      <button class="nav-link" id="tab-res" data-bs-toggle="pill" data-bs-target="#pane-res" type="button" role="tab" aria-controls="pane-res" aria-selected="false">Resources</button>
+                    </li>
+                  </ul>
+                </div>
+
+                <div class="tab-content mt-2">
+                  <!-- Components -->
+                  <div class="tab-pane fade show active" id="pane-comp" role="tabpanel" aria-labelledby="tab-comp" tabindex="0">
+                    <div class="row row-cols-1 g-2">
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">Bend Sensor 2.2" (x5)</h6>
+                            <p class="mb-2 small text-muted">One per finger (thumb–pinky). Measurement range normalized to 0–100%.</p>
+                            <div class="mb-2"><span class="tag">2.2"</span><span class="tag">Flex</span><span class="tag">Analog</span></div>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-primary" href="#" role="button">Datasheet</a>
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">Wiring</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">Arduino Portenta + IMU</h6>
+                            <p class="mb-2 small text-muted">Main board with integrated accelerometer &amp; gyroscope.</p>
+                            <div class="mb-2"><span class="tag">IMU</span><span class="tag">I/O</span><span class="tag">C/C++</span></div>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-primary" href="#" role="button">Pinout</a>
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">Libraries</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">LCD1602 (I2C)</h6>
+                            <p class="mb-2 small text-muted">16×2 display for on-device feedback via I2C.</p>
+                            <div class="mb-2"><span class="tag">I2C</span><span class="tag">16×2</span><span class="tag">UI</span></div>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-primary" href="#" role="button">Code Sample</a>
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">I2C Address</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">Elastic Glove</h6>
+                            <p class="mb-2 small text-muted">Mechanical base to embed the sensors discreetly.</p>
+                            <div class="mb-2"><span class="tag">Textile</span><span class="tag">Mounting</span></div>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">Mount Guide</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">Portable Power Supply</h6>
+                            <p class="mb-2 small text-muted">Battery pack with protections &amp; regulation.</p>
+                            <div class="mb-2"><span class="tag">Power</span><span class="tag">5V</span></div>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">Schematic</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">Resistors &amp; Capacitors</h6>
+                            <p class="mb-2 small text-muted">Dividers/filters for sensor signal conditioning.</p>
+                            <div class="mb-2"><span class="tag">RC</span><span class="tag">Filter</span></div>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">Typical Values</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- /row -->
+                  </div>
+
+                  <!-- Resources -->
+                  <div class="tab-pane fade" id="pane-res" role="tabpanel" aria-labelledby="tab-res" tabindex="0">
+                    <div class="row row-cols-1 g-2">
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">Project Documentation</h6>
+                            <p class="mb-2 small text-muted">Overview, architecture, protocols, and state machine.</p>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-primary" href="#" role="button">PDF</a>
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">Diagrams</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">Firmware &amp; Examples</h6>
+                            <p class="mb-2 small text-muted">Sensor readout, normalization, classification, LCD output.</p>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-primary" href="#" role="button">Repository</a>
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">Tutorial</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="col">
+                        <div class="card h-100">
+                          <div class="card-body">
+                            <h6 class="mb-1">Libraries</h6>
+                            <p class="mb-2 small text-muted">IMU / filtering / LCD1602 I2C / utilities.</p>
+                            <div class="d-flex gap-2">
+                              <a class="btn btn-sm btn-outline-secondary" href="#" role="button">Library List</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div><!-- /row -->
+                  </div>
+                </div><!-- /tab-content -->
+              </div>
+            </section>
+
+            <!-- Bottom button -->
+            <div style="position: absolute; top: 450px; left:25%;">
+              <a href="proiectul.html" class="btn-next">Demo Project</a>
+            </div>
+
+          </div><!-- /.container absolute -->
+        </div>
+      </div>
+    </main>
+
+    <!-- Fixed footer (space reserved via CSS above) -->
+    <footer style="background-color: rgb(59, 177, 177); position: fixed; bottom: 0; width: 100%; left: 0; color: #e0f7fa; text-align: center; padding: 10px;">
+      <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+  </body>
+</html>
