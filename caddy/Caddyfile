@@ -36,7 +36,7 @@
 }
 
 
-# API (poți activa CORS minimal dacă ai nevoie – vezi comentariul)
+# API (se poate activa CORS minimal dacă ai nevoie – vezi comentariul)
 {$API_DOMAIN} {
     import common_hardening
     encode zstd gzip
