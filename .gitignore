@@ -1,0 +1,8 @@
+.env
+frontend/.env
+*.log
+mosquitto/log/
+
+# python
+__pycache__/
+*.pyc

@@ -25,12 +25,29 @@ services:
     restart: unless-stopped
     expose:
       - "80"
-    command: ["/bin/sh","-c","mkdir -p /usr/share/nginx/html && echo '<h2>Frontend OK</h2>' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"]
+    # command: ["/bin/sh","-c","mkdir -p /usr/share/nginx/html && echo '<h2>Frontend OK</h2>' > /usr/share/nginx/html/index.html && nginx -g 'daemon off;'"]
+    volumes:
+    - ./frontend:/usr/share/nginx/html:ro
     networks: [app_net]
 
   backend:
-    image: ealen/echo-server:latest
+    # image: ealen/echo-server:latest
+    build: 
+      context: ./backend
+      dockerfile: Dockerfile
     restart: unless-stopped
+    environment:
+      # - PORT=80
+      # - DB_HOST=db
+      # - DB_PORT=5432
+      # - DB_NAME=${POSTGRES_DB:-iot}
+      # - DB_USER=${POSTGRES_USER:-iot}
+      # - DB_PASSWORD=${POSTGRES_PASSWORD:?set in .env}
+      # - MQTT_BROKER=mosquitto
+      # - MQTT_PORT=1883
+      # - MQTT_USERNAME=${MQTT_USERNAME:-}
+      # - MQTT_PASSWORD=${MQTT_PASSWORD:-}
+       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
     expose:
       - "80"
     networks: [app_net]
@@ -47,6 +64,20 @@ services:
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
     networks: [app_net]
+  db:
+    image: timescale/timescaledb:latest-pg14 
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-iot}
+      POSTGRES_USER: ${POSTGRES_USER:-iot}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+    # ports:
+      # opțional, doar pentru acces direct din afara hostului pentru debug:
+      # - "127.0.0.1:5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      - ./backend/db/init:/docker-entrypoint-initdb.d:ro   # <-- aici pui 01_schema.sql
+    networks: [app_net]
 
 networks:
   app_net:
@@ -55,3 +86,4 @@ networks:
 volumes:
   caddy_data: {}
   caddy_config: {}
+  db_data: {}
