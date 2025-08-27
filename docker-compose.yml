@@ -78,6 +78,18 @@ services:
       - db_data:/var/lib/postgresql/data
       - ./backend/db/init:/docker-entrypoint-initdb.d:ro   # <-- aici pui 01_schema.sql
     networks: [app_net]
+  
+  ingestor:
+    build: ./ingestor
+    restart: unless-stopped
+    environment:
+      # MQTT – momentan anonim, deci fără user/pass
+      MQTT_HOST: mosquitto
+      MQTT_PORT: 1883
+      TOPIC_FILTER: "$share/ingestors/tenants/+/+/+/+"
+      # DB
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+    depends_on: [mosquitto, db]
 
 networks:
   app_net:

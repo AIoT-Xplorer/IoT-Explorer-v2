@@ -4,8 +4,8 @@ from db import write_measurement
 
 MQTT_HOST = os.getenv("MQTT_HOST", "mosquitto")
 MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
-# MQTT_USER = os.getenv("MQTT_USER", "mqtt_ingestor")
-# MQTT_PASS = os.getenv("MQTT_PASS", "changeme")
+MQTT_USER = os.getenv("MQTT_USER")      # None când e anonim
+MQTT_PASS = os.getenv("MQTT_PASS")
 TOPIC_FILTER = os.getenv("TOPIC_FILTER", "$share/ingestors/tenants/+/+/+/+")
 
 TOPIC_RE = re.compile(r"^tenants/(?P<tenant>[^/]+)/(?P<app>[^/]+)/(?P<device>[^/]+)/(?P<signal>[^/]+)$")
@@ -31,8 +31,12 @@ async def handle(topic: str, payload: bytes):
     )
 
 async def main():
-    print(f"Connecting to MQTT {MQTT_HOST}:{MQTT_PORT} as {MQTT_USER}")
-    async with aiomqtt.Client(MQTT_HOST, MQTT_PORT, username=MQTT_USER, password=MQTT_PASS) as client:
+    print(f"[ingestor] MQTT {MQTT_HOST}:{MQTT_PORT} user={MQTT_USER or '-'}")
+    kwargs = {}
+    if MQTT_USER and MQTT_PASS:
+        kwargs.update(dict(username=MQTT_USER, password=MQTT_PASS))
+
+    async with aiomqtt.Client(MQTT_HOST, MQTT_PORT, **kwargs) as client:
         await client.subscribe(TOPIC_FILTER, qos=1)
         async with client.messages() as messages:
             async for message in messages:
