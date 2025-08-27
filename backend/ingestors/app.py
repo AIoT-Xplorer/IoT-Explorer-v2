@@ -4,8 +4,8 @@ from db import write_measurement
 
 MQTT_HOST = os.getenv("MQTT_HOST", "mosquitto")
 MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
-MQTT_USER = os.getenv("MQTT_USER", "mqtt_ingestor")
-MQTT_PASS = os.getenv("MQTT_PASS", "changeme")
+# MQTT_USER = os.getenv("MQTT_USER", "mqtt_ingestor")
+# MQTT_PASS = os.getenv("MQTT_PASS", "changeme")
 TOPIC_FILTER = os.getenv("TOPIC_FILTER", "$share/ingestors/tenants/+/+/+/+")
 
 TOPIC_RE = re.compile(r"^tenants/(?P<tenant>[^/]+)/(?P<app>[^/]+)/(?P<device>[^/]+)/(?P<signal>[^/]+)$")
