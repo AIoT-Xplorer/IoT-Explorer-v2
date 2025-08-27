@@ -80,7 +80,7 @@ services:
     networks: [app_net]
   
   ingestor:
-    build: ./ingestors
+    build: ./backend/ingestors
     restart: unless-stopped
     environment:
       # MQTT – momentan anonim, deci fără user/pass
