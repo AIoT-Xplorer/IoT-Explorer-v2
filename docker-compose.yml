@@ -6,8 +6,8 @@ services:
     image: caddy:2.8-alpine
     restart: unless-stopped
     ports:
-      - "127.0.0.1:80:80"
-      - "127.0.0.1:443:443"
+      - "5.75.210.124:80:80"
+      - "5.75.210.124:443:443"
     environment:
       - DOMAIN=${DOMAIN}
       - API_DOMAIN=${API_DOMAIN}
@@ -30,27 +30,27 @@ services:
     - ./frontend:/usr/share/nginx/html:ro
     networks: [app_net]
 
-  backend:
-    # image: ealen/echo-server:latest
-    build: 
-      context: ./backend
-      dockerfile: Dockerfile
-    restart: unless-stopped
-    environment:
-      # - PORT=80
-      # - DB_HOST=db
-      # - DB_PORT=5432
-      # - DB_NAME=${POSTGRES_DB:-iot}
-      # - DB_USER=${POSTGRES_USER:-iot}
-      # - DB_PASSWORD=${POSTGRES_PASSWORD:?set in .env}
-      # - MQTT_BROKER=mosquitto
-      # - MQTT_PORT=1883
-      # - MQTT_USERNAME=${MQTT_USERNAME:-}
-      # - MQTT_PASSWORD=${MQTT_PASSWORD:-}
-       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
-    expose:
-      - "80"
-    networks: [app_net]
+  # backend:
+  #   # image: ealen/echo-server:latest
+  #   build: 
+  #     context: ./backend
+  #     dockerfile: Dockerfile
+  #   restart: unless-stopped
+  #   environment:
+  #     # - PORT=80
+  #     # - DB_HOST=db
+  #     # - DB_PORT=5432
+  #     # - DB_NAME=${POSTGRES_DB:-iot}
+  #     # - DB_USER=${POSTGRES_USER:-iot}
+  #     # - DB_PASSWORD=${POSTGRES_PASSWORD:?set in .env}
+  #     # - MQTT_BROKER=mosquitto
+  #     # - MQTT_PORT=1883
+  #     # - MQTT_USERNAME=${MQTT_USERNAME:-}
+  #     # - MQTT_PASSWORD=${MQTT_PASSWORD:-}
+  #      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+  #   expose:
+  #     - "80"
+  #   networks: [app_net]
 
   mosquitto:
     image: eclipse-mosquitto:2
@@ -64,33 +64,97 @@ services:
       - ./mosquitto/data:/mosquitto/data
       - ./mosquitto/log:/mosquitto/log
     networks: [app_net]
+  # db:
+  #   image: timescale/timescaledb:latest-pg14 
+  #   restart: unless-stopped
+  #   environment:
+  #     POSTGRES_DB: ${POSTGRES_DB:-aiotdb}
+  #     POSTGRES_USER: ${POSTGRES_USER:-aiot}
+  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
+  #   # ports:
+  #     # opțional, doar pentru acces direct din afara hostului pentru debug:
+  #     # - "127.0.0.1:5432:5432"
+  #   volumes:
+  #     - db_data:/var/lib/postgresql/data
+  #     - ./backend/db/init:/docker-entrypoint-initdb.d:ro   # <-- aici pui 01_schema.sql
+  #   networks: [app_net]
+  
+  # ingestor:
+  #   # build: ./backend/ingestors
+  #   # restart: unless-stopped
+  #   # environment:
+  #   #   # MQTT – momentan anonim, deci fără user/pass
+  #   #   MQTT_HOST: mosquitto
+  #   #   MQTT_PORT: 1883
+  #   #   TOPIC_FILTER: "$share/ingestors/tenants/+/+/+/+"
+  #   #   # DB
+  #   #   DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+  #   # depends_on: [mosquitto, db]
+  #   build:
+  #     context: ./backend/ingestors    # sau calea ta actuală
+  #     dockerfile: Dockerfile
+  #   depends_on:
+  #     db:
+  #       condition: service_started
+  #     mosquitto:
+  #       condition: service_started
+  #   environment:
+  #     DATABASE_URL: postgresql://aiot:aiot2025@db:5432/aiotdb
+  #     MQTT_HOST: mosquitto           # fără :1883
+  #     MQTT_PORT: "1883"
+  #     TOPIC_FILTER: $share/ingestors/tenants/+/+/+/+  # vezi nota de mai jos
+  #   networks:
+  #     - app_net
+  #   restart: unless-stopped
   db:
-    image: timescale/timescaledb:latest-pg14 
+    image: timescale/timescaledb:latest-pg14
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-iot}
-      POSTGRES_USER: ${POSTGRES_USER:-iot}
+      POSTGRES_DB: ${POSTGRES_DB:-aiotdb}
+      POSTGRES_USER: ${POSTGRES_USER:-aiot}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set in .env}
-    # ports:
-      # opțional, doar pentru acces direct din afara hostului pentru debug:
-      # - "127.0.0.1:5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-      - ./backend/db/init:/docker-entrypoint-initdb.d:ro   # <-- aici pui 01_schema.sql
+      - ./backend/db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-aiot} -d ${POSTGRES_DB:-aiotdb}"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
     networks: [app_net]
-  
-  ingestor:
-    build: ./backend/ingestors
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
     restart: unless-stopped
     environment:
-      # MQTT – momentan anonim, deci fără user/pass
-      MQTT_HOST: mosquitto
-      MQTT_PORT: 1883
-      TOPIC_FILTER: "$share/ingestors/tenants/+/+/+/+"
-      # DB
-      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
-    depends_on: [mosquitto, db]
+      # If your backend expects a URL, keep this:
+      - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      # (Alternative safer pattern is to pass PG* vars and build the DSN in code.)
+    expose: ["80"]
+    depends_on:
+      db:
+        condition: service_healthy
+    networks: [app_net]
 
+  ingestor:
+    build:
+      context: ./backend/ingestors
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+      mosquitto:
+        condition: service_started
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
+      MQTT_HOST: mosquitto
+      MQTT_PORT: "1883"
+      # TOPIC_FILTER: '$share/ingestors/tenants/+/+/+/+'
+      TOPIC_FILTER: 'tenants/#'
+    networks: [app_net]
 networks:
   app_net:
     driver: bridge

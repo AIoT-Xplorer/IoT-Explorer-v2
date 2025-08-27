@@ -43,3 +43,17 @@ async def glove_history(limit: int = 10):
         LIMIT $1
     """, {"limit": limit})
     return [dict(r) for r in rows]
+
+@app.get("/api/glove/istoric")
+async def glove_istoric(limit: int = 10):
+    rows = await fetch_all(
+        """
+        SELECT tenant_id, app_id, device_id, signal, ts, value, extra
+        FROM measurements
+        WHERE app_id = 'glove'
+        ORDER BY ts DESC
+        LIMIT $1
+        """,
+        {"limit": limit}
+    )
+    return [dict(r) for r in rows]

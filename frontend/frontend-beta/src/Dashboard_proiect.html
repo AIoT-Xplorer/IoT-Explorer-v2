@@ -455,7 +455,52 @@
         try { barChart.resize(); } catch(e){}
       });
 
-      // Device integration
+//       // Device integration
+//       // === Backend integration ===
+// const API_URL = "https://api.aiot-xplorer.eu/api/glove/istoric?limit=20";
+
+// async function fetchHistory() {
+//   try {
+//     const res = await fetch(API_URL);
+//     const data = await res.json();
+
+//     // Clear old chart state if needed
+//     // lineChart.data.labels = [];
+//     // lineChart.data.datasets.forEach(d => d.data = []);
+
+//     // Map latest signals
+//     // Expect rows like: { signal: "flex1", value: 42 }
+//     const flexVals = [0,0,0,0,0];
+//     data.forEach(row => {
+//       if (row.signal?.startsWith("flex")) {
+//         const idx = parseInt(row.signal.replace("flex","")) - 1;
+//         if (idx >= 0 && idx < flexVals.length) flexVals[idx] = row.value;
+//       }
+//       if (row.signal === "char") {
+//         updateRecognition(
+//           row.value,
+//           row.extra?.confidence ?? 0.8,
+//           row.extra?.latency ?? 0
+//         );
+//       }
+//     });
+
+//     // Push to charts if we have data
+//     if (flexVals.some(v => v > 0)) {
+//       pushFlex(flexVals);
+//     }
+//   } catch (err) {
+//     console.error("Failed to fetch history:", err);
+//   }
+// }
+
+// // Poll every 3s
+// setInterval(fetchHistory, 3000);
+// fetchHistory();
+
+
+
+
       function handleFrame(frame) {
         if (!frame) return;
         if (Array.isArray(frame.flex)) {

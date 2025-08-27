@@ -11,7 +11,7 @@ TOPIC_FILTER = os.getenv("TOPIC_FILTER", "$share/ingestors/tenants/+/+/+/+")
 TOPIC_RE = re.compile(r"^tenants/(?P<tenant>[^/]+)/(?P<app>[^/]+)/(?P<device>[^/]+)/(?P<signal>[^/]+)$")
 
 async def handle(topic: str, payload: bytes):
-    m = TOPIC_RE.match(topic)
+    m = TOPIC_RE.match(str(topic))
     if not m:
         return
     meta = m.groupdict()
@@ -36,11 +36,13 @@ async def main():
     if MQTT_USER and MQTT_PASS:
         kwargs.update(dict(username=MQTT_USER, password=MQTT_PASS))
 
-    async with aiomqtt.Client(MQTT_HOST, MQTT_PORT, **kwargs) as client:
+    async with aiomqtt.Client(MQTT_HOST, port=MQTT_PORT, **kwargs) as client:
         await client.subscribe(TOPIC_FILTER, qos=1)
-        async with client.messages() as messages:
-            async for message in messages:
-                asyncio.create_task(handle(message.topic.value, message.payload))
+        async for message in client.messages:  # <— fără paranteze, fără "async with"
+            # în aiomqtt topicul e str; nu folosi ".value"
+            topic = message.topic
+            payload = message.payload
+            asyncio.create_task(handle(topic, payload))
 
 if __name__ == "__main__":
     asyncio.run(main())
