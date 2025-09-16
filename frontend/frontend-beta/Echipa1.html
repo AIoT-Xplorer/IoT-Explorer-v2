@@ -83,12 +83,48 @@
       text-shadow: 0 0 14px rgba(34,209,238,.4);
     }
     #hello-word .bit.show{ opacity:1; transform:translateY(0) scale(1); }
+    
+    /* Wrapper to keep description and hello-image paired and scaling together */
+    .desc-hello-wrapper{
+      display:flex;
+      gap:2rem;
+      align-items:flex-start;
+      flex-wrap:nowrap;
+      /* allow the wrapper to shrink if viewport smaller */
+      width:100%;
+      box-sizing:border-box;
+    }
+    .desc-hello-wrapper .desc-box{
+      /* description takes available space but capped */
+      flex: 1 1 auto;
+      min-width: 220px;
+      max-width: 65%;
+    }
+    .desc-hello-wrapper .hello-box{
+      flex: 0 0 auto;
+      width: clamp(120px, 18vw, 340px);
+    }
+    /* textarea and image scale proportionally using viewport-based sizing */
+    #description-text{
+      width: 100%;
+      max-width: 100%;
+      height: clamp(140px, 35vh, 500px);
+      resize: none;
+      overflow-y: auto;
+      box-sizing: border-box;
+    }
+    #hello-sequence .frame, #hello-sequence img{
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
+    
   </style>
 </head>
 
 <body>
 <header>
-   <div class="top-bar" style="background-color: white;">
+   <div class="top-bar" style="width:100%; background-color: white;">
             <div class="container d-flex justify-content-between align-items-center">
                 <div class="social-icons">
                     <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
@@ -113,7 +149,7 @@
         </div>
 
  <nav
-            class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
+            class="navbar navbar-expand-md" style=" width:100%; background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
            >
             <div class="container">
                 <a class="navbar-brand" href="Echipa1.html">
@@ -191,30 +227,43 @@
 <main>
   <div class="content-wrapper">
     <div class="main-content">
-      <div class="container" style="height:80vh; position:absolute;">
+      <div class="container" style="height:80vh; position: absolute">
         <!-- Titlu -->
-        <div style="position:absolute; top:32px; left:0; width:600px;">
+        <div style="position:relative; top:6%; left:0%; width:30%;">
           <div style="font-family: montserrat, sans-serif; font-size:2.5rem; font-weight:bold; color:#00796b; text-shadow:2px 2px #e0f7fa; padding-bottom:16px; border-bottom:4px solid #3bb1b1;">
             IoT-Xplorers Team β
           </div>
         </div>
 
         <!-- Descriere -->
-        <div style="position:absolute; top:28%; left:-8px">
-          <textarea class="form-control" rows="7" style="background:none;overflow-y: hidden; border:none; resize:none; width:600px; height:500px;" placeholder="Descriere" disabled>We are the AIoT-Xplorer - Team-Beta, a recently established subgroup of students within the IoT-Xplorer initiative from the National University of Science and Technology POLITEHNICA Bucharest. Our team brings together motivated and perseverant students, united by a common interest in innovation and collaboration, with the ambition to transform ideas into meaningful results.
-
-Although new, our team builds on a strong foundation of curiosity, adaptability, and teamwork. We are committed to learning through practice, contributing to the development of the IoT-Xplorer community, and pursuing impactful projects that connect research, education, and real-world applications.</textarea>
-        </div>
-
+       
         
 
         <!-- === SECVENȚA HELLO === -->
-        <div id="hello-sequence">
+        <div id="hello-sequence" style="left: 65%;position: absolute; top: 20%; width: auto;">
           <div class="frame">
             <img id="hello-image" alt="Hello frame">
           </div>
           <div id="hello-word"></div>
         </div>
+          <!-- Descriere + HELLO wrapper -->
+          <div class="desc-hello-wrapper" style="position:relative; top: 10%; left:0%; width: 100%;">
+            <div class="desc-box">
+              <textarea id="description-text" class="form-control" rows="7" style="background:none;overflow-y: hidden; border:none; resize:none; width:100%; height:500px;" placeholder="Descriere" disabled>We are the AIoT-Xplorer - Team-Beta, a recently established subgroup of students within the IoT-Xplorer initiative from the National University of Science and Technology POLITEHNICA Bucharest. Our team brings together motivated and perseverant students, united by a common interest in innovation and collaboration, with the ambition to transform ideas into meaningful results.
+
+  Although new, our team builds on a strong foundation of curiosity, adaptability, and teamwork. We are committed to learning through practice, contributing to the development of the IoT-Xplorer community, and pursuing impactful projects that connect research, education, and real-world applications.</textarea>
+            </div>
+
+            <!-- === SECVENȚA HELLO === -->
+            <div class="hello-box">
+              <div id="hello-sequence">
+                <div class="frame">
+                  <img id="hello-image" alt="Hello frame">
+                </div>
+                <div id="hello-word"></div>
+              </div>
+            </div>
+          </div>
         <!-- === /HELLO === -->
 
       </div>
@@ -229,7 +278,7 @@ Although new, our team builds on a strong foundation of curiosity, adaptability,
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-<script style="z-index: 5;">
+<script style="z-index: 5; ">
   (function () {
     const img  = document.getElementById('hello-image');
     const word = document.getElementById('hello-word');
