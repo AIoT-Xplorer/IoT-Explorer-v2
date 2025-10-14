@@ -140,8 +140,6 @@
       margin-bottom: 30px;
       box-shadow: 0 0 20px rgba(0,255,195,0.2);
     }
-
-    /* === Buton Irrigation === */
     .irrigation-btn {
       background: linear-gradient(45deg, #4caf50, #00ffc3);
       color: #000;
@@ -160,8 +158,6 @@
       background: linear-gradient(45deg, #00c3ff, #0066ff);
       color: #fff;
     }
-
-    /* Efect blinking */
     .blink {
       animation: blinkEffect 1s infinite alternate;
     }
@@ -186,7 +182,7 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="../../../index.html">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="MeetTheTeam.html">Meet the Team</a></li>
             <li class="nav-item"><a class="nav-link" href="About_The_Project.html">About the Project</a></li>
             <li class="nav-item"><a class="nav-link active" href="Dashboard.html">Dashboard</a></li>
@@ -203,50 +199,50 @@
     <div class="dashboard-header">
       <h1 class="dashboard-title">Dashboard</h1>
       <p>Monitor your plant’s parameters in real time 🌱</p>
+
+      <!-- PLANT DROPDOWN -->
+      <div class="mt-4">
+        <label for="plantSelect" class="form-label fw-bold">Select your plant:</label>
+        <select id="plantSelect" class="form-select w-auto d-inline-block">
+          <option value="" selected disabled>Choose a plant</option>
+          <option value="aloe">Aloe Vera</option>
+          <option value="orchid">Orhidee (Phalaenopsis)</option>
+          <option value="ficus">Ficus</option>
+          <option value="basil">Busuioc</option>
+          <option value="tomato">Roșii Cherry</option>
+          <option value="lettuce">Salată Verde</option>
+        </select>
+      </div>
     </div>
 
     <div class="container">
       <div class="row g-4 text-center justify-content-center">
-        <div class="col-6 col-md-4 col-lg-2">
+        <div class="col-6 col-md-4 col-lg-3">
           <div class="card-custom">
             <i class="fas fa-tint"></i>
             <div class="card-value">-- %</div>
             <div class="card-label">Soil Moisture</div>
           </div>
         </div>
-        <div class="col-6 col-md-4 col-lg-2">
-          <div class="card-custom">
-            <i class="fas fa-sun"></i>
-            <div class="card-value">-- lux</div>
-            <div class="card-label">Ambient Light</div>
-          </div>
-        </div>
-        <div class="col-6 col-md-4 col-lg-2">
+        <div class="col-6 col-md-4 col-lg-3">
           <div class="card-custom">
             <i class="fas fa-thermometer-half"></i>
             <div class="card-value">-- °C</div>
             <div class="card-label">Temperature</div>
           </div>
         </div>
-        <div class="col-6 col-md-4 col-lg-2">
+        <div class="col-6 col-md-4 col-lg-3">
           <div class="card-custom">
             <i class="fas fa-wind"></i>
-            <div class="card-value">-- AQI</div>
-            <div class="card-label">Air Quality</div>
+            <div class="card-value">-- %</div>
+            <div class="card-label">Air Humidity</div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- BUTON IRRIGATION SEPARAT -->
-    <div class="container text-center my-5">
-      <h3 class="mb-3">Irrigation Control</h3>
-      <button id="irrigationBtn" class="btn btn-lg irrigation-btn">
-        <i class="fas fa-faucet"></i> Start Irrigation
-      </button>
-    </div>
 
-    <!-- ===== CHARTS SECTION ===== -->
+    <!-- CHARTS -->
     <div class="container charts-section">
       <h2 class="text-center mb-4">Live Graphs</h2>
       <div class="row g-4 justify-content-center">
@@ -262,12 +258,7 @@
         </div>
         <div class="col-md-6">
           <div class="chart-container">
-            <canvas id="lightChart"></canvas>
-          </div>
-        </div>
-        <div class="col-md-6">
-          <div class="chart-container">
-            <canvas id="airChart"></canvas>
+            <canvas id="humidityChart"></canvas>
           </div>
         </div>
       </div>
@@ -282,14 +273,15 @@
     </p>
     <div class="footer-social">
       <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
-      
     </div>
   </footer>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- ===== CHART.JS SCRIPT ===== -->
+  <!-- CHART SCRIPT -->
+  <script src="./dashboard.js"></script>
+  <script src="./api.js"></script>
   <script>
     const createChart = (ctx, label, unit, borderColor, bgColor) => {
       return new Chart(ctx, {
@@ -320,37 +312,9 @@
 
     createChart(document.getElementById('tempChart'), 'Temperature', '°C', '#ff6384', 'rgba(255,99,132,0.2)');
     createChart(document.getElementById('soilChart'), 'Soil Moisture', '%', '#4bc0c0', 'rgba(75,192,192,0.2)');
-    createChart(document.getElementById('lightChart'), 'Ambient Light', 'lux', '#ffcd56', 'rgba(255,205,86,0.2)');
-    createChart(document.getElementById('airChart'), 'Air Quality', 'AQI', '#9966ff', 'rgba(153,102,255,0.2)');
+    createChart(document.getElementById('humidityChart'), 'Air Humidity', '%', '#36a2eb', 'rgba(54,162,235,0.2)');
 
-    // === IRRIGATION BUTTON SCRIPT ===
-    const irrigationBtn = document.getElementById("irrigationBtn");
-    let needsWater = true; // simulare senzor
-    let irrigationOn = false;
-
-    if (needsWater) {
-      irrigationBtn.classList.add("blink");
-    }
-
-    irrigationBtn.addEventListener("click", () => {
-      irrigationOn = !irrigationOn;
-
-      if (irrigationOn) {
-        irrigationBtn.classList.remove("blink");
-        irrigationBtn.classList.add("irrigation-on");
-        irrigationBtn.innerHTML = '<i class="fas fa-faucet"></i> Irrigation ON';
-        console.log("Irrigation system started!");
-        // aici trimiți request la backend să pornească pompa
-      } else {
-        irrigationBtn.classList.remove("irrigation-on");
-        irrigationBtn.innerHTML = '<i class="fas fa-faucet"></i> Start Irrigation';
-        console.log("Irrigation system stopped!");
-        // aici trimiți request la backend să oprească pompa
-        if (needsWater) {
-          irrigationBtn.classList.add("blink");
-        }
-      }
-    });
+  
   </script>
 </body>
 </html>

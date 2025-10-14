@@ -1,0 +1,11 @@
+fastapi
+uvicorn[standard]
+psycopg2-binary
+sqlalchemy
+python-multipart
+pydantic
+asyncpg
+asyncio-mqtt==0.16.1
+paho-mqtt<2.0.0
+
+

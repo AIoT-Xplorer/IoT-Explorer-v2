@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>IoT - Meet the Team</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    :root{ --footer-h:72px; --brand:#3bb1b1; }
+
+    /* ============= FUNDAL (identic ca la Echipa 1) ============= */
+    html{
+      min-height:100%;
+      background: url("/frontend/frontend-beta/img/fundal2.png")
+                  top center / 100% 100% no-repeat;
+      background-attachment: scroll;   /* păstrăm scroll pe mobil */
+    }
+    body{ margin:0; min-height:100dvh; background:transparent; }
+    .content-wrapper, .main-content, .container{ background:transparent !important; }
+
+    /* ============= Layout general ============= */
+    .page-wrap{ min-height:100dvh; padding-bottom:var(--footer-h); box-sizing:border-box; }
+    .main{ max-width:1100px; margin:0 auto; padding:20px; }
+
+    /* Bara de navigație – lăsăm exact ca la tine */
+    .btn-outline-success:hover{ border:1px solid #fff; }
+    .navbar-nav .nav-item{ margin-right:2rem; }
+    .navbar-nav .nav-item:last-child{ margin-right:0; }
+
+    /* ============= Grila cu 2 coloane (mereu) ============= */
+    .team-grid{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: clamp(12px, 3vw, 24px);
+      align-items:start;
+    }
+
+    /* “Plăcuțele” cu nume (înlocuiesc textarea-urile) */
+    .tile{
+      display:block;
+      text-align:center;
+      padding: clamp(10px, 2.6vw, 16px) 12px;
+      border: clamp(2px, .5vw, 4px) solid var(--brand);
+      border-radius: 14px;
+      background:#fff;
+      color:#0b1f24;
+      font-weight:800;
+      font-size: clamp(14px, 3.6vw, 22px);
+      text-decoration:none;
+      box-shadow: 0 2px 8px rgba(0,0,0,.08);
+    }
+    .tile:hover{ background:#e0f7fa; }
+
+    /* Card-uri pentru membri (imaginile NU mai “sar”) */
+    .member-card{
+      border: clamp(2px, .5vw, 4px) solid var(--brand);
+      border-radius: 12px;
+      overflow: hidden;
+      background:#fff;
+    }
+    .member-card img{
+      width:100%;
+      display:block;
+      aspect-ratio: 3 / 4;       /* raport stabil */
+      object-fit: cover;         /* taie surplusul frumos */
+    }
+    .member-card .role{
+      margin:0;
+      padding:8px 10px;
+      text-align:center;
+      background: var(--brand);
+      color:#fff;
+      font-weight:700;
+    }
+
+    /* Titlu de pagină */
+    .page-title{
+      width:100%;
+      font-family: montserrat, system-ui, sans-serif;
+      font-weight:800;
+      font-size: clamp(1.4rem, 4.2vw, 2.4rem);
+      color:#00796b;
+      text-shadow:2px 2px #e0f7fa;
+      padding-bottom:12px;
+      border-bottom:4px solid var(--brand);
+      margin: 12px 0 18px;
+    }
+
+    /* Footer fix jos */
+    footer{
+      position:fixed; left:0; right:0; bottom:0; height:var(--footer-h);
+      background: rgb(59,177,177); color:#e0f7fa;
+      display:grid; place-items:center; text-align:center; padding:8px;
+    }
+
+    /* Ecrane foarte înguste: păstrăm 2 coloane dar comprimăm fonturile */
+    @media (max-width:360px){
+      .navbar .form-control, .navbar .btn{ display:none; }
+      .tile{ font-size: clamp(13px, 4vw, 18px); padding-block: 10px; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Top bar -->
+  <div class="top-bar" style="width:100%;background-color:#fff;">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="social-icons">
+        <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <a class="navbar-brand" href="../../index.html">
+        <img src="/frontend/frontend-beta/img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid" style="max-width:100px;">
+      </a>
+      <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center me-3">
+          <i class="far fa-envelope me-2 text-secondary"></i>
+          <span class="text-secondary">contact@aiot-xplorer.eu</span>
+        </div>
+        <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-outline-success">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-md" style="width:100%; background: linear-gradient(to right, #fff, rgb(59,177,177));">
+    <div class="container">
+      <a class="navbar-brand" href="Echipa1.html">
+        <img src="/frontend/frontend-beta/img/IoT - Team B.png" height="60" alt="Team B">
+      </a>
+      <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
+              aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="../../index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Meet_the_Team.html">Meet the Team</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Our_project.html">Our Project</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Dashboard_proiect.html">Dashboard Project</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Contact_us.html">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link active" href="news.html">News & Updates</a></li>
+        </ul>
+        <form class="d-flex my-2 my-lg-0">
+          <input class="form-control me-sm-2" type="text" placeholder="Search" />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color:#00796b; color:#e0f7fa;">
+            Search
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Conținut -->
+  <div class="page-wrap">
+    <main class="main">
+      <div class="page-title">Meet the Team</div>
+
+      <!-- Grilă 2 coloane MEREU -->
+      <div class="team-grid">
+        <!-- Plăcuțele cu nume -->
+        <a class="tile" href="pagina_daria.html">Cîrticioiu Daria-Andreea</a>
+        <a class="tile" href="pagina_ctn.html">Catana Marius-Ionut</a>
+
+        <!-- Card Daria -->
+        <div class="member-card">
+          <img src="/frontend/frontend-beta/img/Poza_Daria.jpeg" alt="Cîrticioiu Daria-Andreea">
+          <p class="role">Student</p>
+        </div>
+
+        <!-- Card Marius -->
+        <div class="member-card">
+          <img src="/frontend/frontend-beta/img/Poza_Ctn.jpeg" alt="Catana Marius-Ionut">
+          <p class="role">Student</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Footer fix jos -->
+  <footer>
+    <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
