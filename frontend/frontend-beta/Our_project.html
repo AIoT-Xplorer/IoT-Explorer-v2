@@ -1,151 +1,228 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <title>Title</title>
-    <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+<head>
+  <meta charset="utf-8"/>
+  <title>AIoT - Glove</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <!-- Bootstrap 5.3 -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
 
-    <style>
-      /* ===== quick knobs ===== */
-      :root{
-        /* catalog position/size */
-        --catalog-left: 10px;     /* distance from left */
-        --catalog-top: 520px;     /* distance from top (under description) */
-        --catalog-width: 520px;   /* catalog width */
+  <style>
+    :root{
+      --brand:#3bb1b1;
+      --footer-h:56px;
+      --gap: clamp(8px, 2.5vw, 28px);
 
-        /* footer height (kept fixed) */
-        --footer-h: 56px;
+      /* tipografie fluidă */
+      --fs-title: clamp(0.90rem, 0.4rem + 3.8vw, 2.10rem);
+      --fs-meta:  clamp(0.56rem, 0.22rem + 1.6vw, 0.95rem);
+      --fs-body:  clamp(0.56rem, 0.18rem + 1.9vw, 1.00rem);
+      --fs-btn:   clamp(0.60rem, 0.20rem + 1.2vw, 1.00rem);
+      --fs-nav:   clamp(0.56rem, 0.18rem + 1.0vw, 0.98rem);
+      --fs-foot:  clamp(0.56rem, 0.18rem + 1.0vw, 0.95rem);
+      --lh-body:  clamp(1.35, 1.05 + 0.35vw, 1.60);
+    }
+
+    html, main { height: 100%; margin: 0; overflow-y: auto; }
+    body {
+      margin:0;
+      min-height:100dvh;
+      background: url("/frontend/frontend-beta/img/fundal_jumatate.png") no-repeat center center fixed;
+      background-size: cover;
+      font-family: Montserrat, system-ui, sans-serif;
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+    }
+
+    .content-wrapper{
+      min-height: 100vh;
+      padding-bottom: calc(var(--footer-h) + 24px);
+      box-sizing: border-box;
+    }
+    .main-content{
+      padding: 20px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-bottom: calc(var(--footer-h) + 24px) !important;
+    }
+
+    .btn-outline-success:hover { border: 1px solid #fff; }
+    .navbar-nav .nav-item { margin-right: 2rem; }
+    .navbar-nav .nav-item:last-child { margin-right: 0; }
+    .navbar-nav .nav-link{ font-size: var(--fs-nav); }
+
+    .page-title{
+      font-weight:800;
+      font-size: var(--fs-title);
+      color:#00796b;
+      text-shadow:2px 2px #e0f7fa;
+      padding-bottom:12px;
+      border-bottom:4px solid var(--brand);
+      margin:8px 0 10px;
+    }
+    .page-meta{
+      color:#757575;
+      font-size: var(--fs-meta);
+      margin-bottom: clamp(10px,3vw,22px);
+    }
+
+    /* ===== 2 coloane mereu ===== */
+    .hero{
+      display:grid;
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      gap: var(--gap);
+      align-items:start;
+    }
+
+    /* stânga */
+    .description{
+      white-space: pre-line;
+      hyphens: auto;
+      overflow-wrap: anywhere;
+      margin:0 0 clamp(10px, 2vw, 16px) 0;
+    }
+
+    /* catalog în flux */
+    .catalog-box{
+      background: rgba(255,255,255,.65);
+      border: 3px solid var(--brand);
+      border-radius: 14px;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 10px 22px rgba(0,0,0,.08);
+      padding: 14px 16px;
+    }
+    .catalog-title{
+      font-weight:700; font-size: 1.05rem; color:#00796b;
+      display:inline-flex; align-items:center; gap:.5rem;
+    }
+    .catalog-title::before{
+      content:""; width:9px; height:9px; background:var(--brand); border-radius:50%;
+      display:inline-block;
+    }
+    .catalog-box .nav-pills .nav-link{ border-radius: 999px; font-weight: 600; padding:.3rem .8rem; }
+    .catalog-box .nav-pills .nav-link.active{ background: var(--brand); }
+    .catalog-box .card{ border-radius:12px; border:1px solid rgba(17,24,39,.08); box-shadow:0 2px 8px rgba(0,0,0,.03); }
+    .catalog-box .card-body{ padding:.75rem .9rem; }
+    .tag{ display:inline-block; padding:.12rem .5rem; border-radius:999px; background:#e0f7fa; color:#006a67; font-size:.72rem; margin-right:.35rem; }
+
+    /* dreapta */
+    .right-col{
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap: clamp(10px, 2.2vw, 18px);
+    }
+    /* imagini – identic cu celelalte pagini */
+    .profile-photo{
+      width: clamp(130px, 48vw, 340px);
+      height: auto;
+      border-radius: 12px;
+      border: 4px solid var(--brand);
+      object-fit: cover;
+      box-shadow: 0 6px 18px rgba(0,0,0,.15);
+    }
+
+    .btn-next{
+      background-color: var(--brand);
+      color:#fff; border:none;
+      padding: clamp(6px, 1.2vw, 10px) clamp(10px, 2.0vw, 18px);
+      font-size: var(--fs-btn);
+      border-radius:25px;
+      transition: all .2s ease;
+      text-decoration:none;
+      display:inline-flex; align-items:center; gap:.5em;
+      align-self: flex-end;
+    }
+    .btn-next:hover{ background-color:#005a4f; transform: translateY(-2px); box-shadow:0 4px 8px rgba(0,0,0,.2); }
+
+    footer{ height: var(--footer-h); }
+
+    /* ===== Micro-tweaks pentru telefoane foarte mici ===== */
+    @media (max-width: 380px){
+      html{ font-size: 87.5%; }                  /* micșorează global fonturile */
+      .hero{
+        grid-template-columns: 1.25fr .75fr;     /* mai mult loc pentru text, păstrăm 2 coloane */
+        gap: 8px;                                /* spațiu mai mic între coloane */
       }
-
-      html, main { height: 100%; margin: 0; overflow-y: auto; }
-
-      .content-wrapper{
-        min-height: 100vh;
-        /* leave room for the fixed footer */
-        padding-bottom: calc(var(--footer-h) + 24px);
-        box-sizing: border-box;
-      }
-
-      .main-content{
-        padding: 20px;
-        max-width: 1200px;
-        margin: 0 auto;
-        /* ensure content is not clipped, leave room for footer */
-        padding-bottom: calc(var(--footer-h) + 24px) !important;
-        max-height: none !important;
-        overflow: visible !important;
-      }
-
-      /* ===== Catalog (smaller, left-aligned) ===== */
-      .catalog-pos{
-        position: absolute;
-        left: var(--catalog-left);
-        top: var(--catalog-top);
-        width: var(--catalog-width);
-        max-width: 95vw;
-        padding-bottom: 24px; /* extra space above footer */
+      .profile-photo{
+        width: clamp(90px, 36vw, 200px);         /* poze mai mici pe telefon */
       }
       .catalog-box{
-        background: rgba(255,255,255,.65);
-        border: 3px solid #3bb1b1;
-        border-radius: 14px;
-        backdrop-filter: blur(6px);
-        box-shadow: 0 10px 22px rgba(0,0,0,.08);
-        padding: 14px 16px;
+        padding: 10px 12px; border-width: 2px;   /* catalog mai compact */
       }
-      .catalog-title{
-        font-family: montserrat, sans-serif;
-        font-weight: 700; font-size: 1.05rem; color: #00796b;
-        display: inline-flex; align-items: center; gap: .5rem;
-      }
-      .catalog-title::before{ content: ""; width: 9px; height: 9px; background:#3bb1b1; border-radius:50%; display:inline-block; }
-      .catalog-box .nav-pills .nav-link{ border-radius: 999px; font-weight: 600; padding: .3rem .8rem; }
-      .catalog-box .nav-pills .nav-link.active{ background: #3bb1b1; }
-      .catalog-box .card{ border-radius: 12px; border: 1px solid rgba(17,24,39,.08); box-shadow: 0 2px 8px rgba(0,0,0,.03); }
-      .catalog-box .card-body{ padding: .75rem .9rem; }
-      .tag{ display:inline-block; padding:.12rem .5rem; border-radius:999px; background:#e0f7fa; color:#006a67; font-size:.72rem; margin-right:.35rem; }
-    </style>
+    }
+  </style>
+</head>
 
-    <style>
-      body {
-        background: url("/frontend/frontend-beta/img/fundal_jumatate.png") no-repeat center center fixed;
-        background-size: cover;
-      }
-      .btn-outline-success:hover { border: 1px solid #fff; }
-      .btn-next { background-color: #3bb1b1; color: #fff; border: none; padding: 12px 24px; font-size: 1.1rem; border-radius: 25px; transition: all .3s ease; text-decoration: none; display: inline-block; }
-      .btn-next:hover { background-color: #005a4f; transform: translateY(-2px); box-shadow: 0 4px 8px rgba(0,0,0,.2); }
-      .navbar-nav .nav-item { margin-right: 2rem; }
-      .navbar-nav .nav-item:last-child { margin-right: 0; }
-
-      /* ensure fixed footer has explicit height */
-      footer{ height: var(--footer-h); }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <nav class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59,177,177));">
-        <div class="container">
-          <a class="navbar-brand" href="Echipa1.html">
-            <img src="/frontend/frontend-beta/img/IoT - Team B.png" height="60" alt="logo">
-          </a>
-          <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="collapsibleNavId">
-            <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-              <li class="nav-item"><a class="nav-link active" href="../../index.html" style="font-family: montserrat, sans-serif;">Home</a></li>
-              <li class="nav-item"><a class="nav-link active" href="Meet_the_Team.html" style="font-family: montserrat, sans-serif;">Meet the Team</a></li>
-              <li class="nav-item"><a class="nav-link active" href="Our_project.html" style="font-family: montserrat, sans-serif;">Our Project</a></li>
-              <li class="nav-item"><a class="nav-link active" href="Dashboard_proiect.html" style="font-family: montserrat, sans-serif;">Dashboard Project</a></li>
-              <li class="nav-item"><a class="nav-link active" href="Contact_us.html" style="font-family: montserrat, sans-serif;">Contact Us</a></li>
-              <li class="nav-item"><a class="nav-link active" href="news.html" style="font-family: montserrat, sans-serif;">News & Updates</a></li>
-            </ul>
-            <form class="d-flex my-2 my-lg-0">
-              <input class="form-control me-sm-2" type="text" placeholder="Search"/>
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color:#00796b;color:#e0f7fa;">Search</button>
-            </form>
-          </div>
+<body>
+  <header>
+    <div class="top-bar" style="width:100%;background-color: white;">
+      <div class="container d-flex justify-content-between align-items-center">
+        <div class="social-icons">
+          <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
         </div>
-      </nav>
-    </header>
+        <a class="navbar-brand" href="../../index.html">
+          <img src="/frontend/frontend-beta/img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid" style="max-width: 100px;">
+        </a>
+        <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center me-3">
+            <i class="far fa-envelope me-2 text-secondary"></i>
+            <span class="text-secondary">contact@aiot-xplorer.eu</span>
+          </div>
+          <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-outline-success">
+            <i class="fas fa-sign-in-alt"></i> Sign In
+          </a>
+        </div>
+      </div>
+    </div>
 
-    <main>
-      <div class="content-wrapper">
-        <div class="main-content">
-          <div class="container" style="height: 80vh; position: absolute;">
+    <nav class="navbar navbar-expand-md" style="width:100%;background: linear-gradient(to right, #fff, rgb(59, 177, 177));">
+      <div class="container">
+        <a class="navbar-brand" href="Echipa1.html">
+          <img src="/frontend/frontend-beta/img/IoT - Team B.png" height="60" alt="Team B">
+        </a>
+        <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId" aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="collapsibleNavId">
+          <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+            <li class="nav-item"><a class="nav-link active" href="../../index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link active" href="Meet_the_Team.html">Meet the Team</a></li>
+            <li class="nav-item"><a class="nav-link active" href="Our_project.html">Our Project</a></li>
+            <li class="nav-item"><a class="nav-link active" href="Dashboard_proiect.html">Dashboard Project</a></li>
+            <li class="nav-item"><a class="nav-link active" href="Contact_us.html">Contact Us</a></li>
+            <li class="nav-item"><a class="nav-link active" href="news.html">News & Updates</a></li>
+          </ul>
+          <form class="d-flex my-2 my-lg-0">
+            <input class="form-control me-sm-2" type="text" placeholder="Search"/>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color: #00796b; color: #e0f7fa;">
+              Search
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+  </header>
 
-            <!-- Title -->
-            <div style="position: absolute; top: 32px; left: 0; width: 600px;">
-              <div style="font-family: montserrat, sans-serif; font-size: 2.5rem; font-weight: bold; color: #00796b; text-shadow: 2px 2px #e0f7fa; padding-bottom: 16px; border-bottom: 4px solid #3bb1b1;">
-                AIoT - Glove
-              </div>
+  <main>
+    <div class="content-wrapper">
+      <div class="main-content">
+
+        <div class="page-title">AIoT - Glove</div>
+        <div class="page-meta">Administrator / AIoT Explorers / 11 August 2025</div>
+
+        <section class="hero">
+          <!-- Stânga -->
+          <div>
+            <div class="description">
+&ensp;&ensp;&ensp;Glove Sign is a portable prototype that translates one-hand gestures into characters/messages to support communication for people with speech impairments. The system uses a stretchable glove with five 2.2" bend sensors (one per finger), an on-board IMU (accelerometer + gyroscope) on Arduino Portenta, portable power, and an LCD1602 I2C display for instant feedback.
+
+&ensp;&ensp;&ensp;Sensor data are filtered and normalized; then a recognition algorithm maps finger postures and hand orientation to letters or simple commands. The output is shown locally on the display and can be forwarded to a software dashboard for logging.
             </div>
 
-            <!-- Meta -->
-            <div style="position: absolute; top: 120px; left: 10px; width: 600px;">
-              <div style="font-size: .8rem; font-family: Montserrat, sans-serif; text-align: left; color: #757575; padding-bottom: 16px;">
-                Administrator / AIoT Explorers / 11 August 2025
-              </div>
-            </div>
-
-            <!-- Description -->
-            <div style="position: absolute; top: 200px; left: 10px; width: 600px;">
-              <div style="font-size: 1rem; font-family: Montserrat, sans-serif; text-align: left; padding-bottom: 16px;">
-                <p>&ensp;&ensp;&ensp; Glove Sign is a portable prototype that translates one-hand gestures into characters/messages to support communication for people with speech impairments. The system uses a stretchable glove with five 2.2" bend sensors (one per finger), an on-board IMU (accelerometer + gyroscope) on Arduino Portenta, portable power, and an LCD1602 I2C display for instant feedback.</p>
-                <p>&ensp;&ensp;&ensp; Sensor data are filtered and normalized; then a recognition algorithm maps finger postures and hand orientation to letters or simple commands. The output is shown locally on the display and can be forwarded to a software dashboard for logging.</p>
-              </div>
-            </div>
-
-            <!-- Images -->
-            <img src="/frontend/frontend-beta/img/IoT - Team B.png" alt="Imagine" style="position: absolute; top: 200px; right: 10px; max-width: 500px; margin-bottom: 20px;" height="200">
-            <img src="/frontend/frontend-beta/img/IoT - Team B.png" alt="Imagine" style="position: absolute; top: 400px; right: 10px; max-width: 500px; margin-bottom: 20px;" height="200">
-
-            <!-- CATALOG: Components & Resources -->
-            <section id="catalog" class="catalog-pos">
+            <!-- Catalog -->
+            <section id="catalog" class="mt-3">
               <div class="catalog-box">
                 <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-2">
                   <div class="catalog-title">Catalog: Components &amp; Resources</div>
@@ -160,7 +237,6 @@
                 </div>
 
                 <div class="tab-content mt-2">
-                  <!-- Components -->
                   <div class="tab-pane fade show active" id="pane-comp" role="tabpanel" aria-labelledby="tab-comp" tabindex="0">
                     <div class="row row-cols-1 g-2">
                       <div class="col">
@@ -246,7 +322,6 @@
                     </div><!-- /row -->
                   </div>
 
-                  <!-- Resources -->
                   <div class="tab-pane fade" id="pane-res" role="tabpanel" aria-labelledby="tab-res" tabindex="0">
                     <div class="row row-cols-1 g-2">
                       <div class="col">
@@ -291,23 +366,25 @@
                 </div><!-- /tab-content -->
               </div>
             </section>
+          </div>
 
-            <!-- Bottom button -->
-            <div style="position: absolute; top: 450px; left:25%;">
-              <a href="proiectul.html" class="btn-next">Demo Project</a>
-            </div>
+          <!-- Dreapta -->
+          <div class="right-col">
+            <img src="/frontend/frontend-beta/img/IoT - Team B.png" alt="Imagine 1" class="profile-photo">
+            <img src="/frontend/frontend-beta/img/IoT - Team B.png" alt="Imagine 2" class="profile-photo">
+            <a href="proiectul.html" class="btn-next">Demo Project</a>
+          </div>
+        </section>
 
-          </div><!-- /.container absolute -->
-        </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <!-- Fixed footer (space reserved via CSS above) -->
-    <footer style="background-color: rgb(59, 177, 177); position: fixed; bottom: 0; width: 100%; left: 0; color: #e0f7fa; text-align: center; padding: 10px;">
-      <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
-    </footer>
+  <footer style="background-color: rgb(59, 177, 177); position: fixed; bottom: 0; width: 100%; left: 0; color: #e0f7fa; text-align: center; padding: 10px;">
+    <p class="mb-0" style="font-size: var(--fs-foot);">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
+  </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
-  </body>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
+</body>
 </html>

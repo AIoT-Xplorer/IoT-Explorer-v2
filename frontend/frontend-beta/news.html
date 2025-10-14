@@ -1,247 +1,204 @@
 <!doctype html>
 <html lang="en">
-    <head>
-        <title>Title</title>
-        <!-- Required meta tags -->
-        <meta charset="utf-8" />
-        <meta
-            name="viewport"
-            content="width=device-width, initial-scale=1, shrink-to-fit=no"
-        />
+<head>
+  <meta charset="utf-8" />
+  <title>News & Updates</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-        <!-- Bootstrap CSS v5.2.1 -->
-        <link
-            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
-            rel="stylesheet"
-            integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
-            crossorigin="anonymous"
-        />
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
 
-         <style>
-        html, main {
-            height: 100%;
-            margin: 0;
-            overflow-y: auto; /* Adaugă bara de scroll verticală */
-        }
-        
-        .content-wrapper {
-            min-height: 100vh;
-            padding-bottom: 80px; /* Spațiu pentru footer */
-            box-sizing: border-box;
-        }
-        
-        .main-content {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-            overflow-y: auto; /* Scroll pentru conținut */
-            max-height: calc(100vh - 80px); /* Înălțime minus footer */
-        }
+  <style>
+    :root{
+      --footer-h:72px;
+      --brand:#3bb1b1;
 
-        /* Pentru conținut lung */
-        .scrollable-content {
-            max-height: calc(100vh - 120px);
-            overflow-y: scroll;
-            padding: 20px;
-        }
-         </style>
+      /* tipografie fluidă */
+      --fs-title: clamp(1.2rem, 0.6rem + 3.8vw, 2.4rem);
+      --fs-meta:  clamp(0.65rem, 0.3rem + 1.4vw, 0.95rem);
+      --fs-body:  clamp(0.62rem, 0.3rem + 1.6vw, 1.0rem);
+      --fs-tag:   clamp(0.55rem, 0.25rem + 1.2vw, 0.85rem);
+      --fs-foot:  clamp(0.58rem, 0.25rem + 1.2vw, 0.95rem);
+      --lh-body:  clamp(1.35, 1.1 + 0.3vw, 1.6);
+    }
 
-        <style>
-            body {
-                background: url("/frontend/frontend-beta/img/fundal_jumatate.png") no-repeat center center fixed;
-                background-size: cover;
-            }
-            .btn-outline-success:hover {
-                border: 1px solid #fff;
-            }
-            .caseta-link:hover textarea,
-            .caseta-link:active textarea {
-                border-color: #00796b !important;
-                background: #e0f7fa !important;
-                transition: 0.2s;
-            }
-            .btn-next {
-                background-color: #3bb1b1;
-                color: white;
-                border: none;
-                padding: 12px 24px;
-                font-size: 1.1rem;
-                border-radius: 25px;
-                transition: all 0.3s ease;
-                text-decoration: none;
-                display: inline-block;
-            }
-            .btn-next:hover {
-                background-color: #005a4f;
-                transform: translateY(-2px);
-                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            }
+    /* ===== FUNDAL ===== */
+    html{
+      min-height:100%;
+      background: url("/frontend/frontend-beta/img/fundal_jumatate.png")
+                  top center / 100% 100% no-repeat;
+      background-attachment: scroll;
+    }
+    body{
+      margin:0;
+      min-height:100dvh;
+      background:transparent;
+      font-family: Montserrat, system-ui, sans-serif;
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+    }
+    .content-wrapper,.main-content,.container{ background:transparent !important; }
 
-            .btn-outline-success:hover {
-            border: 1px solid #fff;
-        }
+    /* ===== Layout general ===== */
+    .page-wrap{ min-height:100dvh; padding-bottom:var(--footer-h); box-sizing:border-box; }
+    .main{ max-width:1100px; margin:0 auto; padding:20px; }
 
-        .navbar-nav .nav-item {
-            margin-right: 2.0rem;
-        }
+    .btn-outline-success:hover{ border:1px solid #fff; }
+    .navbar-nav .nav-item{ margin-right:2rem; }
+    .navbar-nav .nav-item:last-child{ margin-right:0; }
+    .navbar-nav .nav-link{ font-size: var(--fs-body); }
 
-        .navbar-nav .nav-item:last-child {
-            margin-right: 0;
-        }
-        </style>
-    </head>
+    /* Titlu + meta */
+    .page-title{
+      font-weight:800;
+      font-size: var(--fs-title);
+      color:#00796b;
+      text-shadow:2px 2px #e0f7fa;
+      padding-bottom:12px;
+      border-bottom:4px solid var(--brand);
+      margin:8px 0 10px;
+    }
+    .page-meta{
+      font-size: var(--fs-meta);
+      color:#757575;
+      margin-bottom: clamp(12px, 3vw, 20px);
+    }
 
-    <body>
-        <header>
-            <nav
-            class="navbar navbar-expand-md" style="background: linear-gradient(to right, #fff, rgb(59, 177, 177)); "
-           >
-            <div class="container">
-                <a class="navbar-brand" href="Echipa1.html">
-                    <img src = "/frontend/frontend-beta/img/IoT - Team B.png" height="60">
-                </a>
-                <button
-                    class="navbar-toggler d-lg-none"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#collapsibleNavId"
-                    aria-controls="collapsibleNavId"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="collapsibleNavId">
-                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                         <li class="nav-item">
-                            <a class="nav-link active" href="../../index.html" aria-current="page" style="font-family: montserrat, sans-serif;"
-                                >Home
-                                <span class="visually-hidden">(current)</span></a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Meet_the_Team.html" aria-current="page" style="font-family: montserrat, sans-serif;"
-                                >Meet the Team
-                                <span class="visually-hidden">(current)</span></a
-                            >
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Our_project.html" aria-current="page" style="font-family: montserrat, sans-serif;">Our Project
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>
-                        
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Dashboard_proiect.html" aria-current="page" style="font-family: montserrat, sans-serif;">Dashboard Project
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>
-                        
-                        
-                        <li class="nav-item">
-                            <a class="nav-link active" href="Contact_us.html" aria-current="page" style="font-family: montserrat, sans-serif;">Contact Us
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                            </li>
+    /* Lista de știri */
+    .news-list{
+      display:grid;
+      grid-template-columns: 1fr;
+      gap: clamp(12px, 2.6vw, 18px);
+    }
+    .news-item{
+      background: rgba(255,255,255,.75);
+      border: 2px solid rgba(0,0,0,.04);
+      border-radius: 14px;
+      padding: clamp(10px, 2.4vw, 16px);
+      backdrop-filter: blur(2px);
+      box-shadow: 0 2px 8px rgba(0,0,0,.06);
+    }
+    .news-head{
+      display:flex; gap:10px; align-items:center; justify-content:space-between;
+      margin-bottom:8px; flex-wrap:wrap;
+    }
+    .news-date{ font-weight:700; color:#0b1f24; font-size: var(--fs-meta); }
+    .news-tag{
+      font-size: var(--fs-tag);
+      color:#0b1f24;
+      background:#e0f7fa;
+      border:1px solid var(--brand);
+      padding:3px 8px;
+      border-radius:999px;
+    }
+    .news-body{
+      border: 4px solid var(--brand);
+      border-radius: 12px;
+      padding: 12px 14px;
+      background: transparent;
+      font-size: var(--fs-body);
+      line-height: var(--lh-body);
+      white-space: pre-line;
+      max-height: 160px;
+      overflow: auto;
+    }
 
-                         <li class="nav-item">
-                            <a class="nav-link active" href="news.html" aria-current="page" style="font-family: montserrat, sans-serif;">News & Updates
-                                <span class="visually-hidden">(current)</span>
-                            </a>
-                        </li>   
-                    </ul>
-                    <form class="d-flex my-2 my-lg-0">
-                        <input
-                            class="form-control me-sm-2"
-                            type="text"
-                            placeholder="Search"
-                        />
-                        <button
-                            class="btn btn-outline-success my-2 my-sm-0"
-                            type="submit"
-                            style="background-color: #00796b; color: #e0f7fa;"                            
-                        >
-                            Search
-                        </button>
-                    </form>
-                </div>
-            </div>
-           </nav>
-        </header>
-        <main>
-        <div class="content-wrapper">
-            <div class="main-content">
-                <div class="container" style="height: 80vh; position: relative;">
-                    <!-- Primul text, sus stânga -->
-                    <div style="position: absolute; top: 32px; left: 0; width: 600px;">
-                        <div 
-                             style="
-                                font-family: montserrat, sans-serif;
-                                font-size: 2.5rem;
-                                font-weight: bold;
-                                color: #00796b;
-                                text-shadow: 2px 2px #e0f7fa;
-                                padding-bottom: 16px;
-                            border-bottom: 4px solid #3bb1b1;
-                            "
-                        >
-                        News & Updates
-                        </div>
-                    </div>
+    /* Footer fix jos */
+    footer{
+      position:fixed; left:0; right:0; bottom:0; height:var(--footer-h);
+      background: rgb(59,177,177); color:#e0f7fa;
+      display:grid; place-items:center; text-align:center; padding:8px;
+    }
+    footer p{ font-size: var(--fs-foot); margin:0; }
 
-                     <div style="position: absolute; top: 120px; left: 10px; width: 600px;">
-                    <div 
-                        style="
-                            font-size: 0.8rem;
-                            font-family: Montserrat, sans-serif;
-                            text-align: left;
-                            background:fundal;
-                            color: #757575;
-                            padding-bottom: 16px;
-                        "
-                    >
-                        Administrator / News / 11 August 2025
-                    </div>
-                </div>
-                </div>
+    /* Ecrane foarte înguste */
+    @media (max-width:360px){
+      .navbar .form-control, .navbar .btn{ display:none; }
+      .news-body{ max-height: 140px; }
+      html{ font-size: 87.5%; }
+    }
+  </style>
+</head>
 
+<body>
+  <!-- Top bar -->
+  <div class="top-bar" style="width:100%;background-color:#fff;">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="social-icons">
+        <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+      <a class="navbar-brand" href="../../index.html">
+        <img src="/frontend/frontend-beta/img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid" style="max-width:100px;">
+      </a>
+      <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center me-3">
+          <i class="far fa-envelope me-2 text-secondary"></i>
+          <span class="text-secondary">contact@aiot-xplorer.eu</span>
+        </div>
+        <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-outline-success">
+          <i class="fas fa-sign-in-alt"></i> Sign In
+        </a>
+      </div>
+    </div>
+  </div>
 
-                <div  style="position: absolute; top: 300px; left: 160px; width: 600px;">
-                    <div 
-                        style="
-                            font-size: 1.0rem;
-                            font-family: Montserrat, sans-serif;
-                            text-align: left;
-                            background:fundal;
-                            
-                            padding-bottom: 16px;
-                        "
-                    >
-                  <textarea style="background:none; overflow: auto; font-family: montserrat, sans-serif;border-radius: 12px; border: 4px solid #3bb1b1;resize: none; width: 600px; max-width: 600px; height: 120px;  max-height: 120px;" placeholder="Descriere" disabled>
-- We officially joined the team — 11 August 
-</textarea>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-md" style="width:100%; background: linear-gradient(to right, #fff, rgb(59, 177, 177));">
+    <div class="container">
+      <a class="navbar-brand" href="Echipa1.html">
+        <img src="/frontend/frontend-beta/img/IoT - Team B.png" height="60" alt="Team B">
+      </a>
+      <button class="navbar-toggler d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavId"
+              aria-controls="collapsibleNavId" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="collapsibleNavId">
+        <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+          <li class="nav-item"><a class="nav-link active" href="../../index.html">Home</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Meet_the_Team.html">Meet the Team</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Our_project.html">Our Project</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Dashboard_proiect.html">Dashboard Project</a></li>
+          <li class="nav-item"><a class="nav-link active" href="Contact_us.html">Contact Us</a></li>
+          <li class="nav-item"><a class="nav-link active" href="news.html">News & Updates</a></li>
+        </ul>
+        <form class="d-flex my-2 my-lg-0">
+          <input class="form-control me-sm-2" type="text" placeholder="Search" />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" style="background-color:#00796b; color:#e0f7fa;">
+            Search
+          </button>
+        </form>
+      </div>
+    </div>
+  </nav>
 
-                    </div>
-                </div>
-            </div>
+  <!-- Conținut -->
+  <div class="page-wrap">
+    <main class="main">
+      <div class="page-title">News & Updates</div>
+      <div class="page-meta">Administrator / News / 11 August 2025</div>
 
-        </main>
-           
-        <footer style="background-color: rgb(59, 177, 177); position: fixed; bottom: 0; width: 100%; left: 0; color: #e0f7fa; text-align: center; padding: 10px;">
-            <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
-        </footer>
+      <section class="news-list">
+        <!-- ITEM 1 -->
+        <article class="news-item">
+          <div class="news-head">
+            <span class="news-date">11 August 2025</span>
+            <span class="news-tag">Announcement</span>
+          </div>
+          <div class="news-body">
+- We officially joined the team — 11 August
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
 
-        <!-- Bootstrap JavaScript Libraries -->
-        <script
-            src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"
-        ></script>
+  <!-- Footer fix jos -->
+  <footer>
+    <p>© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025 IoT Explorer Program</p>
+  </footer>
 
-        <script
-            src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"
-        ></script>
-    </body>
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
