@@ -13,8 +13,7 @@
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
   <!-- Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-  
-  
+
   <style>
     body {
       margin: 0;
@@ -242,13 +241,6 @@
       </div>
     </div>
 
-    <!-- BUTON IRRIGATION -->
-    <div class="container text-center my-5">
-      <h3 class="mb-3">Irrigation Control</h3>
-      <button id="irrigationBtn" class="btn btn-lg irrigation-btn">
-        <i class="fas fa-faucet"></i> Start Irrigation
-      </button>
-    </div>
 
     <!-- CHARTS -->
     <div class="container charts-section">
@@ -333,31 +325,7 @@
     createChart(document.getElementById('humidityChart'), 'Air Humidity', '%', '#36a2eb', 'rgba(54,162,235,0.2)');
     
 
-    // IRRIGATION BUTTON
-    const irrigationBtn = document.getElementById("irrigationBtn");
-    let needsWater = true;
-    let irrigationOn = false;
-
-    if (needsWater) {
-      irrigationBtn.classList.add("blink");
-    }
-
-    irrigationBtn.addEventListener("click", () => {
-      irrigationOn = !irrigationOn;
-      if (irrigationOn) {
-        irrigationBtn.classList.remove("blink");
-        irrigationBtn.classList.add("irrigation-on");
-        irrigationBtn.innerHTML = '<i class="fas fa-faucet"></i> Irrigation ON';
-        console.log("Irrigation system started!");
-      } else {
-        irrigationBtn.classList.remove("irrigation-on");
-        irrigationBtn.innerHTML = '<i class="fas fa-faucet"></i> Start Irrigation';
-        console.log("Irrigation system stopped!");
-        if (needsWater) {
-          irrigationBtn.classList.add("blink");
-        }
-      }
-    });
+    
   </script>
 
   
