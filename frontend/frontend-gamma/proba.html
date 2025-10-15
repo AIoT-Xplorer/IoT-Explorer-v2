@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Medical Dashboard</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Make sure this exists and defines window.AIOT -->
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f8f9fa;
+      margin: 20px;
+    }
+    h2 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+    .card-custom {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 200px;
+      padding: 15px;
+      text-align: center;
+    }
+    .card-value {
+      font-size: 1.5em;
+      font-weight: bold;
+      color: #007bff;
+      margin-top: 10px;
+    }
+    .charts {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 30px;
+    }
+    canvas {
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body>
+  <h2>Medical Dashboard</h2>
+
+  <div class="dashboard">
+    <div class="card-custom"><h5>GSR</h5><div class="card-value">--</div></div>
+    <div class="card-custom"><h5>Temperature</h5><div class="card-value">--</div></div>
+    <div class="card-custom"><h5>SpO₂</h5><div class="card-value">--</div></div>
+    <div class="card-custom"><h5>Heart Rate</h5><div class="card-value">--</div></div>
+  </div>
+
+  <div class="charts">
+    <canvas id="gsrChart"></canvas>
+    <canvas id="tmp007Chart"></canvas>
+    <canvas id="max30102_spo2Chart"></canvas>
+    <canvas id="max30102_bpmChart"></canvas>
+  </div>
+  <script src="api.js"></script>
+  <script>
+  const charts = {
+    gsrChart: new Chart(document.getElementById("gsrChart"), {
+      type: "line",
+      data: { labels: [], datasets: [{ label: "GSR (Ohms)", data: [], borderColor: "blue", fill: false }] },
+      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    }),
+    tmp007Chart: new Chart(document.getElementById("tmp007Chart"), {
+      type: "line",
+      data: { labels: [], datasets: [{ label: "Temperature (°C)", data: [], borderColor: "red", fill: false }] },
+      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    }),
+    max30102_spo2Chart: new Chart(document.getElementById("max30102_spo2Chart"), {
+      type: "line",
+      data: { labels: [], datasets: [{ label: "SpO₂ (%)", data: [], borderColor: "green", fill: false }] },
+      options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
+    }),
+    max30102_bpmChart: new Chart(document.getElementById("max30102_bpmChart"), {
+      type: "line",
+      data: { labels: [], datasets: [{ label: "Heart Rate (bpm)", data: [], borderColor: "purple", fill: false }] },
+      options: { responsive: true, scales: { y: { beginAtZero: true } } }
+    })
+  };
+
+  (async function () {
+    if (!window.AIOT) { console.error("api.js nu exista"); return; }
+
+    const CARD_SIGNALS = [
+      { app: "medical", signal: "gsr", unit: "Ohms" },
+      { app: "medical", signal: "tmp007", unit: "°C" },
+      { app: "medical", signal: "max30102_spo2", unit: "%" },
+      { app: "medical", signal: "max30102_bpm", unit: "bpm" }
+    ];
+
+    const CHARTS = [
+      { canvasId: "gsrChart",      app: "medical", signal: "gsr" },
+      { canvasId: "tmp007Chart",   app: "medical", signal: "tmp007" },
+      { canvasId: "max30102_spo2Chart", app: "medical", signal: "max30102_spo2" },
+      { canvasId: "max30102_bpmChart",  app: "medical", signal: "max30102_bpm" }
+    ];
+
+    const REFRESH_MS = 10000;
+    const HISTORY_MIN = 60;
+    const STEP = "1m";
+
+    const lastPath  = app => `/api/${app}/value`;
+    const rangePath = app => `/api/${app}/history`;
+
+    function getCardValueNodesInOrder() {
+      return Array.from(document.querySelectorAll(".card-custom .card-value"));
+    }
+
+    async function refreshCards() {
+      const nodes = getCardValueNodesInOrder();
+      if (nodes.length < CARD_SIGNALS.length) return;
+
+      try {
+        const jobs = CARD_SIGNALS.map(c =>
+          AIOT.apiGet(lastPath(c.app), { signal: c.signal }).then(r => ({c, r}))
+        );
+        const results = await Promise.all(jobs);
+        results.forEach(({c, r}, idx) => {
+          if (!r || r.value == null) return;
+          nodes[idx].textContent = `${r.value} ${c.unit || ""}`.trim();
+        });
+      } catch (e) {
+        console.warn("[cards] error:", e);
+      }
+    }
+
+    function pushPoint(chart, x, y, maxPoints = 60) {
+      chart.data.labels.push(x);
+      chart.data.datasets[0].data.push(y);
+      if (chart.data.labels.length > maxPoints) {
+        chart.data.labels.shift();
+        chart.data.datasets[0].data.shift();
+      }
+      chart.update();
+    }
+
+    async function loadHistoryIntoCharts() {
+      try {
+        const now = new Date();
+        const from = new Date(now.getTime() - HISTORY_MIN * 60 * 1000).toISOString();
+        const to   = now.toISOString();
+
+        const jobs = CHARTS.map(ch =>
+          AIOT.apiGet(rangePath(ch.app), { signal: ch.signal, from_ts: from, to_ts: to, step: STEP })
+            .then(data => ({ ch, data: data || [] }))
+        );
+        const res = await Promise.all(jobs);
+
+        res.forEach(({ch, data}) => {
+          const chart = charts[ch.canvasId];
+          if (!chart) return;
+          data.forEach(p => pushPoint(chart, new Date(p.ts).toLocaleTimeString(), p.value));
+        });
+      } catch (e) {
+        console.warn("[history] error:", e);
+      }
+    }
+
+    window.addEventListener("load", async () => {
+      await refreshCards();
+      await loadHistoryIntoCharts();
+      if (REFRESH_MS > 0) setInterval(refreshCards, REFRESH_MS);
+    });
+  })();
+  </script>
+</body>
+</html>

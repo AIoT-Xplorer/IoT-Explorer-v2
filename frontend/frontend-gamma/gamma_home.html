@@ -173,15 +173,67 @@
             box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
         }
 
-        .sensor-box {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin: 0.5rem 0;
+        /* ===== CAMERA FEED ===== */
+        .camera-box {
+            background: #000;
+            color: #aaa;
+            border-radius: 15px;
             width: 100%;
-            text-align: left;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
+
+        /* ===== PANEL SENZORI ===== */
+        .sensor-panel {
+            background: #fff;
+          border-radius: 15px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+          min-height: 450px;  /* ⬅️ adaugă linia asta */
+        }
+
+
+        /* ===== CARD INDIVIDUAL ===== */
+        .card-custom {
+        background: #fff;
+        border-radius: 12px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+        padding: 15px;
+        text-align: center;
+        transition: all 0.25s ease;
+        min-height: 180px;
+        }
+
+        .card-custom:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 12px rgba(0,0,0,0.15);
+        }
+
+        .card-custom h6 {
+        margin-bottom: 6px;
+        color: #333;
+        font-weight: 600;
+        }
+
+        .card-value {
+        font-size: 1.3em;
+        font-weight: bold;
+        color: #007bff;
+        margin-bottom: 8px;
+        }
+
+        /* ===== GRAFICE ===== */
+        .mini-chart {
+        background: #fff;
+        border-radius: 8px;
+        box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+        padding: 3px;
+        height: 100px !important;
+        width: 100%;
+        }
+
 
 
         .btn-outline-primary {
@@ -435,63 +487,67 @@
                         </div>
                     </div>
                     <div class="card-body">
-
                         <h4 class="mb-4 text-center">Dashboard</h4>
 
-                        <div class="row g-4">
-                            <div class="col-md-4 text-center">
-                                <h5>Flux Camera</h5>
-                                <div class="border rounded p-2" style="height:200px; background:#ccc;">
-                                    <span class="text-muted">Camera preview placeholder</span>
-                                </div>
+                        <div class="row align-items-start g-4">
+
+                            <!-- Flux Camera (stânga) -->
+                            <div class="col-md-6">
+                            <div class="camera-box w-100">
+                                <span class="text-muted">Camera feed here</span>
+                            </div>
                             </div>
 
-                            <div class="col-md-4 text-center">
-                                <h5>Status Senzori</h5>
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="sensor-box">
-                                        <div class="form-check form-switch green-switch">
-                                            <input class="form-check-input" type="checkbox" id="sensor1" checked>
-                                            <label class="form-check-label" for="sensor1">Temperature sensor</label>
-                                        </div>
-                                    </div>
+                            <!-- Citiri senzori (dreapta) -->
+                            <div class="col-md-6">
+                            <div class="card p-3 shadow-sm rounded-4 sensor-panel">
+                                <h5 class="text-center mb-3">Status Senzori</h5>
 
-                                    <div class="sensor-box">
-                                        <div class="form-check form-switch green-switch">
-                                            <input class="form-check-input" type="checkbox" id="sensor2">
-                                            <label class="form-check-label" for="sensor2">Oxygen sensor</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="sensor-box">
-                                        <div class="form-check form-switch green-switch">
-                                            <input class="form-check-input" type="checkbox" id="sensor3">
-                                            <label class="form-check-label" for="sensor3">Pulse sensor</label>
-                                        </div>
+                                <div class="row g-3">
+                                <!-- GSR -->
+                                <div class="col-6">
+                                    <div class="card-custom h-100">
+                                    <h6>GSR</h6>
+                                    <div class="card-value" id="val-gsr">--</div>
+                                    <canvas id="gsrChart" class="mini-chart"></canvas>
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="col-md-4 text-center">
-                                <h5>Grafice Senzori</h5>
-                                <select id="timeRange" class="form-select mb-2 rounded-3">
-                                    <option value="day">Day</option>
-                                    <option value="month">Month</option>
-                                    <option value="year">Year</option>
-                                </select>
-
-                                <div class="btn-group mb-2">
-                                    <button class="btn btn-outline-success btn-sm active" data-sensor="all">All</button>
-                                    <button class="btn btn-outline-success btn-sm"
-                                        data-sensor="temp">Temperature</button>
-                                    <button class="btn btn-outline-success btn-sm" data-sensor="oxygen">Oxygen</button>
-                                    <button class="btn btn-outline-success btn-sm" data-sensor="pulse">Pulse</button>
+                                <!-- Temperature -->
+                                <div class="col-6">
+                                    <div class="card-custom h-100">
+                                    <h6>Temperature</h6>
+                                    <div class="card-value" id="val-temp">--</div>
+                                    <canvas id="tmp007Chart" class="mini-chart"></canvas>
+                                    </div>
                                 </div>
 
-                                <canvas id="sensorChart"></canvas>
+                                <!-- SpO₂ -->
+                                <div class="col-6">
+                                    <div class="card-custom h-100">
+                                    <h6>SpO₂</h6>
+                                    <div class="card-value" id="val-spo2">--</div>
+                                    <canvas id="max30102_spo2Chart" class="mini-chart"></canvas>
+                                    </div>
+                                </div>
+
+                                <!-- Heart Rate -->
+                                <div class="col-6">
+                                    <div class="card-custom h-100">
+                                    <h6>Heart Rate</h6>
+                                    <div class="card-value" id="val-bpm">--</div>
+                                    <canvas id="max30102_bpmChart" class="mini-chart"></canvas>
+                                    </div>
+                                </div>
+                                </div>
                             </div>
+                            </div>
+
                         </div>
+                        </div>
+
                     </div>
+
                 </div>
             </div>
 
@@ -782,7 +838,8 @@
                 2025
                 IoT Explorer Program</p>
         </footer>
-
+        <script src="api.js"></script>
+        <script src="dashboard.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
             integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
             crossorigin="anonymous"></script>
@@ -790,6 +847,61 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"></script>
+        <!-- fd -->
+
+        <script>
+  // helper generic pentru linii
+  function createLineChart(canvasId, label, ySuffix = "", suggestedMin = undefined, suggestedMax = undefined) {
+    const ctx = document.getElementById(canvasId);
+    if (!ctx) return null;
+    const chart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: [],
+        datasets: [{
+          label,
+          data: [],
+          borderColor: '#225E3E',
+          backgroundColor: 'rgba(34,94,62,0.15)',
+          fill: true,
+          tension: 0.3,
+          pointRadius: 0
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        animation: false,
+        plugins: { legend: { display: true } },
+        scales: {
+          x: { ticks: { maxRotation: 0, autoSkip: true } },
+          y: {
+            suggestedMin,
+            suggestedMax,
+            ticks: {
+              callback: (v) => `${v}${ySuffix}`
+            }
+          }
+        }
+      }
+    });
+    // păstrăm referința pe element => getChartByCanvasId îl găsește
+    ctx._chart = chart;
+    return chart;
+  }
+
+  // creează cele 4 grafice
+  window.addEventListener('load', () => {
+    createLineChart('gsrChart', 'GSR', ' Ω');                  // rezistență
+    createLineChart('tmp007Chart', 'Temperature', ' °C', 20, 45);
+    createLineChart('max30102_spo2Chart', 'SpO₂', ' %', 85, 100);
+    createLineChart('max30102_bpmChart', 'Pulse', ' bpm', 40, 160);
+  });
+</script>
+
+
+
+
         <script>
             // Aici vom stoca datele noastre, ca o simulare.
             // În aplicația reală, acestea ar veni de la un server.

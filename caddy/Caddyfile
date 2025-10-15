@@ -44,13 +44,14 @@
     # --- CORS minimal (decomentează dacă este necesar) ---
     @preflight method OPTIONS
     handle @preflight {
-        header Access-Control-Allow-Origin "*"
+        header Access-Control-Allow-Origin https://app.aiot-xplorer.eu
         header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-        header Access-Control-Allow-Headers "Authorization, Content-Type"
+        header Access-Control-Allow-Headers "x-tenant-id,Authorization, Content-Type"
+        header Access-Control-Allow-Credentials "true"
         header Access-Control-Max-Age "86400"
         respond "" 204
     }
-    header Access-Control-Allow-Origin "*"
+    #header Access-Control-Allow-Origin "*"
     # -----------------------------------------------------
 
     reverse_proxy backend:80

@@ -1,5 +1,7 @@
 from fastapi import APIRouter, Depends, Request
 from db import fetch_all, execute
+from fastapi import Query
+
 
 router = APIRouter()
 
@@ -23,3 +25,34 @@ async def upsert_device(device: dict, request: Request, tenant: str | None = Dep
     """
     await execute(q, {"tenant": tenant, "app_id": device.get("app_id"), "device_id": device.get("device_id"), "meta": device.get("meta")})
     return {"ok": True}
+
+
+@router.get("/value")
+async def get_signal_value(
+    request: Request,
+    signal: str = Query(...),
+    tenant: str | None = Depends(get_tenant)
+):
+    # Returnează ultima valoare pentru signal din measurements
+    q = """
+    SELECT value
+    FROM measurements
+    WHERE signal = $1 AND ($2::text IS NULL OR tenant_id = $2)
+    ORDER BY ts DESC
+    LIMIT 1
+    """
+    rows = await fetch_all(q, {"signal": signal, "tenant": tenant})
+    if rows:
+        return {"value": rows[0]["value"]}
+    return {"value": None}
+
+@router.get("/history")
+async def agri_history(limit: int = 10):
+    rows = await fetch_all("""
+        SELECT topic, payload, received_at
+        FROM device_data
+        WHERE app_name = 'medical' AND tenant_id = 'default'
+        ORDER BY received_at DESC
+        LIMIT $1
+    """, {"limit": limit})
+    return [dict(r) for r in rows]

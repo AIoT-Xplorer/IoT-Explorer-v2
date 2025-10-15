@@ -5,6 +5,8 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 
     <title>About our project</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
     <link rel="icon" href="../img/logo_team.png" type="image/png">
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
@@ -122,7 +124,7 @@
             min-height: 80vh;
         }
 
-        
+
 
         @media screen and (max-width: 600px) {
             .column {
@@ -247,6 +249,43 @@
             justify-content: center;
         }
 
+        .dashboard {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .card-custom {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .card-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #007bff;
+            margin-top: 10px;
+        }
+
+        .charts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        canvas {
+            background: white;
+            border-radius: 12px;
+            padding: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
         #themeToggle:hover {
             background-color: #ddd;
             transform: scale(1.1);
@@ -347,6 +386,16 @@
         .dark-mode .form-check-input:focus {
             box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
         }
+
+        /* ===== GRAFICE ===== */
+        .mini-chart {
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+            padding: 3px;
+            height: 100px !important;
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -358,7 +407,8 @@
                 <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
             </div>
 
-            <img src="../img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid" style="max-width: 100px;">
+            <img src="../img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid"
+                style="max-width: 100px;">
 
             <div class="d-flex align-items-center">
                 <div class="d-flex align-items-center me-3">
@@ -394,7 +444,8 @@
                             data-bs-toggle="dropdown" aria-expanded="false">Our team</a>
                         <ul class="dropdown-menu" aria-labelledby="navbarDropdownOurTeam">
                             <li><a class="dropdown-item" href="../src/gamma_dobrin.html">Dobrin Vasile</a></li>
-                            <li><a class="dropdown-item" href="../src/gamma_nicolae.html">Petriia Iulian-Nicolae</a></li>
+                            <li><a class="dropdown-item" href="../src/gamma_nicolae.html">Petriia Iulian-Nicolae</a>
+                            </li>
                         </ul>
                     </li>
                     <li class="nav-item"><a class="nav-link" href="#updates-section">Updates & News</a></li>
@@ -412,368 +463,507 @@
 <button id="backToTop" title="Go to top">
     <i class="fas fa-arrow-up"></i>
 </button>
-
-
+<!-- 
 <body>
+    <h2>Medical Dashboard</h2>
 
-    <div class="container-fluid p-0">
+    <div class="dashboard">
+        <div class="card-custom">
+            <h5>GSR</h5>
+            <div class="card-value">--</div>
+        </div>
+        <div class="card-custom">
+            <h5>Temperature</h5>
+            <div class="card-value">--</div>
+        </div>
+        <div class="card-custom">
+            <h5>SpO₂</h5>
+            <div class="card-value">--</div>
+        </div>
+        <div class="card-custom">
+            <h5>Heart Rate</h5>
+            <div class="card-value">--</div>
+        </div>
+    </div>
+
+    <div class="charts">
+        <canvas id="gsrChart"></canvas>
+        <canvas id="tmp007Chart"></canvas>
+        <canvas id="max30102_spo2Chart"></canvas>
+        <canvas id="max30102_bpmChart"></canvas>
+    </div>
+    <script src="api.js"></script>
+    <script src="dashboard.js"></script>
+    <script>
+        const charts = {
+            gsrChart: new Chart(document.getElementById("gsrChart"), {
+                type: "line",
+                data: { labels: [], datasets: [{ label: "GSR (Ohms)", data: [], borderColor: "blue", fill: false }] },
+                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            }),
+            tmp007Chart: new Chart(document.getElementById("tmp007Chart"), {
+                type: "line",
+                data: { labels: [], datasets: [{ label: "Temperature (°C)", data: [], borderColor: "red", fill: false }] },
+                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            }),
+            max30102_spo2Chart: new Chart(document.getElementById("max30102_spo2Chart"), {
+                type: "line",
+                data: { labels: [], datasets: [{ label: "SpO₂ (%)", data: [], borderColor: "green", fill: false }] },
+                options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
+            }),
+            max30102_bpmChart: new Chart(document.getElementById("max30102_bpmChart"), {
+                type: "line",
+                data: { labels: [], datasets: [{ label: "Heart Rate (bpm)", data: [], borderColor: "purple", fill: false }] },
+                options: { responsive: true, scales: { y: { beginAtZero: true } } }
+            })
+        };
+
+        (async function () {
+            if (!window.AIOT) { console.error("api.js nu exista"); return; }
+
+            const CARD_SIGNALS = [
+                { app: "medical", signal: "gsr", unit: "Ohms" },
+                { app: "medical", signal: "tmp007", unit: "°C" },
+                { app: "medical", signal: "max30102_spo2", unit: "%" },
+                { app: "medical", signal: "max30102_bpm", unit: "bpm" }
+            ];
+
+            const CHARTS = [
+                { canvasId: "gsrChart", app: "medical", signal: "gsr" },
+                { canvasId: "tmp007Chart", app: "medical", signal: "tmp007" },
+                { canvasId: "max30102_spo2Chart", app: "medical", signal: "max30102_spo2" },
+                { canvasId: "max30102_bpmChart", app: "medical", signal: "max30102_bpm" }
+            ];
+
+            const REFRESH_MS = 10000;
+            const HISTORY_MIN = 60;
+            const STEP = "1m";
+
+            const lastPath = app => `/api/${app}/value`;
+            const rangePath = app => `/api/${app}/history`;
+
+            function getCardValueNodesInOrder() {
+                return Array.from(document.querySelectorAll(".card-custom .card-value"));
+            }
+
+            async function refreshCards() {
+                const nodes = getCardValueNodesInOrder();
+                if (nodes.length < CARD_SIGNALS.length) return;
+
+                try {
+                    const jobs = CARD_SIGNALS.map(c =>
+                        AIOT.apiGet(lastPath(c.app), { signal: c.signal }).then(r => ({ c, r }))
+                    );
+                    const results = await Promise.all(jobs);
+                    results.forEach(({ c, r }, idx) => {
+                        if (!r || r.value == null) return;
+                        nodes[idx].textContent = `${r.value} ${c.unit || ""}`.trim();
+                    });
+                } catch (e) {
+                    console.warn("[cards] error:", e);
+                }
+            }
+
+            function pushPoint(chart, x, y, maxPoints = 60) {
+                chart.data.labels.push(x);
+                chart.data.datasets[0].data.push(y);
+                if (chart.data.labels.length > maxPoints) {
+                    chart.data.labels.shift();
+                    chart.data.datasets[0].data.shift();
+                }
+                chart.update();
+            }
+
+            async function loadHistoryIntoCharts() {
+                try {
+                    const now = new Date();
+                    const from = new Date(now.getTime() - HISTORY_MIN * 60 * 1000).toISOString();
+                    const to = now.toISOString();
+
+                    const jobs = CHARTS.map(ch =>
+                        AIOT.apiGet(rangePath(ch.app), { signal: ch.signal, from_ts: from, to_ts: to, step: STEP })
+                            .then(data => ({ ch, data: data || [] }))
+                    );
+                    const res = await Promise.all(jobs);
+
+                    res.forEach(({ ch, data }) => {
+                        const chart = charts[ch.canvasId];
+                        if (!chart) return;
+                        data.forEach(p => pushPoint(chart, new Date(p.ts).toLocaleTimeString(), p.value));
+                    });
+                } catch (e) {
+                    console.warn("[history] error:", e);
+                }
+            }
+
+            window.addEventListener("load", async () => {
+                await refreshCards();
+                await loadHistoryIntoCharts();
+                if (REFRESH_MS > 0) setInterval(refreshCards, REFRESH_MS);
+            });
+        })();
+    </script>
+</body> -->
+
+    <body>
+
+
+
+
+
+        <div class="card-body">
+            <h4 class="mb-4 text-center">Dashboard</h4>
+
+            <div class="row align-items-start g-4">
+
+                <div class="col-md-6 d-flex">
+                    <div class="camera-box w-100 border rounded-4 shadow-sm overflow-hidden"
+                        style="height: 400px; background: #000;">
+                        <video id="camVideo" autoplay playsinline controls
+                            style="width:100%; height:100%; object-fit:cover; border-radius: 0.5rem;">
+                            <source src="https://perennially-unsnaffled-shakia.ngrok-free.dev/live_stream.m3u8"
+                                type="application/x-mpegURL">
+                            Your browser does not support the video tag.
+                        </video>
+                    </div>
+                </div>
+
+                <!-- Citiri senzori (dreapta) -->
+                <div class="col-md-6">
+                    <div class="card p-3 shadow-sm rounded-4 sensor-panel">
+                        <h5 class="text-center mb-3">Status Senzori</h5>
+
+                        <div class="row g-3">
+                            <!-- GSR -->
+                            <div class="col-6">
+                                <div class="card-custom h-100">
+                                    <h6>GSR</h6>
+                                    <div class="card-value" id="val-gsr">--</div>
+                                    <canvas id="gsrChart" class="mini-chart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Temperature -->
+                            <div class="col-6">
+                                <div class="card-custom h-100">
+                                    <h6>Temperature</h6>
+                                    <div class="card-value" id="val-temp">--</div>
+                                    <canvas id="tmp007Chart" class="mini-chart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- SpO₂ -->
+                            <div class="col-6">
+                                <div class="card-custom h-100">
+                                    <h6>SpO₂</h6>
+                                    <div class="card-value" id="val-spo2">--</div>
+                                    <canvas id="max30102_spo2Chart" class="mini-chart"></canvas>
+                                </div>
+                            </div>
+
+                            <!-- Heart Rate -->
+                            <div class="col-6">
+                                <div class="card-custom h-100">
+                                    <h6>Heart Rate</h6>
+                                    <div class="card-value" id="val-bpm">--</div>
+                                    <canvas id="max30102_bpmChart" class="mini-chart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        </div>
+
+
         <div class="row m-0">
-
             <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
-                <div class="card shadow-sm p-3 Dashboard w-100" id="dashboard-section">
+                <div class="card text-center shadow-sm p-3 sensors-used w-100" id="sensors-used-section">
                     <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <h5 class="card-title">Sensors Used</h5>
+                        <div class="row w-100 justify-content-center mt-4">
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <img src="tmp007.jpg" class="card-img-top sensor-img p-3" alt="TMP007 Sensor">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">TMP007</h6>
+                                        <p class="card-text">
+                                            An infrared thermopile sensor that measures temperature without
+                                            physical contact, ideal for monitoring body temperature.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <img src="logi_cam.jpeg" class="card-img-top sensor-img p-3"
+                                        alt="Camera with dedicated microphone">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">Camera Logitech C922x Pro Stream Webcam</h6>
+                                        <p class="card-text">
+                                            A high-definition webcam with built-in microphones, providing clear
+                                            video and audio for monitoring and communication.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <img src="mh-et live.jpeg" class="card-img-top sensor-img p-3"
+                                        alt="Microphone Sensor Module">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">MH-ET Sensor for pulse and oxygen level</h6>
+                                        <p class="card-text">
+                                            A sensor module designed to measure pulse and oxygen levels, crucial for
+                                            health monitoring.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <img src="gsr.jpeg" class="card-img-top sensor-img p-3" alt="GSR sensor">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">GSR Sensor</h6>
+                                        <p class="card-text">
+                                            Measures galvanic skin response (GSR), providing insights into emotional
+                                            and physiological states.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <img src="display.png" class="card-img-top sensor-img p-3" alt="Display TFT">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">Display TFT</h6>
+                                        <p class="card-text">
+                                            A TFT display module for visual output, enabling real-time data
+                                            visualization.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-3 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <img src="coph-Ads1115-Module-Datasheet.jpg" class="card-img-top sensor-img p-3"
+                                        alt="ADS1115 Module">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">ADS1115 Module</h6>
+                                        <p class="card-text">
+                                            A precision ADC module for accurate sensor readings and data acquisition
+                                            from GSR sensor.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-0">
+            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+                <div class="card text-center shadow-sm p-3 updates w-100" id="updates-section">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <h5 class="card-title">Updates & News</h5>
+
+                        <div class="card news-item w-75 my-3 shadow-sm text-start"
+                            style="border-radius: 15px; border-left: 5px solid #385e45;">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">September 19, 2025</h6>
+                                <h5 class="card-title">PCB's GERBER files ready for manufacturing</h5>
+                                <p class="card-text">
+                                    We are pleased to announce that the GERBER files for our custom PCB design are
+                                    now
+                                    finalized and ready for manufacturing. This marks a significant milestone in our
+                                    project,
+                                    enabling us to move forward with the production of our hardware components.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card news-item w-75 my-3 shadow-sm text-start"
+                            style="border-radius: 15px; border-left: 5px solid #385e45;">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">August 20, 2025</h6>
+                                <h5 class="card-title">A function in working for the moment: a camera flux live</h5>
+                                <p class="card-text">
+                                    For the moment, we are working on a live camera flux that will be
+                                    integrated into the dashboard. This will allow users to monitor real-time humans
+                                    that are in
+                                    need of help or to be resuscitate.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="card news-item w-75 my-3 shadow-sm text-start"
+                            style="border-radius: 15px; border-left: 5px solid #385e45;">
+                            <div class="card-body">
+                                <h6 class="card-subtitle mb-2 text-muted">August 19, 2025</h6>
+                                <h5 class="card-title">New Sensor Integration: Pulse Oximeter Live!</h5>
+                                <p class="card-text">
+                                    We are excited to announce the successful integration of our new pulse
+                                    oximeter
+                                    sensor. You can now monitor real-time oxygen saturation (SpO₂) and pulse rate
+                                    data
+                                    directly on the dashboard. This enhancement provides a more comprehensive view
+                                    of
+                                    vital
+                                    signs, improving our health monitoring capabilities.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row m-0">
+            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+
+                <div class="card text-center shadow-sm p-3 results w-100" id="results-section">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <h5 class="card-title">Results</h5>
+
+                        <div id="auth-section" class="mb-4">
+                            <p>Please log in with your Google account to view your results.</p>
+                            <div id="g_id_onload"
+                                data-client_id="228881855593-7rfqeib30ikfens2lrncrlgnb4m0k23r.apps.googleusercontent.com"
+                                data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
+                                data-auto_prompt="false">
+                            </div>
+                            <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+                                data-text="sign_in_with" data-size="large" data-logo_alignment="left">
+                            </div>
+                        </div>
+
+                        <div class="filter-section w-100 mb-4 text-start d-none" id="filter-section">
+                            <div class="row g-2">
+                                <div class="col-md-4">
+                                    <label for="limit-filter" class="form-label">View last:</label>
+                                    <select class="form-select" id="limit-filter">
+                                        <option value="all" selected>All Readings</option>
+                                        <option value="5">5 Readings</option>
+                                        <option value="10">10 Readings</option>
+                                        <option value="20">20 Readings</option>
+                                        <option value="40">40 Readings</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="sensor-filter" class="form-label">Filter by Sensor:</label>
+                                    <select class="form-select" id="sensor-filter">
+                                        <option value="all" selected>All Sensors</option>
+                                        <option value="temp">Temperature</option>
+                                        <option value="oxygen">Oxygen</option>
+                                        <option value="pulse">Pulse</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label for="date-range-filter" class="form-label">Filter by Date:</label>
+                                    <select class="form-select" id="date-range-filter">
+                                        <option value="all" selected>All Time</option>
+                                        <option value="today">Today</option>
+                                        <option value="week">This Week</option>
+                                        <option value="month">This Month</option>
+                                        <option value="custom">Custom Range</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-2 d-none" id="custom-date-start-container">
+                                    <label for="start-date" class="form-label">Start Date:</label>
+                                    <input type="date" class="form-control" id="start-date">
+                                </div>
+                                <div class="col-md-2 d-none" id="custom-date-end-container">
+                                    <label for="end-date" class="form-label">End Date:</label>
+                                    <input type="date" class="form-control" id="end-date">
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
                             <i class="bi bi-info-circle-fill me-2"></i>
-                            This dashboard is displaying randomly generated data for demonstration purposes.
+                            Data in this table is randomly generated for demonstration purposes.
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
-                        <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
-                            <i class="bi bi-info-circle-fill me-2"></i>
-                            !! TODO: Adjust to look better !!
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
-                    </div>
-                    <div class="card-body">
 
-                        <h4 class="mb-4 text-center">Dashboard</h4>
-
-                        <div class="row g-4">
-                            <div class="col-md-4 text-center">
-                                <h5>Flux Camera</h5>
-                                <div class="border rounded p-2" style="height:200px; background:#ccc;">
-                                    <span class="text-muted">Camera preview placeholder</span>
-                                </div>
+                        <div class="results-container w-100 mt-4 d-none" id="results-container">
+                            <p class="text-muted text-center" id="data-status"></p>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-hover rounded overflow-hidden shadow-sm">
+                                    <thead class="bg-success text-white">
+                                        <tr>
+                                            <th scope="col" class="timestamp-col">Timestamp</th>
+                                            <th scope="col" class="temp-col">Temperature (°C)</th>
+                                            <th scope="col" class="oxygen-col">Oxygen Saturation (%)</th>
+                                            <th scope="col" class="pulse-col">Pulse Rate (BPM)</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="results-table-body">
+                                    </tbody>
+                                </table>
                             </div>
-
-                            <div class="col-md-4 text-center">
-                                <h5>Status Senzori</h5>
-                                <div class="d-flex flex-column align-items-center">
-                                    <div class="sensor-box">
-                                        <div class="form-check form-switch green-switch">
-                                            <input class="form-check-input" type="checkbox" id="sensor1" checked>
-                                            <label class="form-check-label" for="sensor1">Temperature sensor</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="sensor-box">
-                                        <div class="form-check form-switch green-switch">
-                                            <input class="form-check-input" type="checkbox" id="sensor2">
-                                            <label class="form-check-label" for="sensor2">Oxygen sensor</label>
-                                        </div>
-                                    </div>
-
-                                    <div class="sensor-box">
-                                        <div class="form-check form-switch green-switch">
-                                            <input class="form-check-input" type="checkbox" id="sensor3">
-                                            <label class="form-check-label" for="sensor3">Pulse sensor</label>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-md-4 text-center">
-                                <h5>Grafice Senzori</h5>
-                                <select id="timeRange" class="form-select mb-2 rounded-3">
-                                    <option value="day">Day</option>
-                                    <option value="month">Month</option>
-                                    <option value="year">Year</option>
-                                </select>
-
-                                <div class="btn-group mb-2">
-                                    <button class="btn btn-outline-success btn-sm active" data-sensor="all">All</button>
-                                    <button class="btn btn-outline-success btn-sm"
-                                        data-sensor="temp">Temperature</button>
-                                    <button class="btn btn-outline-success btn-sm" data-sensor="oxygen">Oxygen</button>
-                                    <button class="btn btn-outline-success btn-sm" data-sensor="pulse">Pulse</button>
-                                </div>
-
-                                <canvas id="sensorChart"></canvas>
+                            <div class="d-flex justify-content-center mt-4 gap-2">
+                                <button id="exportCsvBtn" class="btn btn-outline-success">
+                                    <i class="fas fa-file-csv me-2"></i>Export to CSV
+                                </button>
+                                <button id="exportPdfBtn" class="btn btn-outline-danger">
+                                    <i class="fas fa-file-pdf me-2"></i>Export to PDF
+                                </button>
+                                <button id="exportTxtBtn" class="btn btn-outline-primary">
+                                    <i class="fas fa-file-alt me-2"></i>Export to TXT
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="row m-0">
-                <div class="col-12 d-flex align-items-center justify-content-center bg-light"
-                    style="min-height: 100vh;">
-                    <div class="card text-center shadow-sm p-3 sensors-used w-100" id="sensors-used-section">
-                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                            <h5 class="card-title">Sensors Used</h5>
-                            <div class="row w-100 justify-content-center mt-4">
-                                <div class="col-lg-3 col-md-6 mb-4">
-                                    <div class="card h-100 sensor-card">
-                                        <img src="../img/gy-max30102-pulse-oximeter-heart-rate-sensor-module-purple-539538.png"
-                                            class="card-img-top sensor-img p-3" alt="MAX30102 Pulse Oximeter Sensor">
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">MAX30102</h6>
-                                            <p class="card-text">
-                                                A highly-sensitive pulse oximeter and heart-rate sensor. It measures
-                                                blood oxygen saturation (SpO₂) and pulse rate.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 mb-4">
-                                    <div class="card h-100 sensor-card">
-                                        <img src="../img/espcam.png" class="card-img-top sensor-img p-3"
-                                            alt="Micro Camera Module">
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Camera Micro</h6>
-                                            <p class="card-text">
-                                                A compact camera for real-time video streaming, essential for visual
-                                                monitoring of the environment.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 mb-4">
-                                    <div class="card h-100 sensor-card">
-                                        <img src="../img/modul-amplificator-microfon-cu-agc-max9814.jpg"
-                                            class="card-img-top sensor-img p-3" alt="Microphone Sensor Module">
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Microphone</h6>
-                                            <p class="card-text">
-                                                An audio sensor used to detect sounds, providing a key layer of acoustic
-                                                monitoring.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-md-6 mb-4">
-                                    <div class="card h-100 sensor-card">
-                                        <img src="../img/mlx90614esf-infrared-temperature-sensor.jpg"
-                                            class="card-img-top sensor-img p-3" alt="Temperature Sensor">
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Temperature Sensor</h6>
-                                            <p class="card-text">
-                                                Measures ambient temperature, providing crucial environmental data to
-                                                complement other sensor readings.
-                                            </p>
-                                        </div>
+        <div class="row m-0">
+            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+                <div class="card text-center shadow-sm p-3 resources w-100" id="resources-section">
+                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
+                        <h5 class="card-title mb-4">Resources</h5>
+                        <div class="row w-100 justify-content-center">
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">Schematic for the circuit</h6>
+                                        <p class="card-text text-muted small">
+                                            Detailed schematic diagram of the entire circuit used in the project
+                                            realised in Orcad Capture X, Student edition.
+                                        </p>
+                                        <a href="schematic_circuit.pdf" target="_blank"
+                                            class="btn btn-outline-primary mt-2 pdf-link">
+                                            <i class="fas fa-file-pdf me-2"></i>View PDF
+                                        </a>
                                     </div>
                                 </div>
                             </div>
+                            <div class="col-lg-4 col-md-6 mb-4">
+                                <div class="card h-100 sensor-card">
+                                    <div class="card-body text-center">
+                                        <h6 class="card-title">Layers for the PCB</h6>
+                                        <p class="card-text text-muted small">
+                                            The layers used for the PCB design, realised in PCB Editor, Student
+                                            edition.
+                                        </p>
+                                        <a href="v2.pdf" target="_blank" class="btn btn-outline-primary mt-2 pdf-link">
+                                            <i class="fas fa-file-pdf me-2"></i>View PDF
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="row m-0">
-                <div class="col-12 d-flex align-items-center justify-content-center bg-light"
-                    style="min-height: 100vh;">
-                    <div class="card text-center shadow-sm p-3 updates w-100" id="updates-section">
-                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                            <h5 class="card-title">Updates & News</h5>
-                            <div class="card news-item w-75 my-3 shadow-sm text-start"
-                                style="border-radius: 15px; border-left: 5px solid #385e45;">
-                                <div class="card-body">
-                                    <h6 class="card-subtitle mb-2 text-muted">August 20, 2025</h6>
-                                    <h5 class="card-title">A function in working for the moment: a camera flux live</h5>
-                                    <p class="card-text">
-                                        For the moment, we are working on a live camera flux that will be
-                                        integrated into the dashboard. This will allow users to monitor real-time humans
-                                        that are in
-                                        need of help or to be resuscitate.
-                                    </p>
-                                </div>
-                            </div>
-                            <div class="card news-item w-75 my-3 shadow-sm text-start"
-                                style="border-radius: 15px; border-left: 5px solid #385e45;">
-                                <div class="card-body">
-                                    <h6 class="card-subtitle mb-2 text-muted">August 19, 2025</h6>
-                                    <h5 class="card-title">New Sensor Integration: Pulse Oximeter Live!</h5>
-                                    <p class="card-text">
-                                        We are excited to announce the successful integration of our new pulse
-                                        oximeter
-                                        sensor. You can now monitor real-time oxygen saturation (SpO₂) and pulse rate
-                                        data
-                                        directly on the dashboard. This enhancement provides a more comprehensive view
-                                        of
-                                        vital
-                                        signs, improving our health monitoring capabilities.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row m-0">
-                <div class="col-12 d-flex align-items-center justify-content-center bg-light"
-                    style="min-height: 100vh;">
-
-                    <div class="card text-center shadow-sm p-3 results w-100" id="results-section">
-                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                            <h5 class="card-title">Results</h5>
-
-                            <div id="auth-section" class="mb-4">
-                                <p>Please log in with your Google account to view your results.</p>
-                                <div id="g_id_onload"
-                                    data-client_id="228881855593-7rfqeib30ikfens2lrncrlgnb4m0k23r.apps.googleusercontent.com"
-                                    data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
-                                    data-auto_prompt="false">
-                                </div>
-                                <div class="g_id_signin" data-type="standard" data-shape="rectangular"
-                                    data-theme="outline" data-text="sign_in_with" data-size="large"
-                                    data-logo_alignment="left">
-                                </div>
-                            </div>
-
-                            <div class="filter-section w-100 mb-4 text-start d-none" id="filter-section">
-                                <div class="row g-2">
-                                    <div class="col-md-4">
-                                        <label for="limit-filter" class="form-label">View last:</label>
-                                        <select class="form-select" id="limit-filter">
-                                            <option value="all" selected>All Readings</option>
-                                            <option value="5">5 Readings</option>
-                                            <option value="10">10 Readings</option>
-                                            <option value="20">20 Readings</option>
-                                            <option value="40">40 Readings</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="sensor-filter" class="form-label">Filter by Sensor:</label>
-                                        <select class="form-select" id="sensor-filter">
-                                            <option value="all" selected>All Sensors</option>
-                                            <option value="temp">Temperature</option>
-                                            <option value="oxygen">Oxygen</option>
-                                            <option value="pulse">Pulse</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="date-range-filter" class="form-label">Filter by Date:</label>
-                                        <select class="form-select" id="date-range-filter">
-                                            <option value="all" selected>All Time</option>
-                                            <option value="today">Today</option>
-                                            <option value="week">This Week</option>
-                                            <option value="month">This Month</option>
-                                            <option value="custom">Custom Range</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-md-2 d-none" id="custom-date-start-container">
-                                        <label for="start-date" class="form-label">Start Date:</label>
-                                        <input type="date" class="form-control" id="start-date">
-                                    </div>
-                                    <div class="col-md-2 d-none" id="custom-date-end-container">
-                                        <label for="end-date" class="form-label">End Date:</label>
-                                        <input type="date" class="form-control" id="end-date">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
-                                <i class="bi bi-info-circle-fill me-2"></i>
-                                Data in this table is randomly generated for demonstration purposes.
-                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                    aria-label="Close"></button>
-                            </div>
-
-                            <div class="results-container w-100 mt-4 d-none" id="results-container">
-                                <p class="text-muted text-center" id="data-status"></p>
-                                <div class="table-responsive">
-                                    <table class="table table-striped table-hover rounded overflow-hidden shadow-sm">
-                                        <thead class="bg-success text-white">
-                                            <tr>
-                                                <th scope="col" class="timestamp-col">Timestamp</th>
-                                                <th scope="col" class="temp-col">Temperature (°C)</th>
-                                                <th scope="col" class="oxygen-col">Oxygen Saturation (%)</th>
-                                                <th scope="col" class="pulse-col">Pulse Rate (BPM)</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody id="results-table-body">
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="d-flex justify-content-center mt-4 gap-2">
-                                    <button id="exportCsvBtn" class="btn btn-outline-success">
-                                        <i class="fas fa-file-csv me-2"></i>Export to CSV
-                                    </button>
-                                    <button id="exportPdfBtn" class="btn btn-outline-danger">
-                                        <i class="fas fa-file-pdf me-2"></i>Export to PDF
-                                    </button>
-                                    <button id="exportTxtBtn" class="btn btn-outline-primary">
-                                        <i class="fas fa-file-alt me-2"></i>Export to TXT
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="row m-0">
-                <div class="col-12 d-flex align-items-center justify-content-center bg-light"
-                    style="min-height: 100vh;">
-                    <div class="card text-center shadow-sm p-3 resources w-100" id="resources-section">
-                        <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                            <h5 class="card-title mb-4">Resources</h5>
-                            <div class="row w-100 justify-content-center">
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="card h-100 sensor-card">
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">MAX30102 Datasheet</h6>
-                                            <p class="card-text text-muted small">
-                                                Detailed technical specifications for the MAX30102 Pulse Oximeter and
-                                                Heart-Rate Sensor.
-                                            </p>
-                                            <a href="../img/MAX30102.pdf" target="_blank"
-                                                class="btn btn-outline-primary mt-2 pdf-link">
-                                                <i class="fas fa-file-pdf me-2"></i>View PDF
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="card h-100 sensor-card">
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">ESP32-CAM Module</h6>
-                                            <p class="card-text text-muted small">
-                                                Technical documentation for the camera module used in the project.
-                                            </p>
-                                            <a href="../img/ESP32-CAM_datasheet.pdf" target="_blank"
-                                                class="btn btn-outline-primary mt-2 pdf-link">
-                                                <i class="fas fa-file-pdf me-2"></i>View PDF
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="card h-100 sensor-card">
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Microphone Datasheet</h6>
-                                            <p class="card-text text-muted small">
-                                                Specifications and usage guide for the MAX9814 microphone amplifier
-                                                module.
-                                            </p>
-                                            <a href="../img/MAX9814.PDF" target="_blank"
-                                                class="btn btn-outline-primary mt-2 pdf-link">
-                                                <i class="fas fa-file-pdf me-2"></i>View PDF
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 col-md-6 mb-4">
-                                    <div class="card h-100 sensor-card">
-                                        <div class="card-body text-center">
-                                            <h6 class="card-title">Temperature Sensor Datasheet</h6>
-                                            <p class="card-text text-muted small">
-                                                Comprehensive details on the MLX90614 Infrared Temperature Sensor.
-                                            </p>
-                                            <a href="../img/MLX90614-Datasheet-Melexis.pdf" target="_blank"
-                                                class="btn btn-outline-primary mt-2 pdf-link">
-                                                <i class="fas fa-file-pdf me-2"></i>View PDF
-                                            </a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        </div>
         </div>
 
         <footer class="footer-bar">
@@ -1010,7 +1200,7 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
             integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
             crossorigin="anonymous"></script>
-</body>
+    </body>
 
 </html>
 <script>
