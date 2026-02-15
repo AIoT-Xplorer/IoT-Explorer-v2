@@ -21,7 +21,7 @@ app.add_middleware(
     allow_origins=["https://app.aiot-xplorer.eu"],  # sau ["*"] dacă nu folosești credențiale
     allow_credentials=True,
     allow_methods=["*"],
-    allow_headers=["x-tenant-id"],  # Permite toate headerele + header personalizat
+    allow_headers=["X-Tenant-ID", "Content-Type", "Authorization"],  # Permite toate headerele + header personalizat
 )
 
 ###-------------------------###

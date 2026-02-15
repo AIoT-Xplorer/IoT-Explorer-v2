@@ -8,5 +8,7 @@ asyncpg
 asyncio-mqtt==0.16.1
 paho-mqtt<2.0.0
 datetime
+aiomqtt
+
 
 

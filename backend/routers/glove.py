@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, Header, HTTPException
 from db import fetch_all, execute
 from fastapi import Query
 router = APIRouter()
 
-def get_tenant(request: Request) -> str | None:
-    return getattr(request.state, "tenant", None)
+def get_tenant(x_tenant_id: str | None = Header(default=None)):
+    if not x_tenant_id:
+        raise HTTPException(400, "Missing X-Tenant-ID header")
+    return x_tenant_id
 
 @router.get("")
 async def list_devices(request: Request, tenant: str | None = Depends(get_tenant)):

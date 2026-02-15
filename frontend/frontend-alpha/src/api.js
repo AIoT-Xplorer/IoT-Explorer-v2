@@ -1,7 +1,8 @@
-// detect tenant from URL (/alfa/energy.html -> "alfa")
 function detectTenant() {
   const segs = (location.pathname || "/").split("/").filter(Boolean);
-  return segs.length ? segs[0] : "default";
+  const first = segs.length ? segs[0] : "default";
+  if (first.startsWith("frontend-")) return first.replace("frontend-", "");
+  return first;
 }
 
 const TENANT = detectTenant();
@@ -17,5 +18,5 @@ async function apiGet(path, params = {}) {
   return res.json();
 }
 
-// expunem global
 window.AIOT = { TENANT, apiGet };
+console.log("[AIOT] Tenant detectat:", TENANT);

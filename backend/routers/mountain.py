@@ -1,10 +1,13 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, HTTPException, Header
 from db import fetch_all, execute
 from fastapi import Query
 router = APIRouter()
+APP = "mountain"
 
-def get_tenant(request: Request) -> str | None:
-    return getattr(request.state, "tenant", None)
+def get_tenant(x_tenant_id: str | None = Header(default=None)):
+    if not x_tenant_id:
+        raise HTTPException(400, "Missing X-Tenant-ID header")
+    return x_tenant_id
 
 @router.get("")
 async def list_devices(request: Request, tenant: str | None = Depends(get_tenant)):
@@ -39,7 +42,7 @@ async def get_signal_value(
     ORDER BY ts DESC
     LIMIT 1
     """
-    rows = await fetch_all(q, {"signal": signal, "tenant": tenant})
+    rows = await fetch_all(q, {"signal": signal, "tenant_id": tenant})
     if rows:
         return {"value": rows[0]["value"]}
     return {"value": None}

@@ -2,1510 +2,991 @@
 <html lang="en">
 
 <head>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>About our project · Medical Dashboard</title>
 
-    <title>About our project</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Vendor libs -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
+  <link rel="icon" href="../img/logo_team.png" type="image/png">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
 
-    <link rel="icon" href="../img/logo_team.png" type="image/png">
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <style>
+/* layout container mai larg */
+.container-wide { max-width:100%; padding-left:24px; padding-right:24px; }
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+/* grid: camera la stânga, conținut la dreapta */
+.live-grid {
+  display: grid;
+  grid-template-columns: 500px minmax(500px, 1fr);
+  gap: 28px;
+  align-items: start;
+}
+@media (max-width:1400px){ .live-grid { grid-template-columns: 620px 1fr; } }
+@media (max-width:1200px){ .live-grid { grid-template-columns: 1fr; } }
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+/* stream */
+.stream-card{ background:#fff; border-radius:14px; box-shadow:0 2px 8px rgba(0,0,0,.08); padding:14px; position:sticky; top: 50px; }
+.stream-frame{ background:#000; border-radius:12px; overflow:hidden; }
+.stream-frame img{ width:100%; height:auto; aspect-ratio:4/3; object-fit:cover; display:block; }
 
-    <style>
-        body {
-            padding-top: 140px;
-            scroll-behavior: smooth;
-        }
+.values-row {
+  display:flex;
+  gap:20px;
+  margin-bottom:18px;
+  align-items:stretch;
+}
+.card-custom {
+  background:#fff;
+  border-radius:12px;
+  box-shadow:0 2px 6px rgba(0,0,0,.08);
+  padding:12px;
+  width:100%;          
+  min-width:160px;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:flex-start;
+}
+.values-row .card-custom { flex:1 1 0; }
 
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1050;
-            transition: transform 0.3s ease-in-out;
-        }
+.card-value {
+  font-size:1.4rem;
+  font-weight:800;
+  color:#0d6efd;
+  margin-top:8px;
+  align-self:flex-start;
+  min-height:1.4em;
+}
 
-        header.hide {
-            transform: translateY(-100%);
-        }
+.charts-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(220px, 1fr));
+  gap: 24px;
+}
+@media (max-width:1200px){
+  .charts-grid{ grid-template-columns: repeat(2, minmax(280px, 1fr)); }
+}
+@media (max-width:768px){
+  .charts-grid{ grid-template-columns: 1fr; }
+}
 
-        #backToTop {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: #385e45;
-            color: white;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 20px;
-            display: none;
-            cursor: pointer;
-            z-index: 1100;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease;
-        }
+.chart-card{
+  background:#fff;
+  border-radius:14px;
+  box-shadow:0 2px 8px rgba(0,0,0,.06);
+  padding:14px;
+  display:flex;
+  flex-direction:column;
+}
+.chart-title{ font-weight:700; margin-bottom:10px; }
 
-        #backToTop:hover {
-            background-color: #2b4635;
-        }
+.chart-card canvas{
+  width:100% !important;
+  height:340px !important;
+  border-radius:10px;
+  background:#fff;
+}
 
-        .main-content {
-            background-color: #f0f0f0;
-            padding: 2rem;
-            min-height: calc(100% - 70px);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .share-section {
-            margin-top: 2rem;
-        }
-
-        .profile-card {
-            width: 90%;
-            max-width: 900px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border: none;
-        }
-
-        .profile-img {
-            width: 150px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 2px solid #ddd;
-        }
-
-        .footer-bar {
-            background-color: #385e45;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-            width: 100%;
-        }
-
-        .justified-text {
-            text-align: justify;
-            line-height: 1.6;
-        }
-
-        .column {
-            float: left;
-            width: 33.33%;
-        }
-
-        .row:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
-
-        .Dashboard,
-        .updates,
-        .resources,
-        .results,
-        .sensors-used {
-            width: 90%;
-            min-height: 80vh;
-        }
+h2.text-start{ margin-bottom:12px; }
+</style>
 
 
 
-        @media screen and (max-width: 600px) {
-            .column {
-                width: 100%;
-            }
-        }
+  <style>
+    body {
+      padding-top: 140px;
+      scroll-behavior: smooth;
+      background: #f0f0f0;
+    }
 
-        .main-nav {
-            position: sticky;
-            top: 0;
-            z-index: 1050;
-        }
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1050;
+      transition: transform .3s ease-in-out;
+    }
 
-        #sensorChart {
-            max-height: 300px;
-        }
+    header.hide {
+      transform: translateY(-100%);
+    }
 
-        .sensor-card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            border-radius: 10px;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
+    #backToTop {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #385e45;
+      color: #fff;
+      border: 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 20px;
+      display: none;
+      cursor: pointer;
+      z-index: 1100;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+      transition: background-color .3s ease;
+    }
 
-        .sensor-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
+    section .col-12[style*="min-height"] {
+      min-height: auto !important;
+      padding: 80px 0 !important;
+    }
 
-        .sensor-img {
-            height: 100px;
-            object-fit: contain;
-        }
+    #backToTop:hover {
+      background-color: #2b4635;
+    }
 
-        .pdf-link {
-            transition: transform 0.2s;
-        }
+    #themeToggle {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      background: #f0f0f0;
+      color: #333;
+      border: 0;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      z-index: 1100;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, .2);
+      transition: background-color .3s ease, transform .3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-        .pdf-link:hover {
-            transform: scale(1.05);
-        }
+    #themeToggle:hover {
+      background: #ddd;
+      transform: scale(1.1);
+    }
 
-        .green-switch .form-check-input:checked {
-            background-color: #198754;
-            border-color: #198754;
-        }
+    .dark-mode {
+      background: #121212;
+      color: #e0e0e0;
+    }
 
-        .green-switch .form-check-input:checked:focus {
-            box-shadow: 0 0 0 0.25rem rgba(25, 135, 84, 0.25);
-        }
+    .dark-mode .card {
+      background: #1e1e1e;
+      color: #e0e0e0;
+    }
 
-        .sensor-box {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            width: 100%;
-            text-align: left;
-        }
+    .dark-mode .navbar,
+    .dark-mode .fixed-top {
+      background: #1e1e1e !important;
+    }
 
+    .dark-mode .btn-outline-success {
+      color: #4CAF50 !important;
+      border-color: #4CAF50 !important;
+    }
 
-        .btn-outline-primary {
-            --bs-btn-color: #225E3E;
-            --bs-btn-border-color: #225E3E;
-            --bs-btn-hover-color: #fff;
-            --bs-btn-hover-bg: #225E3E;
-            --bs-btn-hover-border-color: #0d6efd;
-            --bs-btn-focus-shadow-rgb: 13, 110, 253;
-            --bs-btn-active-color: #fff;
-            --bs-btn-active-bg: #225E3E;
-            --bs-btn-active-border-color: #225E3E;
-            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-            --bs-btn-disabled-color: #225E3E;
-            --bs-btn-disabled-bg: transparent;
-            --bs-btn-disabled-border-color: #225E3E;
-            --bs-gradient: none;
-        }
+    .dark-mode .btn-outline-success:hover {
+      background: #4CAF50 !important;
+      color: #1e1e1e !important;
+    }
 
-        .btn-outline-success {
-            --bs-btn-color: #225E3E;
-            --bs-btn-border-color: #225E3E;
-            --bs-btn-hover-color: #fff;
-            --bs-btn-hover-bg: #225E3E;
-            --bs-btn-hover-border-color: #225E3E;
-            --bs-btn-focus-shadow-rgb: 25, 135, 84;
-            --bs-btn-active-color: #fff;
-            --bs-btn-active-bg: #225E3E;
-            --bs-btn-active-border-color: #225E3E;
-            --bs-btn-active-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
-            --bs-btn-disabled-color: #225E3E;
-            --bs-btn-disabled-bg: transparent;
-            --bs-btn-disabled-border-color: #225E3E;
-            --bs-gradient: none;
-        }
+    .dark-mode #themeToggle {
+      background: #333;
+      color: #fff;
+    }
 
-        .alert-info {
-            --bs-alert-color: #ffffff;
-            --bs-alert-bg: #225E3E;
-            --bs-alert-border-color: #225E3E;
-            --bs-alert-link-color: #225E3E;
-        }
+    /* Dashboard */
+    .dashboard {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 20px;
+      margin-bottom: 40px;
+    }
 
-        /* Stil pentru noul buton de temă */
-        #themeToggle {
-            position: fixed;
-            bottom: 80px;
-            /* Poziționat deasupra butonului backToTop */
-            right: 20px;
-            background-color: #f0f0f0;
-            color: #333;
-            border: none;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            font-size: 20px;
-            cursor: pointer;
-            z-index: 1100;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: background-color 0.3s ease, transform 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+    .card-custom {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
+      width: 200px;
+      padding: 15px;
+      text-align: center;
+    }
 
-        .dashboard {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
-            margin-bottom: 40px;
-        }
+    .card-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #007bff;
+      margin-top: 10px;
+      min-height: 1.5em;
+    }
 
-        .card-custom {
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-            width: 200px;
-            padding: 15px;
-            text-align: center;
-        }
-
-        .card-value {
-            font-size: 1.5em;
-            font-weight: bold;
-            color: #007bff;
-            margin-top: 10px;
-        }
-
-        .charts {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        canvas {
-            background: white;
-            border-radius: 12px;
-            padding: 10px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-        }
-
-        #themeToggle:hover {
-            background-color: #ddd;
-            transform: scale(1.1);
-        }
-
-        /* Stiluri pentru tema întunecată */
-        .dark-mode {
-            background-color: #121212;
-            color: #e0e0e0;
-        }
-
-        .dark-mode .card {
-            background-color: #1e1e1e;
-            color: #e0e0e0;
-        }
-
-        .dark-mode .card-text,
-        .dark-mode .card-subtitle {
-            color: #b0b0b0 !important;
-        }
-
-        .dark-mode .navbar,
-        .dark-mode .fixed-top {
-            background-color: #1e1e1e !important;
-        }
-
-        .dark-mode .nav-link,
-        .dark-mode .top-bar a,
-        .dark-mode .top-bar span {
-            color: #e0e0e0 !important;
-        }
-
-        .dark-mode .btn-outline-success {
-            color: #4CAF50 !important;
-            border-color: #4CAF50 !important;
-        }
-
-        .dark-mode .btn-outline-success:hover {
-            background-color: #4CAF50 !important;
-            color: #1e1e1e !important;
-        }
-
-        .dark-mode #themeToggle {
-            background-color: #333;
-            color: #fff;
-        }
-
-        .dark-mode .carousel-section {
-            background-color: #1e1e1e !important;
-        }
-
-        .dark-mode .bg-light {
-            background-color: #121212 !important;
-        }
+    /* 4 grafice pe un rând, fără scroll */
+    .charts{
+      display:grid;
+      grid-template-columns:repeat(4, minmax(0,1fr)); /* 4 coloane egale */
+      gap:24px;
+      align-items:stretch;
+      overflow:visible; /* fără bară orizontală */
+    }
+    .chart-card{
+      min-width:0;                  /* să permită micșorarea în grid */
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 2px 6px rgba(0,0,0,.08);
+      padding:12px;
+    }
+    .chart-card canvas{
+      width:100% !important;
+      height:300px !important;
+    }
 
 
-        /* Default look improvements for both themes */
-        .sensor-box {
-            border-radius: 0.5rem;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            width: 100%;
-            text-align: left;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
+    canvas {
+      background: white;
+      border-radius: 12px;
+      padding: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
 
-        /* Light mode (default) */
-        .sensor-box {
-            background-color: #f8f9fa;
-            border: 1px solid #dee2e6;
-        }
+    .sensor-card {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      transition: transform .3s ease, box-shadow .3s ease;
+    }
 
-        /* Dark mode overrides */
-        .dark-mode .sensor-box {
-            background-color: #1e1e1e;
-            /* match card color */
-            border: 1px solid #333;
-            /* softer border */
-        }
+    .sensor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, .2);
+    }
 
-        .dark-mode .form-check-label {
-            color: #e0e0e0;
-            /* light text */
-        }
+    .sensor-img {
+      height: 100px;
+      object-fit: contain;
+    }
 
-        .dark-mode .form-check-input {
-            background-color: #444;
-            /* default off background */
-            border-color: #666;
-        }
+    .footer-bar {
+      background: #385e45;
+      color: #fff;
+      padding: 1rem;
+      text-align: center;
+      width: 100%;
+    }
 
-        .dark-mode .form-check-input:checked {
-            background-color: #4CAF50;
-            /* green when ON */
-            border-color: #4CAF50;
-        }
+    /* Grafice vizibile ftw */
+    .charts canvas {
+      min-height: 300px;
+      height: 300px;
+    }
 
-        .dark-mode .form-check-input:focus {
-            box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
-        }
-
-        /* ===== GRAFICE ===== */
-        .mini-chart {
-            background: #fff;
-            border-radius: 8px;
-            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
-            padding: 3px;
-            height: 100px !important;
-            width: 100%;
-        }
-    </style>
+  </style>
 </head>
 
-<header class="fixed-top bg-white shadow-sm">
+<body>
+  <!-- Floating buttons -->
+  <button id="themeToggle" title="Toggle theme"><i class="fas fa-moon"></i></button>
+  <button id="backToTop" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+  <!-- Header / Nav -->
+  <header class="fixed-top bg-white shadow-sm">
     <div class="top-bar">
-        <div class="container d-flex justify-content-between align-items-center">
-            <div class="social-icons">
-                <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
-                <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
-            </div>
-
-            <img src="../img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid"
-                style="max-width: 100px;">
-
-            <div class="d-flex align-items-center">
-                <div class="d-flex align-items-center me-3">
-                    <i class="far fa-envelope me-2 text-secondary"></i>
-                    <span class="text-secondary">contact@aiot-xplorer.eu</span>
-                </div>
-
-                <div>
-                    <a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-signin">
-                        <i class="fas fa-sign-in-alt"></i> Sign In
-                    </a>
-                </div>
-
-            </div>
+      <div class="container d-flex justify-content-between align-items-center">
+        <div class="social-icons">
+          <a href="#" class="me-3 text-secondary"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="text-secondary"><i class="fab fa-linkedin-in"></i></a>
         </div>
+        <img src="../img/logo_team.png" alt="AIoT Explorer Logo" class="logo-img img-fluid" style="max-width: 100px;">
+        <div class="d-flex align-items-center">
+          <div class="d-flex align-items-center me-3">
+            <i class="far fa-envelope me-2 text-secondary"></i>
+            <span class="text-secondary">contact@aiot-xplorer.eu</span>
+          </div>
+          <div><a href="https://aiot-xplorer.eu/index.php/component/users/login" class="btn btn-signin"><i
+                class="fas fa-sign-in-alt"></i> Sign In</a></div>
+        </div>
+      </div>
     </div>
 
     <nav class="navbar navbar-expand-lg navbar-light bg-white">
-        <div class="container">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="index.html">Project's home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#results-section">Results</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#sensors-used-section">Sensors used and method</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOurTeam" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">Our team</a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownOurTeam">
-                            <li><a class="dropdown-item" href="../src/gamma_dobrin.html">Dobrin Vasile</a></li>
-                            <li><a class="dropdown-item" href="../src/gamma_nicolae.html">Petriia Iulian-Nicolae</a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#updates-section">Updates & News</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#resources-section">Resources</a></li>
-                    <li class="nav-item"><a class="nav-link" href="https://aiot-xplorer.eu/index.php/contact-us">Contact
-                            us</a></li>
-                </ul>
-            </div>
+      <div class="container">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+          aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+          <ul class="navbar-nav">
+            <li class="nav-item"><a class="nav-link" href="../../index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="index.html">Project's home</a></li>
+            <li class="nav-item"><a class="nav-link" href="#demo">Demo</a></li>
+            <li class="nav-item"><a class="nav-link" href="#results-section">Results</a></li>
+            <li class="nav-item"><a class="nav-link" href="#sensors-used-section">Sensors used and method</a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownOurTeam" role="button"
+                data-bs-toggle="dropdown" aria-expanded="false">Our team</a>
+              <ul class="dropdown-menu" aria-labelledby="navbarDropdownOurTeam">
+                <li><a class="dropdown-item" href="../src/gamma_dobrin.html">Dobrin Vasile</a></li>
+                <li><a class="dropdown-item" href="../src/gamma_nicolae.html">Petriia Iulian-Nicolae</a></li>
+              </ul>
+            </li>
+            <li class="nav-item"><a class="nav-link" href="#updates-section">Updates & News</a></li>
+            <li class="nav-item"><a class="nav-link" href="#resources-section">Resources</a></li>
+            <li class="nav-item"><a class="nav-link" href="https://aiot-xplorer.eu/index.php/contact-us">Contact us</a>
+            </li>
+          </ul>
         </div>
+      </div>
     </nav>
-</header>
-<button id="themeToggle" title="Toggle theme">
-    <i class="fas fa-moon"></i>
-</button>
-<button id="backToTop" title="Go to top">
-    <i class="fas fa-arrow-up"></i>
-</button>
-<!-- 
-<body>
-    <h2>Medical Dashboard</h2>
+  </header>
 
-    <div class="dashboard">
+  <!-- Medical Dashboard -->
+  <main class="container-fluid container-wide py-4">
+  <h2 class="text-start">Medical Dashboard</h2>
+
+  <div class="live-grid">
+    <aside class="stream-card">
+      <div class="d-flex justify-content-between align-items-center mb-2">
+        <h5 class="mb-0">Live camera</h5>
+        <span class="small text-muted"><i class="fa-solid fa-circle me-1" style="color:#e11d48"></i>live</span>
+      </div>
+          <div class="stream-frame">
+            <img id="livePoster"
+              src="Resuscitare_sfm.jpg"   
+              alt="Snapshot" loading="lazy" />
+
+          </div>
+
+      <div id="streamFallback" class="small text-muted mt-2 d-none">
+        Flux indisponibil. Verifica `STREAM_URL:8000/video_feed` si mixed-content (HTTP vs HTTPS).
+      </div>
+    </aside>
+
+    <section>
+      <div class="values-row mb-3">
         <div class="card-custom">
-            <h5>GSR</h5>
-            <div class="card-value">--</div>
+          <h6 class="mb-0">GSR</h6>
+          <div class="card-value" data-card="gsr">--</div>
         </div>
+
         <div class="card-custom">
-            <h5>Temperature</h5>
-            <div class="card-value">--</div>
+          <h6 class="mb-0">Temperature</h6>
+          <div class="card-value" data-card="tmp007">--</div>
         </div>
+
         <div class="card-custom">
-            <h5>SpO₂</h5>
-            <div class="card-value">--</div>
+          <h6 class="mb-0">SpO₂</h6>
+          <div class="card-value" data-card="max30102_spo2">--</div>
         </div>
+
         <div class="card-custom">
-            <h5>Heart Rate</h5>
-            <div class="card-value">--</div>
+          <h6 class="mb-0">Heart Rate</h6>
+          <div class="card-value" data-card="max30102_bpm">--</div>
         </div>
+      </div>
+
+      <div class="charts-grid">
+        <div class="chart-card">
+          <div class="chart-title">GSR</div>
+          <canvas id="gsrChart"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">Temperature</div>
+          <canvas id="tmp007Chart"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">SpO₂</div>
+          <canvas id="max30102_spo2Chart"></canvas>
+        </div>
+
+        <div class="chart-card">
+          <div class="chart-title">Heart Rate</div>
+          <canvas id="max30102_bpmChart"></canvas>
+        </div>
+      </div>
+
+    </section>
+  </div>
+</main>
+
+<section id="demo" class="row m-0">
+  <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+    <div class="card text-center shadow-sm p-3 demo w-100" style="max-width:300px;">
+      <div class="card-body d-flex flex-column align-items-center justify-content-center">
+        <h5 class="card-title mb-3">AIoT Medical Demo</h5>
+
+        <video
+          class="w-100 rounded"
+          controls
+          autoplay
+          loop
+          
+        >
+          <source src="../img/DEMO_MEDICAL.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+  <!-- Sensors Used -->
+  <section class="row m-0">
+    <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+      <div class="card text-center shadow-sm p-3 sensors-used w-100" id="sensors-used-section">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+          <h5 class="card-title">Sensors Used</h5>
+          <div class="row w-100 justify-content-center mt-4">
+            <div class="col-lg-3 col-md-6 mb-4">
+              <div class="card h-100 sensor-card"><img src="tmp007.jpg" class="card-img-top sensor-img p-3"
+                  alt="TMP007 Sensor">
+                <div class="card-body text-center">
+                  <h6 class="card-title">TMP007</h6>
+                  <p class="card-text">Infrared thermopile sensor for non-contact temperature.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+              <div class="card h-100 sensor-card"><img src="logi_cam.jpeg" class="card-img-top sensor-img p-3"
+                  alt="Logitech Webcam">
+                <div class="card-body text-center">
+                  <h6 class="card-title">Logitech C922x</h6>
+                  <p class="card-text">HD webcam with built-in microphones.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+              <div class="card h-100 sensor-card"><img src="mh-et live.jpeg" class="card-img-top sensor-img p-3"
+                  alt="Pulse/Oxygen">
+                <div class="card-body text-center">
+                  <h6 class="card-title">MH-ET Pulse & SpO₂</h6>
+                  <p class="card-text">Pulse and oxygen level measurement.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+              <div class="card h-100 sensor-card"><img src="gsr.jpeg" class="card-img-top sensor-img p-3"
+                  alt="GSR sensor">
+                <div class="card-body text-center">
+                  <h6 class="card-title">GSR Sensor</h6>
+                  <p class="card-text">Galvanic skin response for physiological state.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+              <div class="card h-100 sensor-card"><img src="display.png" class="card-img-top sensor-img p-3"
+                  alt="Display TFT">
+                <div class="card-body text-center">
+                  <h6 class="card-title">Display TFT</h6>
+                  <p class="card-text">Real-time data visualization.</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6 mb-4">
+              <div class="card h-100 sensor-card"><img src="coph-Ads1115-Module-Datasheet.jpg"
+                  class="card-img-top sensor-img p-3" alt="ADS1115 Module">
+                <div class="card-body text-center">
+                  <h6 class="card-title">ADS1115 Module</h6>
+                  <p class="card-text">Precision ADC for GSR readings.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Updates -->
+  <section class="row m-0">
+    <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+      <div class="card text-center shadow-sm p-3 updates w-100" id="updates-section">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+          <h5 class="card-title">Updates & News</h5>
+          <div class="card news-item w-75 my-3 shadow-sm text-start"
+            style="border-radius: 15px; border-left: 5px solid #385e45;">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">September 19, 2025</h6>
+              <h5 class="card-title">Sending the PCB files (Gerber) to JLCPCB for the first prototype.</h5>
+              <p class="card-text">The Gerber files have been sent to JLCPCB for manufacturing the first prototype.</p>
+            </div>
+          </div>
+          <div class="card news-item w-75 my-3 shadow-sm text-start"
+            style="border-radius: 15px; border-left: 5px solid #385e45;">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">August 20, 2025</h6>
+              <h5 class="card-title">Live camera stream</h5>
+              <p class="card-text">We are integrating a live camera stream into the dashboard for monitoring.</p>
+            </div>
+          </div>
+          <div class="card news-item w-75 my-3 shadow-sm text-start"
+            style="border-radius: 15px; border-left: 5px solid #385e45;">
+            <div class="card-body">
+              <h6 class="card-subtitle mb-2 text-muted">August 19, 2025</h6>
+              <h5 class="card-title">Pulse oximeter live</h5>
+              <p class="card-text">Real-time oxygen saturation (SpO₂) and pulse rate data now on the dashboard.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Results -->
+  <section id="results-section" class="row m-0">
+    <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+      <div class="card text-center shadow-sm p-3 results w-100">
+        <div class="card-body d-flex flex-column align-items-center justify-content-center">
+          <h5 class="card-title">Results</h5>
+
+          <div id="auth-section" class="mb-4">
+            <p>Please log in with your Google account to view your results.</p>
+            <div id="g_id_onload"
+              data-client_id="228881855593-7rfqeib30ikfens2lrncrlgnb4m0k23r.apps.googleusercontent.com"
+              data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
+              data-auto_prompt="false"></div>
+            <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
+              data-text="sign_in_with" data-size="large" data-logo_alignment="left"></div>
+          </div>
+
+          <div class="filter-section w-100 mb-4 text-start d-none" id="filter-section">
+            <div class="row g-2">
+              <div class="col-md-4">
+                <label for="limit-filter" class="form-label">View last:</label>
+                <select class="form-select" id="limit-filter">
+                  <option value="all" selected>All Readings</option>
+                  <option value="5">5 Readings</option>
+                  <option value="10">10 Readings</option>
+                  <option value="20">20 Readings</option>
+                  <option value="40">40 Readings</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="sensor-filter" class="form-label">Filter by Sensor:</label>
+                <select class="form-select" id="sensor-filter">
+                  <option value="all" selected>All Sensors</option>
+                  <option value="temp">Temperature</option>
+                  <option value="oxygen">Oxygen</option>
+                  <option value="pulse">Pulse</option>
+                </select>
+              </div>
+              <div class="col-md-4">
+                <label for="date-range-filter" class="form-label">Filter by Date:</label>
+                <select class="form-select" id="date-range-filter">
+                  <option value="all" selected>All Time</option>
+                  <option value="today">Today</option>
+                  <option value="week">This Week</option>
+                  <option value="month">This Month</option>
+                  <option value="custom">Custom Range</option>
+                </select>
+              </div>
+              <div class="col-md-2 d-none" id="custom-date-start-container">
+                <label for="start-date" class="form-label">Start Date:</label>
+                <input type="date" class="form-control" id="start-date">
+              </div>
+              <div class="col-md-2 d-none" id="custom-date-end-container">
+                <label for="end-date" class="form-label">End Date:</label>
+                <input type="date" class="form-control" id="end-date">
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-info alert-dismissible fade show rounded-3 d-none" role="alert" id="demo-alert">
+            Data in this table is randomly generated for demonstration purposes.
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+
+          <div class="results-container w-100 mt-4 d-none" id="results-container">
+            <p class="text-muted text-center" id="data-status"></p>
+            <div class="table-responsive">
+              <table class="table table-striped table-hover rounded overflow-hidden shadow-sm">
+                <thead class="bg-success text-white">
+                  <tr>
+                    <th scope="col" class="timestamp-col">Timestamp</th>
+                    <th scope="col" class="temp-col">Temperature (°C)</th>
+                    <th scope="col" class="oxygen-col">Oxygen Saturation (%)</th>
+                    <th scope="col" class="pulse-col">Pulse Rate (BPM)</th>
+                  </tr>
+                </thead>
+                <tbody id="results-table-body"></tbody>
+              </table>
+            </div>
+            <div class="d-flex justify-content-center mt-4 gap-2">
+              <button id="exportCsvBtn" class="btn btn-outline-success"><i class="fas fa-file-csv me-2"></i>Export to
+                CSV</button>
+              <button id="exportPdfBtn" class="btn btn-outline-danger"><i class="fas fa-file-pdf me-2"></i>Export to
+                PDF</button>
+              <button id="exportTxtBtn" class="btn btn-outline-primary"><i class="fas fa-file-alt me-2"></i>Export to
+                TXT</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="charts">
-        <canvas id="gsrChart"></canvas>
-        <canvas id="tmp007Chart"></canvas>
-        <canvas id="max30102_spo2Chart"></canvas>
-        <canvas id="max30102_bpmChart"></canvas>
-    </div>
-    <script src="api.js"></script>
-    <script src="dashboard.js"></script>
-    <script>
-        const charts = {
-            gsrChart: new Chart(document.getElementById("gsrChart"), {
-                type: "line",
-                data: { labels: [], datasets: [{ label: "GSR (Ohms)", data: [], borderColor: "blue", fill: false }] },
-                options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            }),
-            tmp007Chart: new Chart(document.getElementById("tmp007Chart"), {
-                type: "line",
-                data: { labels: [], datasets: [{ label: "Temperature (°C)", data: [], borderColor: "red", fill: false }] },
-                options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            }),
-            max30102_spo2Chart: new Chart(document.getElementById("max30102_spo2Chart"), {
-                type: "line",
-                data: { labels: [], datasets: [{ label: "SpO₂ (%)", data: [], borderColor: "green", fill: false }] },
-                options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
-            }),
-            max30102_bpmChart: new Chart(document.getElementById("max30102_bpmChart"), {
-                type: "line",
-                data: { labels: [], datasets: [{ label: "Heart Rate (bpm)", data: [], borderColor: "purple", fill: false }] },
-                options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            })
-        };
-
-        (async function () {
-            if (!window.AIOT) { console.error("api.js nu exista"); return; }
-
-            const CARD_SIGNALS = [
-                { app: "medical", signal: "gsr", unit: "Ohms" },
-                { app: "medical", signal: "tmp007", unit: "°C" },
-                { app: "medical", signal: "max30102_spo2", unit: "%" },
-                { app: "medical", signal: "max30102_bpm", unit: "bpm" }
-            ];
-
-            const CHARTS = [
-                { canvasId: "gsrChart", app: "medical", signal: "gsr" },
-                { canvasId: "tmp007Chart", app: "medical", signal: "tmp007" },
-                { canvasId: "max30102_spo2Chart", app: "medical", signal: "max30102_spo2" },
-                { canvasId: "max30102_bpmChart", app: "medical", signal: "max30102_bpm" }
-            ];
-
-            const REFRESH_MS = 10000;
-            const HISTORY_MIN = 60;
-            const STEP = "1m";
-
-            const lastPath = app => `/api/${app}/value`;
-            const rangePath = app => `/api/${app}/history`;
-
-            function getCardValueNodesInOrder() {
-                return Array.from(document.querySelectorAll(".card-custom .card-value"));
-            }
-
-            async function refreshCards() {
-                const nodes = getCardValueNodesInOrder();
-                if (nodes.length < CARD_SIGNALS.length) return;
-
-                try {
-                    const jobs = CARD_SIGNALS.map(c =>
-                        AIOT.apiGet(lastPath(c.app), { signal: c.signal }).then(r => ({ c, r }))
-                    );
-                    const results = await Promise.all(jobs);
-                    results.forEach(({ c, r }, idx) => {
-                        if (!r || r.value == null) return;
-                        nodes[idx].textContent = `${r.value} ${c.unit || ""}`.trim();
-                    });
-                } catch (e) {
-                    console.warn("[cards] error:", e);
-                }
-            }
-
-            function pushPoint(chart, x, y, maxPoints = 60) {
-                chart.data.labels.push(x);
-                chart.data.datasets[0].data.push(y);
-                if (chart.data.labels.length > maxPoints) {
-                    chart.data.labels.shift();
-                    chart.data.datasets[0].data.shift();
-                }
-                chart.update();
-            }
-
-            async function loadHistoryIntoCharts() {
-                try {
-                    const now = new Date();
-                    const from = new Date(now.getTime() - HISTORY_MIN * 60 * 1000).toISOString();
-                    const to = now.toISOString();
-
-                    const jobs = CHARTS.map(ch =>
-                        AIOT.apiGet(rangePath(ch.app), { signal: ch.signal, from_ts: from, to_ts: to, step: STEP })
-                            .then(data => ({ ch, data: data || [] }))
-                    );
-                    const res = await Promise.all(jobs);
-
-                    res.forEach(({ ch, data }) => {
-                        const chart = charts[ch.canvasId];
-                        if (!chart) return;
-                        data.forEach(p => pushPoint(chart, new Date(p.ts).toLocaleTimeString(), p.value));
-                    });
-                } catch (e) {
-                    console.warn("[history] error:", e);
-                }
-            }
-
-            window.addEventListener("load", async () => {
-                await refreshCards();
-                await loadHistoryIntoCharts();
-                if (REFRESH_MS > 0) setInterval(refreshCards, REFRESH_MS);
-            });
-        })();
-    </script>
-</body> -->
-
-    <body>
-
-
-
-
-
+  </section>
+  <!-- Resources & Downloads -->
+  <section id="resources-section" class="row m-0">
+    <div class="col-12 d-flex align-items-center justify-content-center bg-light py-5">
+      <div class="card text-center shadow-sm p-4 w-100" style="max-width:900px;">
         <div class="card-body">
-            <h4 class="mb-4 text-center">Dashboard</h4>
-
-            <div class="row align-items-start g-4">
-
-                <div class="col-md-6 d-flex">
-                    <div class="camera-box w-100 border rounded-4 shadow-sm overflow-hidden"
-                        style="height: 400px; background: #000;">
-                        <video id="camVideo" autoplay playsinline controls
-                            style="width:100%; height:100%; object-fit:cover; border-radius: 0.5rem;">
-                            <source src="https://perennially-unsnaffled-shakia.ngrok-free.dev/live_stream.m3u8"
-                                type="application/x-mpegURL">
-                            Your browser does not support the video tag.
-                        </video>
-                    </div>
+          <h5 class="card-title mb-4">Resources & Downloads</h5>
+          <p class="text-muted">Below you can find the schematic circuit and the PCB layout files for our project.</p>
+          <div class="row justify-content-center mt-4">
+            <!-- PDF 1 -->
+            <div class="col-md-5 mb-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                  <h6 class="card-title">Schematic file</h6>
+                  <p class="card-text text-muted small">Designed in Cadence Capture X (Student Licence)</p>
+                  <a href="../src/schematic_circuit.pdf" download class="btn btn-outline-danger w-100">
+                    <i class="fas fa-download me-2"></i>Download PDF
+                  </a>
                 </div>
-
-                <!-- Citiri senzori (dreapta) -->
-                <div class="col-md-6">
-                    <div class="card p-3 shadow-sm rounded-4 sensor-panel">
-                        <h5 class="text-center mb-3">Status Senzori</h5>
-
-                        <div class="row g-3">
-                            <!-- GSR -->
-                            <div class="col-6">
-                                <div class="card-custom h-100">
-                                    <h6>GSR</h6>
-                                    <div class="card-value" id="val-gsr">--</div>
-                                    <canvas id="gsrChart" class="mini-chart"></canvas>
-                                </div>
-                            </div>
-
-                            <!-- Temperature -->
-                            <div class="col-6">
-                                <div class="card-custom h-100">
-                                    <h6>Temperature</h6>
-                                    <div class="card-value" id="val-temp">--</div>
-                                    <canvas id="tmp007Chart" class="mini-chart"></canvas>
-                                </div>
-                            </div>
-
-                            <!-- SpO₂ -->
-                            <div class="col-6">
-                                <div class="card-custom h-100">
-                                    <h6>SpO₂</h6>
-                                    <div class="card-value" id="val-spo2">--</div>
-                                    <canvas id="max30102_spo2Chart" class="mini-chart"></canvas>
-                                </div>
-                            </div>
-
-                            <!-- Heart Rate -->
-                            <div class="col-6">
-                                <div class="card-custom h-100">
-                                    <h6>Heart Rate</h6>
-                                    <div class="card-value" id="val-bpm">--</div>
-                                    <canvas id="max30102_bpmChart" class="mini-chart"></canvas>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+              </div>
             </div>
-        </div>
-
-        </div>
-
-
-        <div class="row m-0">
-            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
-                <div class="card text-center shadow-sm p-3 sensors-used w-100" id="sensors-used-section">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <h5 class="card-title">Sensors Used</h5>
-                        <div class="row w-100 justify-content-center mt-4">
-                            <div class="col-lg-3 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <img src="tmp007.jpg" class="card-img-top sensor-img p-3" alt="TMP007 Sensor">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">TMP007</h6>
-                                        <p class="card-text">
-                                            An infrared thermopile sensor that measures temperature without
-                                            physical contact, ideal for monitoring body temperature.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <img src="logi_cam.jpeg" class="card-img-top sensor-img p-3"
-                                        alt="Camera with dedicated microphone">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">Camera Logitech C922x Pro Stream Webcam</h6>
-                                        <p class="card-text">
-                                            A high-definition webcam with built-in microphones, providing clear
-                                            video and audio for monitoring and communication.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <img src="mh-et live.jpeg" class="card-img-top sensor-img p-3"
-                                        alt="Microphone Sensor Module">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">MH-ET Sensor for pulse and oxygen level</h6>
-                                        <p class="card-text">
-                                            A sensor module designed to measure pulse and oxygen levels, crucial for
-                                            health monitoring.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <img src="gsr.jpeg" class="card-img-top sensor-img p-3" alt="GSR sensor">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">GSR Sensor</h6>
-                                        <p class="card-text">
-                                            Measures galvanic skin response (GSR), providing insights into emotional
-                                            and physiological states.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <img src="display.png" class="card-img-top sensor-img p-3" alt="Display TFT">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">Display TFT</h6>
-                                        <p class="card-text">
-                                            A TFT display module for visual output, enabling real-time data
-                                            visualization.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-3 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <img src="coph-Ads1115-Module-Datasheet.jpg" class="card-img-top sensor-img p-3"
-                                        alt="ADS1115 Module">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">ADS1115 Module</h6>
-                                        <p class="card-text">
-                                            A precision ADC module for accurate sensor readings and data acquisition
-                                            from GSR sensor.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            <!-- PDF 2 -->
+            <div class="col-md-5 mb-3">
+              <div class="card border-0 shadow-sm h-100">
+                <div class="card-body text-center">
+                  <i class="fas fa-file-pdf fa-3x text-danger mb-3"></i>
+                  <h6 class="card-title">PCB Layouts</h6>
+                  <p class="card-text text-muted small">Designed in Cadence PCB Designer (Student Licence)</p>
+                  <a href="../src/v2.pdf" download class="btn btn-outline-danger w-100">
+                    <i class="fas fa-download me-2"></i>Download PDF
+                  </a>
                 </div>
+              </div>
             </div>
+          </div>
         </div>
+      </div>
+    </div>
+  </section>
 
-        <div class="row m-0">
-            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
-                <div class="card text-center shadow-sm p-3 updates w-100" id="updates-section">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <h5 class="card-title">Updates & News</h5>
+  <footer class="footer-bar">
+    <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame of 2025
+      IoT Explorer Program</p>
+  </footer>
 
-                        <div class="card news-item w-75 my-3 shadow-sm text-start"
-                            style="border-radius: 15px; border-left: 5px solid #385e45;">
-                            <div class="card-body">
-                                <h6 class="card-subtitle mb-2 text-muted">September 19, 2025</h6>
-                                <h5 class="card-title">PCB's GERBER files ready for manufacturing</h5>
-                                <p class="card-text">
-                                    We are pleased to announce that the GERBER files for our custom PCB design are
-                                    now
-                                    finalized and ready for manufacturing. This marks a significant milestone in our
-                                    project,
-                                    enabling us to move forward with the production of our hardware components.
-                                </p>
-                            </div>
-                        </div>
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js" crossorigin="anonymous"></script>
 
-                        <div class="card news-item w-75 my-3 shadow-sm text-start"
-                            style="border-radius: 15px; border-left: 5px solid #385e45;">
-                            <div class="card-body">
-                                <h6 class="card-subtitle mb-2 text-muted">August 20, 2025</h6>
-                                <h5 class="card-title">A function in working for the moment: a camera flux live</h5>
-                                <p class="card-text">
-                                    For the moment, we are working on a live camera flux that will be
-                                    integrated into the dashboard. This will allow users to monitor real-time humans
-                                    that are in
-                                    need of help or to be resuscitate.
-                                </p>
-                            </div>
-                        </div>
+  <!-- Ensure api.js defines window.AIOT with apiGet(url, params) => Promise(json) -->
+  <script src="api.js"></script>
 
-                        <div class="card news-item w-75 my-3 shadow-sm text-start"
-                            style="border-radius: 15px; border-left: 5px solid #385e45;">
-                            <div class="card-body">
-                                <h6 class="card-subtitle mb-2 text-muted">August 19, 2025</h6>
-                                <h5 class="card-title">New Sensor Integration: Pulse Oximeter Live!</h5>
-                                <p class="card-text">
-                                    We are excited to announce the successful integration of our new pulse
-                                    oximeter
-                                    sensor. You can now monitor real-time oxygen saturation (SpO₂) and pulse rate
-                                    data
-                                    directly on the dashboard. This enhancement provides a more comprehensive view
-                                    of
-                                    vital
-                                    signs, improving our health monitoring capabilities.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  <script>
+    // Back to top & hide-on-scroll header
+    (function () {
+      let lastScroll = 0; const header = document.querySelector('header'); const backToTop = document.getElementById('backToTop');
+      window.addEventListener('scroll', () => {
+        const y = window.pageYOffset;
+        if (y > lastScroll && y > 100) header.classList.add('hide'); else header.classList.remove('hide');
+        lastScroll = y;
+        backToTop.style.display = y > 300 ? 'flex' : 'none';
+      });
+      backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+    })();
 
-        <div class="row m-0">
-            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
+    // Theme toggle
+    (function () {
+      const themeToggleBtn = document.getElementById('themeToggle');
+      const body = document.body;
+      const saved = localStorage.getItem('theme');
+      const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (saved === 'dark' || (!saved && prefersDark)) { body.classList.add('dark-mode'); themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>'; }
+      themeToggleBtn.addEventListener('click', () => {
+        body.classList.toggle('dark-mode');
+        if (body.classList.contains('dark-mode')) { themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>'; localStorage.setItem('theme', 'dark'); }
+        else { themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>'; localStorage.setItem('theme', 'light'); }
+      });
+    })();
 
-                <div class="card text-center shadow-sm p-3 results w-100" id="results-section">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <h5 class="card-title">Results</h5>
+    // Google Sign-In callback (kept)
+    function handleCredentialResponse(response) {
+      console.log('Google ID token:', response.credential);
+      document.getElementById('auth-section').classList.add('d-none');
+      document.getElementById('filter-section').classList.remove('d-none');
+      document.getElementById('results-container').classList.remove('d-none');
+    }
+    window.handleCredentialResponse = handleCredentialResponse;
+  </script>
 
-                        <div id="auth-section" class="mb-4">
-                            <p>Please log in with your Google account to view your results.</p>
-                            <div id="g_id_onload"
-                                data-client_id="228881855593-7rfqeib30ikfens2lrncrlgnb4m0k23r.apps.googleusercontent.com"
-                                data-context="signin" data-ux_mode="popup" data-callback="handleCredentialResponse"
-                                data-auto_prompt="false">
-                            </div>
-                            <div class="g_id_signin" data-type="standard" data-shape="rectangular" data-theme="outline"
-                                data-text="sign_in_with" data-size="large" data-logo_alignment="left">
-                            </div>
-                        </div>
+ <!-- AICI ȘTERGI TOT SCRIPTUL VECHI -->
+<!-- ÎNLOCUIEȘTE TOT SCRIPTUL VECHI CU ASTA -->
+<script>
+(function () {
+  if (!window.AIOT) {
+    console.error("api.js nu există sau window.AIOT nu e definit.");
+    return;
+  }
 
-                        <div class="filter-section w-100 mb-4 text-start d-none" id="filter-section">
-                            <div class="row g-2">
-                                <div class="col-md-4">
-                                    <label for="limit-filter" class="form-label">View last:</label>
-                                    <select class="form-select" id="limit-filter">
-                                        <option value="all" selected>All Readings</option>
-                                        <option value="5">5 Readings</option>
-                                        <option value="10">10 Readings</option>
-                                        <option value="20">20 Readings</option>
-                                        <option value="40">40 Readings</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="sensor-filter" class="form-label">Filter by Sensor:</label>
-                                    <select class="form-select" id="sensor-filter">
-                                        <option value="all" selected>All Sensors</option>
-                                        <option value="temp">Temperature</option>
-                                        <option value="oxygen">Oxygen</option>
-                                        <option value="pulse">Pulse</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-4">
-                                    <label for="date-range-filter" class="form-label">Filter by Date:</label>
-                                    <select class="form-select" id="date-range-filter">
-                                        <option value="all" selected>All Time</option>
-                                        <option value="today">Today</option>
-                                        <option value="week">This Week</option>
-                                        <option value="month">This Month</option>
-                                        <option value="custom">Custom Range</option>
-                                    </select>
-                                </div>
-                                <div class="col-md-2 d-none" id="custom-date-start-container">
-                                    <label for="start-date" class="form-label">Start Date:</label>
-                                    <input type="date" class="form-control" id="start-date">
-                                </div>
-                                <div class="col-md-2 d-none" id="custom-date-end-container">
-                                    <label for="end-date" class="form-label">End Date:</label>
-                                    <input type="date" class="form-control" id="end-date">
-                                </div>
-                            </div>
-                        </div>
+  // --------------- Config ---------------
+  const CARD_SIGNALS = [
+    { app: "medical", signal: "gsr",            unit: "µS" },   // acum afișăm microSiemens
+    { app: "medical", signal: "tmp007",         unit: "°C" },
+    { app: "medical", signal: "max30102_spo2",  unit: "%"  },
+    { app: "medical", signal: "max30102_bpm",   unit: "bpm" }
+  ];
+  const SERIES = [
+    { id: "gsrChart",            app: "medical", signal: "gsr",           label: "GSR (µS)" },
+    { id: "tmp007Chart",         app: "medical", signal: "tmp007",        label: "Temperature" },
+    { id: "max30102_spo2Chart",  app: "medical", signal: "max30102_spo2", label: "SpO₂" },
+    { id: "max30102_bpmChart",   app: "medical", signal: "max30102_bpm",  label: "Heart Rate" }
+  ];
 
-                        <div class="alert alert-info alert-dismissible fade show rounded-3" role="alert">
-                            <i class="bi bi-info-circle-fill me-2"></i>
-                            Data in this table is randomly generated for demonstration purposes.
-                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                        </div>
+  const REFRESH_MS  = 10000;        // refresh valori live
+  const HISTORY_MIN = 60;           // câte minute în urmă încărcăm
+  const STEP        = "1m";         // depinde de backend (ai așa ceva în API)
+  const lastPath    = app => `/api/${app}/value`;
+  const rangePath   = app => `/api/${app}/history`;
 
-                        <div class="results-container w-100 mt-4 d-none" id="results-container">
-                            <p class="text-muted text-center" id="data-status"></p>
-                            <div class="table-responsive">
-                                <table class="table table-striped table-hover rounded overflow-hidden shadow-sm">
-                                    <thead class="bg-success text-white">
-                                        <tr>
-                                            <th scope="col" class="timestamp-col">Timestamp</th>
-                                            <th scope="col" class="temp-col">Temperature (°C)</th>
-                                            <th scope="col" class="oxygen-col">Oxygen Saturation (%)</th>
-                                            <th scope="col" class="pulse-col">Pulse Rate (BPM)</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody id="results-table-body">
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div class="d-flex justify-content-center mt-4 gap-2">
-                                <button id="exportCsvBtn" class="btn btn-outline-success">
-                                    <i class="fas fa-file-csv me-2"></i>Export to CSV
-                                </button>
-                                <button id="exportPdfBtn" class="btn btn-outline-danger">
-                                    <i class="fas fa-file-pdf me-2"></i>Export to PDF
-                                </button>
-                                <button id="exportTxtBtn" class="btn btn-outline-primary">
-                                    <i class="fas fa-file-alt me-2"></i>Export to TXT
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+  // --------------- Util ---------------
+  function ohmToMicroS(R) {
+    const n = typeof R === 'string' ? parseFloat(R) : R;
+    return n > 0 && Number.isFinite(n) ? (1e6 / n) : null; // µS
+  }
+  function prettyNum(x) {
+    if (x == null || !Number.isFinite(x)) return '—';
+    return Math.abs(x) >= 100 ? x.toFixed(0) : x.toFixed(2);
+  }
 
-        <div class="row m-0">
-            <div class="col-12 d-flex align-items-center justify-content-center bg-light" style="min-height: 100vh;">
-                <div class="card text-center shadow-sm p-3 resources w-100" id="resources-section">
-                    <div class="card-body d-flex flex-column align-items-center justify-content-center">
-                        <h5 class="card-title mb-4">Resources</h5>
-                        <div class="row w-100 justify-content-center">
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">Schematic for the circuit</h6>
-                                        <p class="card-text text-muted small">
-                                            Detailed schematic diagram of the entire circuit used in the project
-                                            realised in Orcad Capture X, Student edition.
-                                        </p>
-                                        <a href="schematic_circuit.pdf" target="_blank"
-                                            class="btn btn-outline-primary mt-2 pdf-link">
-                                            <i class="fas fa-file-pdf me-2"></i>View PDF
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 col-md-6 mb-4">
-                                <div class="card h-100 sensor-card">
-                                    <div class="card-body text-center">
-                                        <h6 class="card-title">Layers for the PCB</h6>
-                                        <p class="card-text text-muted small">
-                                            The layers used for the PCB design, realised in PCB Editor, Student
-                                            edition.
-                                        </p>
-                                        <a href="v2.pdf" target="_blank" class="btn btn-outline-primary mt-2 pdf-link">
-                                            <i class="fas fa-file-pdf me-2"></i>View PDF
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+  function coerceTs(p) {
+    // acceptă {ts: ISO}, {ts: epoch-sec}, {timestamp}, {time}
+    let t = p?.ts ?? p?.timestamp ?? p?.time ?? null;
+    if (t == null) return null;
+    if (typeof t === "number") {
+      if (t < 1e12) t = t * 1000;   // sec -> ms
+      return new Date(t);
+    }
+    const d = new Date(t);
+    return isNaN(d.getTime()) ? null : d;
+  }
+  function coerceVal(p) {
+    const v = p?.value ?? p?.val ?? p?.y ?? null;
+    const n = typeof v === "string" ? parseFloat(v) : v;
+    return Number.isFinite(n) ? n : null;
+  }
+  function fmtTime(d) {
+    try { return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'}); }
+    catch { return ""; }
+  }
 
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        </div>
-
-        <footer class="footer-bar">
-            <p class="mb-0">© 2025 AIoT-Explorer - part of the unified, multi-tenant IoT platform developed in the frame
-                of
-                2025
-                IoT Explorer Program</p>
-        </footer>
-
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"></script>
-
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
-        <script>
-            // Aici vom stoca datele noastre, ca o simulare.
-            // În aplicația reală, acestea ar veni de la un server.
-            let allData = [];
-
-            // Funcția pentru a genera date simulate
-            function generateRandomData() {
-                allData = [];
-                const numRows = 200; // Mărim numărul de rânduri pentru a demonstra opțiunile de 20 și 40
-                for (let i = 0; i < numRows; i++) {
-                    const timestamp = new Date(Date.now() - i * 3600000); // Date din trecut, la interval de o oră
-                    const temp = (Math.random() * 15 + 20).toFixed(2);
-                    const oxygen = (Math.random() * 10 + 90).toFixed(2);
-                    const pulse = Math.floor(Math.random() * 50) + 70;
-                    allData.push({
-                        timestamp: timestamp, // Păstrăm obiectul Date pentru filtrare
-                        displayTimestamp: timestamp.toLocaleString(), // String pentru afișare
-                        temp: temp,
-                        oxygen: oxygen,
-                        pulse: pulse
-                    });
-                }
-                // Sortăm datele în ordine cronologică inversă (de la cea mai nouă la cea mai veche)
-                allData.sort((a, b) => b.timestamp - a.timestamp);
-                filterData(); // Apelăm filtrarea inițială
+  // --------------- Inițializare grafice ---------------
+  const charts = {};
+  function makeLineChart(canvasId, label) {
+    const el = document.getElementById(canvasId);
+    if (!el) { console.warn("Canvas lipsă:", canvasId); return null; }
+    const ctx = el.getContext("2d");
+    return new Chart(ctx, {
+      type: "line",
+      data: {
+        labels: [],
+        datasets: [{
+          label,
+          data: [],
+          tension: 0.25,
+          fill: false,
+          pointRadius: 0,
+          borderWidth: 2
+        }]
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        interaction: { mode: "nearest", intersect: false },
+        animation: false,
+        scales: {
+          x: { grid: { display: false } },
+          y: { grid: { color: "rgba(0,0,0,.08)" }, ticks: { maxTicksLimit: 6 } }
+        },
+        plugins: {
+          legend: { display: false },
+          tooltip: {
+            callbacks: {
+              label: (ctx) => {
+                const y = ctx.parsed.y;
+                const base = prettyNum(y);
+                // dacă datasetul e GSR (µS), arată și unitatea
+                return /GSR/.test(ctx.dataset.label) ? `${base} µS` : `${base}`;
+              }
             }
+          }
+        }
+      }
+    });
+  }
 
-            // Funcția care randează datele în tabel
-            function renderTable(dataToDisplay) {
-                const tbody = document.getElementById('results-table-body');
-                tbody.innerHTML = ''; // Golim tabelul
+  function initCharts() {
+    SERIES.forEach(s => {
+      const ch = makeLineChart(s.id, s.label);
+      if (ch) charts[s.id] = ch;
+    });
+  }
 
-                // Verificăm dacă există date de afișat
-                if (dataToDisplay.length === 0) {
-                    tbody.innerHTML = `<tr><td colspan="4" class="text-center text-muted">No data found matching the filters.</td></tr>`;
-                    return;
-                }
+  function pushPoint(chart, x, y, maxPoints = 240) {
+    chart.data.labels.push(x);
+    chart.data.datasets[0].data.push(y);
+    if (chart.data.labels.length > maxPoints) {
+      chart.data.labels.shift();
+      chart.data.datasets[0].data.shift();
+    }
+    chart.update("none");
+  }
 
-                dataToDisplay.forEach(row => {
-                    const tr = document.createElement('tr');
-                    tr.innerHTML = `
-                    <td>${row.displayTimestamp}</td>
-                    <td>${row.temp}</td>
-                    <td>${row.oxygen}</td>
-                    <td>${row.pulse}</td>
-                `;
-                    tbody.appendChild(tr);
-                });
-            }
+  // --------------- Carduri (valori live) ---------------
+  function nodeForCard(signal) {
+    return document.querySelector(`.card-value[data-card="${signal}"]`);
+  }
 
-            // Funcția de filtrare
-            function filterData() {
-                const limitFilter = document.getElementById('limit-filter').value;
-                const sensorFilter = document.getElementById('sensor-filter').value;
-                const dateRangeFilter = document.getElementById('date-range-filter').value;
-                const startDate = document.getElementById('start-date').value;
-                const endDate = document.getElementById('end-date').value;
+  async function refreshCards() {
+    try {
+      const jobs = CARD_SIGNALS.map(c =>
+        AIOT.apiGet(lastPath(c.app), { signal: c.signal }).then(r => ({ c, r }))
+      );
+      const results = await Promise.all(jobs);
 
-                let filteredData = allData;
+      results.forEach(({ c, r }) => {
+        const node = nodeForCard(c.signal);
+        if (!node) return;
 
-                // Filtrarea după numărul de înregistrări (limit)
-                if (limitFilter !== 'all') {
-                    const limit = parseInt(limitFilter, 10);
-                    filteredData = filteredData.slice(0, limit);
-                }
+        const raw = r?.value ?? r?.val ?? r;
+        let val = typeof raw === "string" ? parseFloat(raw) : raw;
 
-                // Filtrarea după data
-                if (dateRangeFilter !== 'all') {
-                    const now = new Date();
-                    let filterStartDate;
-                    let filterEndDate;
+        // GSR: backend dă ohmi -> convertim la µS pentru afișare
+        if (c.signal === "gsr") val = ohmToMicroS(val);
 
-                    if (dateRangeFilter === 'today') {
-                        filterStartDate = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-                        filterEndDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1);
-                    } else if (dateRangeFilter === 'week') {
-                        filterStartDate = new Date(now.getFullYear(), now.getMonth(), now.getDate() - 7);
-                        filterEndDate = now;
-                    } else if (dateRangeFilter === 'month') {
-                        filterStartDate = new Date(now.getFullYear(), now.getMonth(), 1);
-                        filterEndDate = now;
-                    } else if (dateRangeFilter === 'custom') {
-                        filterStartDate = new Date(startDate);
-                        filterEndDate = new Date(endDate);
-                    }
+        if (val == null) return;
+        node.textContent = `${prettyNum(val)} ${c.unit || ""}`.trim();
+      });
+    } catch (e) {
+      console.warn("[cards] eroare fetch", e);
+    }
+  }
 
-                    filteredData = filteredData.filter(row => {
-                        return row.timestamp >= filterStartDate && row.timestamp <= filterEndDate;
-                    });
-                }
+  // --------------- Încărcare istoric ---------------
+  async function loadHistoryIntoCharts() {
+    try {
+      const now  = new Date();
+      const from = new Date(now.getTime() - HISTORY_MIN * 60 * 1000).toISOString();
+      const to   = now.toISOString();
 
-                // Filtrarea după senzor (ascunde coloane)
-                const columns = ['timestamp-col', 'temp-col', 'oxygen-col', 'pulse-col'];
-                const headers = document.querySelectorAll('th');
+      const jobs = SERIES.map(s =>
+        AIOT.apiGet(rangePath(s.app), { signal: s.signal, from_ts: from, to_ts: to, step: STEP })
+          .then(data => ({ s, data: Array.isArray(data) ? data : (data?.points ?? []) }))
+      );
+      const res = await Promise.all(jobs);
 
-                headers.forEach(header => header.classList.remove('d-none'));
+      res.forEach(({ s, data }) => {
+        const chart = charts[s.id];
+        if (!chart) return;
+        if (!data.length) return;
 
-                if (sensorFilter !== 'all') {
-                    const columnMap = {
-                        'temp': 'temp-col',
-                        'oxygen': 'oxygen-col',
-                        'pulse': 'pulse-col'
-                    };
-                    const colToHide = columns.filter(col => col !== columnMap[sensorFilter] && col !== 'timestamp-col');
+        // dacă e GSR, convertim fiecare punct din Ω în µS și ne asigurăm că labelul e corect
+        if (s.signal === "gsr" && chart.data?.datasets?.[0]) {
+          chart.data.datasets[0].label = "GSR (µS)";
+        }
 
-                    colToHide.forEach(colClass => {
-                        const header = document.querySelector(`th.${colClass}`);
-                        if (header) {
-                            header.classList.add('d-none');
-                        }
-                    });
-                }
+        data.forEach(p => {
+          const d = coerceTs(p);
+          let v = coerceVal(p);
+          if (s.signal === "gsr") v = ohmToMicroS(v);
+          if (d && v != null) pushPoint(chart, fmtTime(d), v);
+        });
+      });
+    } catch (e) {
+      console.warn("[history] eroare", e);
+    }
+  }
 
-                renderTable(filteredData);
+  // --------------- Live append (din /value) ---------------
+  async function tickAppendLatest() {
+    try {
+      const jobs = SERIES.map(s =>
+        AIOT.apiGet(lastPath(s.app), { signal: s.signal }).then(r => ({ s, r }))
+      );
+      const res = await Promise.all(jobs);
+      const nowLbl = fmtTime(new Date());
 
-                // După randare, ascunde celulele corespunzătoare
-                const rows = document.querySelectorAll('#results-table-body tr');
-                if (sensorFilter !== 'all') {
-                    const columnMap = {
-                        'temp': 'temp-col',
-                        'oxygen': 'oxygen-col',
-                        'pulse': 'pulse-col'
-                    };
-                    const colIndexToHide = columns.filter(col => col !== columnMap[sensorFilter] && col !== 'timestamp-col').map(col => columns.indexOf(col));
+      res.forEach(({ s, r }) => {
+        const chart = charts[s.id];
+        if (!chart) return;
 
-                    rows.forEach(row => {
-                        const cells = row.querySelectorAll('td');
-                        colIndexToHide.forEach(index => {
-                            if (cells[index]) {
-                                cells[index].classList.add('d-none');
-                            }
-                        });
-                    });
-                }
-            }
+        let v = coerceVal(r ?? {});
+        if (s.signal === "gsr") {
+          v = ohmToMicroS(v);
+          if (chart.data?.datasets?.[0]) chart.data.datasets[0].label = "GSR (µS)";
+        }
 
-            // Funcția pentru a afișa/ascunde câmpurile de dată personalizate
-            document.getElementById('date-range-filter').addEventListener('change', (e) => {
-                const isCustom = e.target.value === 'custom';
-                document.getElementById('custom-date-start-container').classList.toggle('d-none', !isCustom);
-                document.getElementById('custom-date-end-container').classList.toggle('d-none', !isCustom);
-                filterData();
-            });
+        if (v != null) pushPoint(chart, nowLbl, v);
+      });
+    } catch (e) {
+      // ignorăm spike-urile rețelei, mai încercăm la următorul tick
+    }
+  }
 
-            // Așteptăm ca DOM-ul să fie încărcat
-            document.addEventListener('DOMContentLoaded', () => {
-                generateRandomData();
+  // --------------- Boot ---------------
+  window.addEventListener("load", async () => {
+    initCharts();
+    await refreshCards();
+    await loadHistoryIntoCharts();
+    if (REFRESH_MS > 0) {
+      setInterval(refreshCards, REFRESH_MS);
+      setInterval(tickAppendLatest, REFRESH_MS);
+    }
+  });
+})();
+</script>
 
-                // Adăugăm evenimentele pentru butoanele de export
-                document.getElementById('exportCsvBtn').addEventListener('click', () => {
-                    let csvContent = "data:text/csv;charset=utf-8,";
-                    const table = document.querySelector('table');
-                    const rows = table.querySelectorAll('tr');
 
-                    rows.forEach(row => {
-                        const visibleCols = Array.from(row.querySelectorAll('td, th')).filter(cell => !cell.classList.contains('d-none'));
-                        const rowData = visibleCols.map(cell => cell.innerText).join(',');
-                        csvContent += rowData + "\r\n";
-                    });
 
-                    const encodedUri = encodeURI(csvContent);
-                    const link = document.createElement("a");
-                    link.setAttribute("href", encodedUri);
-                    link.setAttribute("download", "data.csv");
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                });
 
-                document.getElementById('exportPdfBtn').addEventListener('click', () => {
-                    const doc = new window.jspdf.jsPDF();
-                    const table = document.querySelector('table');
 
-                    const head = Array.from(table.querySelectorAll('thead th')).filter(th => !th.classList.contains('d-none')).map(th => th.innerText);
-                    const body = Array.from(table.querySelectorAll('tbody tr')).map(row =>
-                        Array.from(row.querySelectorAll('td')).filter(td => !td.classList.contains('d-none')).map(td => td.innerText)
-                    );
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
 
-                    doc.autoTable({
-                        head: [head],
-                        body: body
-                    });
-                    doc.save('data.pdf');
-                });
+      // Exports
+      document.getElementById('exportCsvBtn').addEventListener('click', () => {
+        let csv = '';
+        const table = document.querySelector('table');
+        table.querySelectorAll('tr').forEach(row => {
+          const cells = Array.from(row.querySelectorAll('td,th')).filter(c => !c.classList.contains('d-none'));
+          csv += cells.map(c => '"' + c.innerText.replace(/"/g, '""') + '"').join(',') + '\r\n';
+        });
+        const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+        const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'data.csv'; document.body.appendChild(a); a.click(); a.remove();
+      });
 
-                document.getElementById('exportTxtBtn').addEventListener('click', () => {
-                    let txtContent = "";
-                    const table = document.querySelector('table');
-                    const rows = table.querySelectorAll('tr');
+      document.getElementById('exportPdfBtn').addEventListener('click', () => {
+        const doc = new window.jspdf.jsPDF();
+        const table = document.querySelector('table');
+        const head = Array.from(table.querySelectorAll('thead th')).filter(th => !th.classList.contains('d-none')).map(th => th.innerText);
+        const body = Array.from(table.querySelectorAll('tbody tr')).map(row => Array.from(row.querySelectorAll('td')).filter(td => !td.classList.contains('d-none')).map(td => td.innerText));
+        doc.autoTable({ head: [head], body }); doc.save('data.pdf');
+      });
 
-                    rows.forEach(row => {
-                        const visibleCols = Array.from(row.querySelectorAll('td, th')).filter(cell => !cell.classList.contains('d-none'));
-                        const rowData = visibleCols.map(cell => cell.innerText).join('\t');
-                        txtContent += rowData + "\r\n";
-                    });
+      document.getElementById('exportTxtBtn').addEventListener('click', () => {
+        let txt = ''; const table = document.querySelector('table');
+        table.querySelectorAll('tr').forEach(row => { const cells = Array.from(row.querySelectorAll('td,th')).filter(c => !c.classList.contains('d-none')); txt += cells.map(c => c.innerText).join('\t') + '\r\n'; });
+        const blob = new Blob([txt], { type: 'text/plain' }); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'data.txt'; document.body.appendChild(a); a.click(); a.remove();
+      });
 
-                    const blob = new Blob([txtContent], { type: 'text/plain' });
-                    const link = document.createElement("a");
-                    link.href = URL.createObjectURL(blob);
-                    link.download = "data.txt";
-                    document.body.appendChild(link);
-                    link.click();
-                    document.body.removeChild(link);
-                });
-
-                // Adăugăm evenimentele de filtrare
-                document.getElementById('limit-filter').addEventListener('change', filterData);
-                document.getElementById('sensor-filter').addEventListener('change', filterData);
-                document.getElementById('date-range-filter').addEventListener('change', filterData);
-                document.getElementById('start-date').addEventListener('change', filterData);
-                document.getElementById('end-date').addEventListener('change', filterData);
-            });
-        </script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
-            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
-            crossorigin="anonymous"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.min.js"
-            integrity="sha384-BBtl+eGJRgqQAUMxJ7pMwbEyER4l1g+O15P+16Ep7Q9Q+zqX6gSbd85u4mG4QzX+"
-            crossorigin="anonymous"></script>
-    </body>
+    });
+  </script>
+</body>
 
 </html>
-<script>
-    let lastScroll = 0;
-    const header = document.querySelector("header");
-    const backToTop = document.getElementById("backToTop");
-
-    window.addEventListener("scroll", () => {
-        const currentScroll = window.pageYOffset;
-
-        // Show/hide header based on scroll direction
-        if (currentScroll > lastScroll && currentScroll > 100) {
-            header.classList.add("hide"); // scrolling down
-        } else {
-            header.classList.remove("hide"); // scrolling up
-        }
-        lastScroll = currentScroll;
-
-        // Show/hide "Back to Top" button
-        if (currentScroll > 300) {
-            backToTop.style.display = "block";
-        } else {
-            backToTop.style.display = "none";
-        }
-    });
-
-    // Scroll to top when button clicked
-    backToTop.addEventListener("click", () => {
-        window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-</script>
-
-<script>
-    const ctx = document.getElementById('sensorChart').getContext('2d');
-    const sensor1Checkbox = document.getElementById('sensor1');
-    const sensor2Checkbox = document.getElementById('sensor2');
-    const sensor3Checkbox = document.getElementById('sensor3');
-    let datasets = [];
-
-    // Function to generate random data for a specified number of points and value range
-    function generateRandomData(points, min, max) {
-        return Array.from({ length: points }, () =>
-            (Math.random() * (max - min) + min).toFixed(1)
-        );
-    }
-
-    // Function to get labels based on the selected time range
-    function getLabels(range) {
-        if (range === 'day') return Array.from({ length: 24 }, (_, i) => `${i}:00`);
-        if (range === 'month') return Array.from({ length: 30 }, (_, i) => `Day ${i + 1}`);
-        if (range === 'year') return ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-    }
-
-    // Function to create all initial datasets
-    function createAllDatasets(points) {
-        return [
-            {
-                label: 'Sensor temperature',
-                data: generateRandomData(points, 20, 35),
-                borderColor: '#e74c3c',
-                backgroundColor: 'rgba(231, 76, 60, 0.2)',
-                fill: true,
-                tension: 0.3,
-                yAxisID: 'y',
-                sensorId: 'sensor1',
-                dataType: 'temp'
-            },
-            {
-                label: 'Sensor oxygen',
-                data: generateRandomData(points, 90, 100),
-                borderColor: '#3498db',
-                backgroundColor: 'rgba(52, 152, 219, 0.2)',
-                fill: true,
-                tension: 0.3,
-                yAxisID: 'y1',
-                sensorId: 'sensor2',
-                dataType: 'oxygen'
-            },
-            {
-                label: 'Sensor 3 (Pulse)',
-                data: generateRandomData(points, 60, 120),
-                borderColor: '#2ecc71',
-                backgroundColor: 'rgba(46, 204, 113, 0.2)',
-                fill: true,
-                tension: 0.3,
-                yAxisID: 'y2',
-                sensorId: 'sensor3',
-                dataType: 'pulse'
-            }
-        ];
-    }
-
-    let initialLabels = getLabels('year');
-    datasets = createAllDatasets(initialLabels.length);
-
-    let chart = new Chart(ctx, {
-        type: 'line',
-        data: {
-            labels: initialLabels,
-            datasets: datasets.filter(ds => ds.dataType === 'temp')
-        },
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            interaction: { mode: 'index', intersect: false },
-            plugins: {
-                legend: { display: false }
-            }
-        }
-    });
-
-    // Function to update the chart based on checkbox states
-    function updateChartFromCheckboxes() {
-        const activeDatasets = [];
-        const timeRange = document.getElementById('timeRange').value;
-        const labels = getLabels(timeRange);
-        const points = labels.length;
-
-        const newDatasets = createAllDatasets(points);
-
-        if (sensor1Checkbox.checked) {
-            activeDatasets.push(newDatasets.find(ds => ds.sensorId === 'sensor1'));
-        }
-        if (sensor2Checkbox.checked) {
-            activeDatasets.push(newDatasets.find(ds => ds.sensorId === 'sensor2'));
-        }
-        if (sensor3Checkbox.checked) {
-            activeDatasets.push(newDatasets.find(ds => ds.sensorId === 'sensor3'));
-        }
-
-        chart.data.labels = labels;
-        chart.data.datasets = activeDatasets;
-        chart.update();
-
-        // Deactivate all sensor buttons
-        document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active'));
-    }
-
-    // Function to update the chart based on button clicks
-    function updateChartFromButtons(sensorType) {
-        const activeDatasets = [];
-        const timeRange = document.getElementById('timeRange').value;
-        const labels = getLabels(timeRange);
-        const points = labels.length;
-
-        const newDatasets = createAllDatasets(points);
-
-        // Uncheck all sensor checkboxes
-        document.getElementById('sensor1').checked = false;
-        document.getElementById('sensor2').checked = false;
-        document.getElementById('sensor3').checked = false;
-
-        if (sensorType === 'all') {
-            activeDatasets.push(...newDatasets);
-            // Also check all the checkboxes
-            document.getElementById('sensor1').checked = true;
-            document.getElementById('sensor2').checked = true;
-            document.getElementById('sensor3').checked = true;
-        } else {
-            const dataset = newDatasets.find(ds => ds.dataType === sensorType);
-            if (dataset) {
-                activeDatasets.push(dataset);
-                // Check the corresponding checkbox
-                document.getElementById(dataset.sensorId).checked = true;
-            }
-        }
-
-        chart.data.labels = labels;
-        chart.data.datasets = activeDatasets;
-        chart.update();
-    }
-
-
-    // Event listeners for sensor checkboxes
-    sensor1Checkbox.addEventListener('change', updateChartFromCheckboxes);
-    sensor2Checkbox.addEventListener('change', updateChartFromCheckboxes);
-    sensor3Checkbox.addEventListener('change', updateChartFromCheckboxes);
-
-    // Event listener for time range selector
-    document.getElementById('timeRange').addEventListener('change', () => {
-        // This will handle updates from both checkboxes and buttons
-        const activeSensorButton = document.querySelector('.btn-group button.active');
-        if (activeSensorButton) {
-            updateChartFromButtons(activeSensorButton.dataset.sensor);
-        } else {
-            updateChartFromCheckboxes();
-        }
-    });
-
-    document.querySelectorAll('.btn-group button').forEach(button => {
-        button.addEventListener('click', function () {
-            document.querySelectorAll('.btn-group button').forEach(btn => btn.classList.remove('active'));
-            this.classList.add('active');
-            const sensorType = this.dataset.sensor;
-            updateChartFromButtons(sensorType);
-        });
-    });
-
-    // New JavaScript for the Results section
-    document.addEventListener('DOMContentLoaded', (event) => {
-        const tableBody = document.getElementById('results-table-body');
-        const exportCsvBtn = document.getElementById('exportCsvBtn');
-        let generatedData = [];
-
-        // Function to generate and populate the table with data
-        function populateTable() {
-            tableBody.innerHTML = '';
-            generatedData = [];
-            const now = new Date();
-            const numRows = 50; // Generate 50 rows of data for a good demo
-
-            for (let i = 0; i < numRows; i++) {
-                const timestamp = new Date(now.getTime() - i * 60000).toLocaleString();
-                const temp = (Math.random() * (35 - 20) + 20).toFixed(1);
-                const oxygen = (Math.random() * (100 - 90) + 90).toFixed(1);
-                const pulse = (Math.random() * (120 - 60) + 60).toFixed(0);
-
-                const row = `
-                    <tr>
-                        <td>${timestamp}</td>
-                        <td>${temp}</td>
-                        <td>${oxygen}</td>
-                        <td>${pulse}</td>
-                    </tr>
-                `;
-                tableBody.innerHTML += row;
-                generatedData.push({ timestamp, temp, oxygen, pulse });
-            }
-        }
-
-        // Function to export data to CSV
-        function exportToCsv() {
-            const header = ['Timestamp', 'Temperature (°C)', 'Oxygen Saturation (%)', 'Pulse Rate (BPM)'];
-            let csv = header.join(',') + '\n';
-            generatedData.forEach(row => {
-                csv += `${row.timestamp},${row.temp},${row.oxygen},${row.pulse}\n`;
-            });
-
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
-            const link = document.createElement("a");
-            const url = URL.createObjectURL(blob);
-            link.setAttribute("href", url);
-            link.setAttribute("download", "sensor_data.csv");
-            link.style.visibility = 'hidden';
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
-        // Call the function to populate the table on page load
-        populateTable();
-
-        // Add event listener for the export button
-        exportCsvBtn.addEventListener('click', exportToCsv);
-    });
-
-    //  Noul cod JavaScript pentru temă (începe aici)
-    document.addEventListener('DOMContentLoaded', () => {
-        const themeToggleBtn = document.getElementById('themeToggle');
-        const body = document.body;
-
-        const savedTheme = localStorage.getItem('theme');
-        const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-            body.classList.add('dark-mode');
-            themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-        } else {
-            body.classList.remove('dark-mode');
-            themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-        }
-
-        themeToggleBtn.addEventListener('click', () => {
-            body.classList.toggle('dark-mode');
-            if (body.classList.contains('dark-mode')) {
-                themeToggleBtn.innerHTML = '<i class="fas fa-sun"></i>';
-                localStorage.setItem('theme', 'dark');
-            } else {
-                themeToggleBtn.innerHTML = '<i class="fas fa-moon"></i>';
-                localStorage.setItem('theme', 'light');
-            }
-        });
-    });
-    // Noul cod JavaScript pentru temă (se termină aici)
-
-    function handleCredentialResponse(response) {
-        // Decode Google token here or send to server for verification
-        console.log("Google ID token:", response.credential);
-
-        // functie verificare token
-        document.getElementById('auth-section').classList.add('d-none');
-        document.getElementById('filter-section').classList.remove('d-none');
-        document.getElementById('results-container').classList.remove('d-none');
-    }
-
-    function handleCredentialResponse(response) {
-        console.log("Google ID token:", response.credential);
-
-        // TODO: Verifică token-ul pe server dacă vrei securitate reală
-
-        // Ascunde zona de login
-        document.getElementById('auth-section').classList.add('d-none');
-
-        // Afișează filtrele și rezultatele
-        document.getElementById('filter-section').classList.remove('d-none');
-        document.getElementById('results-container').classList.remove('d-none');
-    }
-</script>

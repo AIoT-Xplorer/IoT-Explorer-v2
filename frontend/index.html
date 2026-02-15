@@ -107,7 +107,7 @@
         .hero-section {
             width: 100%;
             height: 100vh;
-            background-image: url('/img/team_full_1.jpg');
+            background: url('img/team_form_1.jpg') no-repeat center center/cover;
             /* Updated line */
             background-size: cover;
             background-position: center;
@@ -275,7 +275,7 @@
 
         .dark-mode .form-check-input:checked {
             background-color: #4CAF50;
-            /* green when ON */ 
+            /* green when ON */
             border-color: #4CAF50;
         }
 
@@ -283,11 +283,11 @@
             box-shadow: 0 0 0 0.25rem rgba(76, 175, 80, 0.25);
         }
 
-         /* ===== GRAFICE ===== */
+        /* ===== GRAFICE ===== */
         .mini-chart {
             background: #fff;
             border-radius: 8px;
-            box-shadow: inset 0 0 6px rgba(0,0,0,0.05);
+            box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
             padding: 3px;
             height: 100px !important;
             width: 100%;
@@ -351,7 +351,8 @@
                                 <li><a class="dropdown-item" href="/frontend-alpha/src/index.html">Alpha</a></li>
                                 <li><a class="dropdown-item" href="/frontend-beta/src/index.html">Beta</a></li>
                                 <li><a class="dropdown-item" href="/frontend-gamma/src/index.html">Gamma</a></li>
-                                <li><a class="dropdown-item" href="/frontend-delta/src/about-project-delta.html">Delta</a></li>
+                                <li><a class="dropdown-item"
+                                        href="/frontend-delta/src/about-project-delta.html">Delta</a></li>
                             </ul>
                         </li>
 
@@ -449,6 +450,7 @@
                             aria-label="Slide 4"></button>
                     </div>
                     <div class="carousel-inner">
+
                         <div class="carousel-item active">
                             <div class="card shadow-sm rounded-3">
                                 <img src="/img/team_full_kick_off_meet.jpg" class="card-img-top" alt="Kick off meeting">
@@ -458,16 +460,16 @@
                                 </div>
                             </div>
                         </div>
-
-                        <div class="carousel-item">
+                        <div class="carousel-item active">
                             <div class="card shadow-sm rounded-3">
-                                <img src="/img/team_full_1.jpg" class="card-img-top" alt="Mentor-photo">
+                                <img src="/img/team_form_1.jpg" class="card-img-top" alt="Kick off meeting">
                                 <div class="carousel-caption d-none d-md-block">
-                                    <h5>During the development of the front-end</h5>
-                                    <p>Us with our mentor, Founder of IoT-Explorer Ana-Maria Drăgulinescu</p>
+                                    <h5>Presentation held during Orientation Day</h5>
+                                    <p>This presentation provided an overview of the project goals and objectives.</p>
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="carousel-item">
                             <div class="card p-3 shadow-sm rounded-3">
@@ -488,13 +490,7 @@
                             </div>
                         </div>
 
-                        <div class="carousel-item">
-                            <div class="card p-3 shadow-sm rounded-3">
-                                <div class="d-flex justify-content-center">
-                                    <img src="/img/photo_3.jpg" class="w-50 rounded-3 shadow" alt="Imagine 4">
-                                </div>
-                            </div>
-                        </div>
+
 
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#projectCarousel"
@@ -581,115 +577,116 @@
         </footer>
         <script src="api.js"></script>
         <script>
-        const charts = {
-            gsrChart: new Chart(document.getElementById("gsrChart"), {
-            type: "line",
-            data: { labels: [], datasets: [{ label: "GSR (Ohms)", data: [], borderColor: "blue", fill: false }] },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            }),
-            tmp007Chart: new Chart(document.getElementById("tmp007Chart"), {
-            type: "line",
-            data: { labels: [], datasets: [{ label: "Temperature (°C)", data: [], borderColor: "red", fill: false }] },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            }),
-            max30102_spo2Chart: new Chart(document.getElementById("max30102_spo2Chart"), {
-            type: "line",
-            data: { labels: [], datasets: [{ label: "SpO₂ (%)", data: [], borderColor: "green", fill: false }] },
-            options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
-            }),
-            max30102_bpmChart: new Chart(document.getElementById("max30102_bpmChart"), {
-            type: "line",
-            data: { labels: [], datasets: [{ label: "Heart Rate (bpm)", data: [], borderColor: "purple", fill: false }] },
-            options: { responsive: true, scales: { y: { beginAtZero: true } } }
-            })
-        };
+            const charts = {
+                gsrChart: new Chart(document.getElementById("gsrChart"), {
+                    type: "line",
+                    data: { labels: [], datasets: [{ label: "GSR (Ohms)", data: [], borderColor: "blue", fill: false }] },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                }),
+                tmp007Chart: new Chart(document.getElementById("tmp007Chart"), {
+                    type: "line",
+                    data: { labels: [], datasets: [{ label: "Temperature (°C)", data: [], borderColor: "red", fill: false }] },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                }),
+                max30102_spo2Chart: new Chart(document.getElementById("max30102_spo2Chart"), {
+                    type: "line",
+                    data: { labels: [], datasets: [{ label: "SpO₂ (%)", data: [], borderColor: "green", fill: false }] },
+                    options: { responsive: true, scales: { y: { beginAtZero: true, max: 100 } } }
+                }),
+                max30102_bpmChart: new Chart(document.getElementById("max30102_bpmChart"), {
+                    type: "line",
+                    data: { labels: [], datasets: [{ label: "Heart Rate (bpm)", data: [], borderColor: "purple", fill: false }] },
+                    options: { responsive: true, scales: { y: { beginAtZero: true } } }
+                })
+            };
 
-        (async function () {
-            if (!window.AIOT) { console.error("api.js nu exista"); return; }
+            (async function () {
+                if (!window.AIOT) { console.error("api.js nu exista"); return; }
 
-            const CARD_SIGNALS = [
-            { app: "medical", signal: "gsr", unit: "Ohms" },
-            { app: "medical", signal: "tmp007", unit: "°C" },
-            { app: "medical", signal: "max30102_spo2", unit: "%" },
-            { app: "medical", signal: "max30102_bpm", unit: "bpm" }
-            ];
+                const CARD_SIGNALS = [
+                    { app: "medical", signal: "gsr", unit: "Ohms" },
+                    { app: "medical", signal: "tmp007", unit: "°C" },
+                    { app: "medical", signal: "max30102_spo2", unit: "%" },
+                    { app: "medical", signal: "max30102_bpm", unit: "bpm" }
+                ];
 
-            const CHARTS = [
-            { canvasId: "gsrChart",      app: "medical", signal: "gsr" },
-            { canvasId: "tmp007Chart",   app: "medical", signal: "tmp007" },
-            { canvasId: "max30102_spo2Chart", app: "medical", signal: "max30102_spo2" },
-            { canvasId: "max30102_bpmChart",  app: "medical", signal: "max30102_bpm" }
-            ];
+                const CHARTS = [
+                    { canvasId: "gsrChart", app: "medical", signal: "gsr" },
+                    { canvasId: "tmp007Chart", app: "medical", signal: "tmp007" },
+                    { canvasId: "max30102_spo2Chart", app: "medical", signal: "max30102_spo2" },
+                    { canvasId: "max30102_bpmChart", app: "medical", signal: "max30102_bpm" }
+                ];
 
-            const REFRESH_MS = 10000;
-            const HISTORY_MIN = 60;
-            const STEP = "1m";
+                const REFRESH_MS = 10000;
+                const HISTORY_MIN = 60;
+                const STEP = "1m";
 
-            const lastPath  = app => `/api/${app}/value`;
-            const rangePath = app => `/api/${app}/history`;
+                const lastPath = app => `/api/${app}/value`;
+                const rangePath = app => `/api/${app}/history`;
 
-            function getCardValueNodesInOrder() {
-            return Array.from(document.querySelectorAll(".card-custom .card-value"));
-            }
+                function getCardValueNodesInOrder() {
+                    return Array.from(document.querySelectorAll(".card-custom .card-value"));
+                }
 
-            async function refreshCards() {
-            const nodes = getCardValueNodesInOrder();
-            if (nodes.length < CARD_SIGNALS.length) return;
+                async function refreshCards() {
+                    const nodes = getCardValueNodesInOrder();
+                    if (nodes.length < CARD_SIGNALS.length) return;
 
-            try {
-                const jobs = CARD_SIGNALS.map(c =>
-                AIOT.apiGet(lastPath(c.app), { signal: c.signal }).then(r => ({c, r}))
-                );
-                const results = await Promise.all(jobs);
-                results.forEach(({c, r}, idx) => {
-                if (!r || r.value == null) return;
-                nodes[idx].textContent = `${r.value} ${c.unit || ""}`.trim();
+                    try {
+                        const jobs = CARD_SIGNALS.map(c =>
+                            AIOT.apiGet(lastPath(c.app), { signal: c.signal }).then(r => ({ c, r }))
+                        );
+                        const results = await Promise.all(jobs);
+                        results.forEach(({ c, r }, idx) => {
+                            if (!r || r.value == null) return;
+                            nodes[idx].textContent = `${r.value} ${c.unit || ""}`.trim();
+                        });
+                    } catch (e) {
+                        console.warn("[cards] error:", e);
+                    }
+                }
+
+                function pushPoint(chart, x, y, maxPoints = 60) {
+                    chart.data.labels.push(x);
+                    chart.data.datasets[0].data.push(y);
+                    if (chart.data.labels.length > maxPoints) {
+                        chart.data.labels.shift();
+                        chart.data.datasets[0].data.shift();
+                    }
+                    chart.update();
+                }
+
+                async function loadHistoryIntoCharts() {
+                    try {
+                        const now = new Date();
+                        const from = new Date(now.getTime() - HISTORY_MIN * 60 * 1000).toISOString();
+                        const to = now.toISOString();
+
+                        const jobs = CHARTS.map(ch =>
+                            AIOT.apiGet(rangePath(ch.app), { signal: ch.signal, from_ts: from, to_ts: to, step: STEP })
+                                .then(data => ({ ch, data: data || [] }))
+                        );
+                        const res = await Promise.all(jobs);
+
+                        res.forEach(({ ch, data }) => {
+                            const chart = charts[ch.canvasId];
+                            if (!chart) return;
+                            data.forEach(p => pushPoint(chart, new Date(p.ts).toLocaleTimeString(), p.value));
+                        });
+                    } catch (e) {
+                        console.warn("[history] error:", e);
+                    }
+                }
+
+                window.addEventListener("load", async () => {
+                    await refreshCards();
+                    await loadHistoryIntoCharts();
+                    if (REFRESH_MS > 0) setInterval(refreshCards, REFRESH_MS);
                 });
-            } catch (e) {
-                console.warn("[cards] error:", e);
-            }
-            }
-
-            function pushPoint(chart, x, y, maxPoints = 60) {
-            chart.data.labels.push(x);
-            chart.data.datasets[0].data.push(y);
-            if (chart.data.labels.length > maxPoints) {
-                chart.data.labels.shift();
-                chart.data.datasets[0].data.shift();
-            }
-            chart.update();
-            }
-
-            async function loadHistoryIntoCharts() {
-            try {
-                const now = new Date();
-                const from = new Date(now.getTime() - HISTORY_MIN * 60 * 1000).toISOString();
-                const to   = now.toISOString();
-
-                const jobs = CHARTS.map(ch =>
-                AIOT.apiGet(rangePath(ch.app), { signal: ch.signal, from_ts: from, to_ts: to, step: STEP })
-                    .then(data => ({ ch, data: data || [] }))
-                );
-                const res = await Promise.all(jobs);
-
-                res.forEach(({ch, data}) => {
-                const chart = charts[ch.canvasId];
-                if (!chart) return;
-                data.forEach(p => pushPoint(chart, new Date(p.ts).toLocaleTimeString(), p.value));
-                });
-            } catch (e) {
-                console.warn("[history] error:", e);
-            }
-            }
-
-            window.addEventListener("load", async () => {
-            await refreshCards();
-            await loadHistoryIntoCharts();
-            if (REFRESH_MS > 0) setInterval(refreshCards, REFRESH_MS);
-            });
-        })();
+            })();
         </script>
 </body>
+
 </html>
 
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"

@@ -135,6 +135,7 @@
       const res = await Promise.all(jobs);
 
       res.forEach(({ c, r }) => {
+        console.log("[LIVE API]", c.signal,r);
         if (!r || r.value == null) return;
         const chart = getChartByCanvasId(c.canvasId) || ensureChart(c.canvasId, c.label, c.unit);
         if (!chart) return;

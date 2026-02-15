@@ -1,12 +1,17 @@
 from fastapi import Query
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, Header, HTTPException
 from db import fetch_all, execute
+import os
+import aiomqtt
 
 router = APIRouter()
 
-def get_tenant(request: Request) -> str | None:
-    return getattr(request.state, "tenant", None)
+def get_tenant(x_tenant_id: str | None = Header(default=None)):
+    if not x_tenant_id:
+        raise HTTPException(400, "Missing X-Tenant-ID header")
+    x_tenant_id=x_tenant_id.capitalize()
+    return x_tenant_id
 
 @router.get("")
 async def list_devices(request: Request, tenant: str | None = Depends(get_tenant)):
@@ -36,7 +41,7 @@ async def get_signal_value(
     q = """
     SELECT value
     FROM measurements
-    WHERE signal = $1 AND ($2::text IS NULL OR tenant_id = $2)
+    WHERE  signal = $1 AND ($2::text IS NULL OR tenant_id = $2)
     ORDER BY ts DESC
     LIMIT 1
     """
@@ -67,7 +72,7 @@ async def choose_plant(request: Request):
     if not plant:
         return {"ok": False, "error": "Missing plant name"}
 
-    topic = "tenants/Alpha/agri/esp32_Alpha/selectPlant"
+    topic = "tenants/Alpha/agri/esp32-Alpha/selectPlant"
     payload = plant
 
     MQTT_HOST = os.getenv("MQTT_HOST", "mosquitto")
