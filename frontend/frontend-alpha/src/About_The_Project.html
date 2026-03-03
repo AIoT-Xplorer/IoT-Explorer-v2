@@ -158,7 +158,7 @@
         </button>
         <div class="collapse navbar-collapse" id="collapsibleNavId">
           <ul class="navbar-nav ms-auto">
-            <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="../../../index.html">Home</a></li>
             <li class="nav-item"><a class="nav-link" href="MeetTheTeam.html">Meet the Team</a></li>
             <li class="nav-item"><a class="nav-link active" href="About_The_Project.html">About the Project</a></li>
             <li class="nav-item"><a class="nav-link" href="Dashboard.html">Dashboard</a></li>
@@ -181,36 +181,33 @@
       <ul class="custom-list">
         <li><i class="fas fa-tint"></i> Soil moisture → detects when watering is needed</li>
         <li><i class="fas fa-temperature-high"></i> Ambient temperature & humidity → ensures optimal growth</li>
-        <li><i class="fas fa-wind"></i> Air quality (VOC/CO₂) → checks proper circulation</li>
-        <li><i class="fas fa-sun"></i> Light intensity → verifies plant receives enough light</li>
       </ul>
       <p class="section-content">
-        The system can automatically water the plant using a pump when the soil becomes too dry, while also allowing remote monitoring and manual control via Wi-Fi and cloud integration.
+       The system can automatically water the plant using a servo-controlled irrigation mechanism when the soil becomes too dry, while also allowing remote monitoring via Wi-Fi and cloud integration.
       </p>
     </div>
 
-    <div class="section-block">
-      <h2 class="section-title">Objectives</h2>
-      <ul class="custom-list">
-        <li><i class="fas fa-chart-line"></i> Monitor soil moisture, temperature, humidity, light, and optionally air quality.</li>
-        <li><i class="fas fa-robot"></i> Automate irrigation when soil drops below threshold with safety limits.</li>
-        <li><i class="fas fa-cloud"></i> Remote access: cloud dashboards, graphs, and manual irrigation commands.</li>
-        <li><i class="fas fa-shield-alt"></i> Reliability & safety: fail-safes, OTA updates, and optional water level sensor.</li>
-      </ul>
-    </div>
+   <div class="section-block">
+  <h2 class="section-title">Technologies</h2>
+  <ul class="custom-list">
+    <li><i class="fas fa-microchip"></i> ESP32 DevKit v1 (Wi-Fi microcontroller)</li>
+    <li><i class="fas fa-tint"></i> Sparkfun Capacitive Soil Moisture Sensor</li>
+    <li><i class="fas fa-thermometer-half"></i> BME280 for temperature and humidity</li>
+    <li><i class="fas fa-eye"></i> ADPS9960 proximity sensor</li>
+    <li><i class="fas fa-tv"></i> 2.4-inch TFT LCD display</li>
+    <li><i class="fas fa-water"></i> Servo motor with irrigation mechanism</li>
+    <li><i class="fas fa-plug"></i> 9V power supply + buck converter</li>
+    <li><i class="fas fa-code"></i> Software: PlatformIO, MQTT</li>
+  </ul>
+</div>
 
-    <div class="section-block">
-      <h2 class="section-title">Technologies</h2>
-      <ul class="custom-list">
-        <li><i class="fas fa-microchip"></i> ESP32 DevKit v1 (Wi-Fi microcontroller)</li>
-        <li><i class="fas fa-tint"></i> Capacitive Soil Moisture Sensor</li>
-        <li><i class="fas fa-sun"></i> BH1750 light sensor</li>
-        <li><i class="fas fa-thermometer-half"></i> BME280/BME680 for temp, humidity, VOC</li>
-        <li><i class="fas fa-water"></i> Peristaltic pump + MOSFET driver</li>
-        <li><i class="fas fa-plug"></i> 12V power supply + buck converter</li>
-        <li><i class="fas fa-code"></i> Software: Arduino IDE/PlatformIO, MQTT, Cloud dashboards (Adafruit IO, Blynk, ThingsBoard)</li>
-      </ul>
-    </div>
+<div class="section-block">
+  <h2 class="section-title">Design & Fabrication</h2>
+  <ul class="custom-list">
+    <li><i class="fas fa-cube"></i> Custom 3D-printed case designed in Fusion 360</li>
+    <li><i class="fas fa-project-diagram"></i> Custom PCB designed in KiCad</li>
+  </ul>
+</div>
 
     <div class="section-block">
       <h2 class="section-title">Future Plans</h2>

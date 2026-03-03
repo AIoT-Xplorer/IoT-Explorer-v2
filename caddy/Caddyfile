@@ -23,9 +23,20 @@
     import common_hardening
     encode zstd gzip
     reverse_proxy frontend:80
+    # 🔹 reguli de cache
+    @static {
+        path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.ttf
+    }
+    header @static Cache-Control "public, max-age=31536000, immutable"
+
+    @html {
+        path *.html
+    }
+    header @html Cache-Control "no-cache, no-store, must-revalidate"
 }
 
-# API (poți activa CORS minimal dacă ai nevoie – vezi comentariul)
+
+# API (se poate activa CORS minimal dacă ai nevoie – vezi comentariul)
 {$API_DOMAIN} {
     import common_hardening
     encode zstd gzip
