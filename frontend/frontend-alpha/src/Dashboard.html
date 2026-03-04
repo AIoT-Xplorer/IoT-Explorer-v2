@@ -205,8 +205,8 @@
         <label for="plantSelect" class="form-label fw-bold">Select your plant:</label>
         <select id="plantSelect" class="form-select w-auto d-inline-block">
           <option value="" selected disabled>Choose a plant</option>
-          <option value="aloe">Aloe vera</option>
-          <option value="orchid">Orchid</option>
+          <option value="aloe">Aloe Vera</option>
+          <option value="orchid">Orhid </option>
           <option value="ficus">Ficus</option>
           <option value="basil">Basil</option>
           <option value="tomato">Tomato</option>
@@ -220,7 +220,7 @@
         <div class="col-6 col-md-4 col-lg-3">
           <div class="card-custom">
             <i class="fas fa-tint"></i>
-            <div class="card-value">-- %</div>
+            <div class="card-value" >-- %</div>
             <div class="card-label">Soil Moisture</div>
           </div>
         </div>
@@ -280,17 +280,19 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
   <!-- CHART SCRIPT -->
-  <script src="./dashboard.js"></script>
+  
   <script src="./api.js"></script>
+  <script src="./dashboard.js"></script>
+  
   <script>
     const createChart = (ctx, label, unit, borderColor, bgColor) => {
-      return new Chart(ctx, {
+      const chart = new Chart(ctx, {
         type: 'line',
         data: {
-          labels: ["10:00","10:05","10:10","10:15","10:20","10:25"],
+          labels: [],    // <- gol
           datasets: [{
             label: `${label} (${unit})`,
-            data: [20, 21, 21.5, 22, 21.8, 22.1],
+            data: [],  // <- gol
             borderColor: borderColor,
             backgroundColor: bgColor,
             fill: true,
@@ -308,13 +310,25 @@
           }
         }
       });
+     // Fallback folosit de dashboard.js dacă Chart.getChart(...) nu e disponibil
+    // IMPORTANT: fallback pentru dashboard.js
+    // Fallback folosit de dashboard.js dacă Chart.getChart(...) nu există
+    if (ctx && ctx instanceof HTMLCanvasElement) ctx._chart = chart;
+    else if (ctx?.canvas instanceof HTMLCanvasElement) ctx.canvas._chart = chart;
+
+    return chart;
+
     };
 
     createChart(document.getElementById('tempChart'), 'Temperature', '°C', '#ff6384', 'rgba(255,99,132,0.2)');
     createChart(document.getElementById('soilChart'), 'Soil Moisture', '%', '#4bc0c0', 'rgba(75,192,192,0.2)');
     createChart(document.getElementById('humidityChart'), 'Air Humidity', '%', '#36a2eb', 'rgba(54,162,235,0.2)');
+    
+
+    
+  </script>
 
   
-  </script>
+  
 </body>
 </html>

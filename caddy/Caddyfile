@@ -18,14 +18,15 @@
     }
 }
 
-# Frontend
+# Original frontend (nginx) - app.aiot-xplorer.eu
 {$DOMAIN} {
     import common_hardening
     encode zstd gzip
     reverse_proxy frontend:80
-    # 🔹 reguli de cache
+
+    # Cache rules for static assets
     @static {
-        path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.ttf
+        path *.ico *.css *.js *.gif *.jpg *.jpeg *.png *.svg *.woff *.woff2 *.ttf *.map
     }
     header @static Cache-Control "public, max-age=31536000, immutable"
 
@@ -44,13 +45,14 @@
     # --- CORS minimal (decomentează dacă este necesar) ---
     @preflight method OPTIONS
     handle @preflight {
-        header Access-Control-Allow-Origin "*"
+        header Access-Control-Allow-Origin https://app.aiot-xplorer.eu
         header Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-        header Access-Control-Allow-Headers "Authorization, Content-Type"
+        header Access-Control-Allow-Headers "x-tenant-id,Authorization, Content-Type"
+        header Access-Control-Allow-Credentials "true"
         header Access-Control-Max-Age "86400"
         respond "" 204
     }
-    header Access-Control-Allow-Origin "*"
+    #header Access-Control-Allow-Origin "*"
     # -----------------------------------------------------
 
     reverse_proxy backend:80
@@ -62,3 +64,65 @@
     # compresia nu ajută WS, o lăsăm deoparte aici
     reverse_proxy mosquitto:9001
 }
+
+
+# #Graduation-Lab
+
+# {$HUB_DOMAIN} {
+#   encode zstd gzip
+#   @api path /api/* /admin/* /upload/*
+#   handle @api {
+#     reverse_proxy hub-backend:4000  # backend/Next API
+#   }
+#   handle {
+#     reverse_proxy hub-frontend:3000  # frontend
+#     # pentru Next static export:
+#     # root * /var/www/knowledge
+#     # file_server
+#     # try_files {path} /index.html
+#   }
+#   header {
+#     Content-Security-Policy "default-src 'self' https: data: blob:; frame-ancestors 'none';"
+#     Referrer-Policy "strict-origin-when-cross-origin"
+#     X-Content-Type-Options "nosniff"
+#     X-Frame-Options "DENY"
+#     Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+#   }
+# }
+
+# Graduation Lab (HUB)
+{$HUB_DOMAIN} {
+    encode zstd gzip
+
+    # toate cererile Next.js către API-ul propriu
+    @hub_api path /api/*
+    handle @hub_api {
+        reverse_proxy hub-backend:4000
+    }
+
+    # TOT ce ține de frontend (inclusiv /admin/*)
+    handle {
+        reverse_proxy hub-frontend:3000
+    }
+
+    header {
+           Content-Security-Policy "default-src 'self' https: data: blob:; script-src 'self' 'unsafe-inline' https:; frame-ancestors 'none';"
+        Referrer-Policy "strict-origin-when-cross-origin"
+        X-Content-Type-Options "nosniff"
+        X-Frame-Options "DENY"
+        Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    }
+}
+{$AQI_DOMAIN}
+{
+    root * /var/www/html
+    php_fastcgi aqi-php:9000
+    file_server
+    try_files {path} {path}/ /index.php
+}
+# Posturiq
+posturiq.aiot-xplorer.eu {
+    encode zstd gzip
+    reverse_proxy 172.18.0.10:8001
+}
+

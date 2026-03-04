@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Request, Header, HTTPException
 from db import fetch_all, execute
-
+from fastapi import Query
 router = APIRouter()
 
-def get_tenant(request: Request) -> str | None:
-    return getattr(request.state, "tenant", None)
+def get_tenant(x_tenant_id: str | None = Header(default=None)):
+    if not x_tenant_id:
+        raise HTTPException(400, "Missing X-Tenant-ID header")
+    return x_tenant_id
 
 @router.get("")
 async def list_devices(request: Request, tenant: str | None = Depends(get_tenant)):
@@ -39,3 +41,21 @@ async def glove_history(limit: int = 10):
     """, {"limit": limit})
     return [dict(r) for r in rows]
 
+@router.get("/value")
+async def get_signal_value(
+    request: Request,
+    signal: str = Query(...),
+    tenant: str | None = Depends(get_tenant)
+):
+    # Returnează ultima valoare pentru signal din measurements
+    q = """
+    SELECT value
+    FROM measurements
+    WHERE signal = $1 AND ($2::text IS NULL OR tenant_id = $2)
+    ORDER BY ts DESC
+    LIMIT 1
+    """
+    rows = await fetch_all(q, {"signal": signal, "tenant": tenant})
+    if rows:
+        return {"value": rows[0]["value"]}
+    return {"value": None}

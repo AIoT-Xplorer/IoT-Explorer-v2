@@ -8,15 +8,20 @@ services:
     ports:
       - "5.75.210.124:80:80"
       - "5.75.210.124:443:443"
+      - "49.13.76.182:80:80"
+      - "49.13.76.182:443:443"
     environment:
       - DOMAIN=${DOMAIN}
       - API_DOMAIN=${API_DOMAIN}
       - MQTT_DOMAIN=${MQTT_DOMAIN}
       - ACME_EMAIL=${ACME_EMAIL}
+      - HUB_DOMAIN=${HUB_DOMAIN}
+      - AQI_DOMAIN=${AQI_DOMAIN}
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
       - caddy_data:/data
       - caddy_config:/config
+      - /opt/aqi:/var/www/html
     depends_on: [frontend, backend, mosquitto]
     networks: [app_net]
 
@@ -133,11 +138,12 @@ services:
       - DATABASE_URL=postgresql://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:5432/${POSTGRES_DB}
       # (Alternative safer pattern is to pass PG* vars and build the DSN in code.)
     expose: ["80"]
+    # ports:
+    #   - "8000:80"
     depends_on:
       db:
         condition: service_healthy
     networks: [app_net]
-
   ingestor:
     build:
       context: ./backend/ingestors
@@ -155,6 +161,48 @@ services:
       # TOPIC_FILTER: '$share/ingestors/tenants/+/+/+/+'
       TOPIC_FILTER: 'tenants/#'
     networks: [app_net]
+  hub-frontend:
+    image: node:20
+    working_dir: /app
+    command: sh -c "npm ci && npm run build && npm run start"  # Next.js pe 3000
+    volumes: ["/opt/graduation-lab/hub:/app"]
+    expose: ["3000"]
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:3000/ || exit 1"]
+      interval: 10s
+      timeout: 3s
+      retries: 10
+    networks: [app_net]
+
+  hub-backend:
+    build:
+      context: /opt/graduation-lab/api
+      dockerfile: Dockerfile
+    environment:
+    - DATABASE_URL=postgresql://${POSTGRES_USER:-aiot}:${POSTGRES_PASSWORD:-aiot2025}@db:5432/${POSTGRES_DB:-aiotdb}
+    - GROQ_API_KEY=${GROQ_API_KEY}
+    expose: ["4000"]
+    networks: [app_net]
+
+  ollama:
+    image: ollama/ollama:latest
+    restart: unless-stopped
+    environment:
+      - OLLAMA_HOST=0.0.0.0:11434
+    volumes:
+      - ollama_data:/root/.ollama
+    expose: ["11434"]
+    networks: [app_net]
+    # Optional: Pull model on startup (can take time on first run)
+    # command: sh -c "ollama pull mistral && ollama serve"
+
+  aqi-php:
+    image: php:8.2-fpm-alpine
+    restart: unless-stopped
+    volumes:
+      - /opt/aqi/:/var/www/html
+    networks: [app_net]
+
 networks:
   app_net:
     driver: bridge
@@ -163,3 +211,4 @@ volumes:
   caddy_data: {}
   caddy_config: {}
   db_data: {}
+  ollama_data: {}

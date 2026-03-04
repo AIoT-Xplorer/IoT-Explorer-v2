@@ -1,6 +1,7 @@
 import os, re, json, asyncio
 import aiomqtt
 from db import write_measurement
+from datetime import datetime
 
 MQTT_HOST = os.getenv("MQTT_HOST", "mosquitto")
 MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
@@ -20,12 +21,19 @@ async def handle(topic: str, payload: bytes):
     except Exception:
         data = {"raw": payload.decode("utf-8", errors="replace")}
 
+    # de sters dc nu merge
+    ts_str=data.get("ts")
+    ts=None
+    if ts_str:
+        ts=datetime.strptime(ts_str, "%Y-%m-%dT%H:%M:%SZ")
+    #
+
     await write_measurement(
         tenant_id=meta["tenant"],
         app_id=meta["app"],
         device_id=meta["device"],
         signal=meta["signal"],
-        ts=data.get("ts"),
+        ts=ts,
         value=data.get("value"),
         extra=json.dumps(data)
     )

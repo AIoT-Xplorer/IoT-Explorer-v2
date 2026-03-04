@@ -6,6 +6,26 @@ from mqtt_listener import handle_messages, latest_messages
 from db import fetch_all, execute
 
 app = FastAPI(title="IoT Multi-tenant API", version="0.1.0")
+###---------------------------###
+#ADAUGARE 16.09.2025
+
+# CORS middleware (este util pt ca frontend-ul e pe alt domeniu)
+
+
+
+from fastapi.middleware.cors import CORSMiddleware
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["https://app.aiot-xplorer.eu"],  # sau ["*"] dacă nu folosești credențiale
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["X-Tenant-ID", "Content-Type", "Authorization"],  # Permite toate headerele + header personalizat
+)
+
+###-------------------------###
+
 
 app.add_middleware(TenantMiddleware)
 
