@@ -114,6 +114,143 @@
             max-width: 700px;
             margin: auto;
         }
+
+        .about-section {
+            background: #fff;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid #4682B4;
+        }
+
+        .about-section h2 {
+            font-size: 1.35rem;
+            font-weight: 600;
+            color: #003366;
+            margin-bottom: 0.8rem;
+        }
+
+        .about-section p {
+            margin-bottom: 1rem;
+            color: #2f2f2f;
+            line-height: 1.7;
+        }
+
+        .about-section p:last-child {
+            margin-bottom: 0;
+        }
+
+        .about-section h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #005f99;
+            margin: 1rem 0 0.6rem;
+        }
+
+        .about-section ul,
+        .about-section ol {
+            margin-bottom: 1rem;
+            padding-left: 1.2rem;
+            color: #2f2f2f;
+            line-height: 1.7;
+        }
+
+        .component-image {
+            width: 100%;
+            max-width: 520px;
+            border-radius: 12px;
+            border: 2px dashed #87CEEB;
+            background: #f8fbff;
+            padding: 0.5rem;
+            margin: 0.6rem 0 1.2rem;
+            cursor: zoom-in;
+            transition: transform 0.2s ease;
+        }
+
+        .component-image:hover {
+            transform: scale(1.01);
+        }
+
+        .image-viewer {
+            background: #fff;
+            border-radius: 16px;
+            border-left: 5px solid #4682B4;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .viewer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.8rem;
+            margin-bottom: 0.8rem;
+            flex-wrap: wrap;
+        }
+
+        .viewer-title {
+            margin: 0;
+            font-size: 1.1rem;
+            color: #003366;
+            font-weight: 600;
+        }
+
+        .viewer-controls {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .viewer-controls .btn {
+            border-radius: 20px;
+            padding: 0.35rem 0.85rem;
+        }
+
+        .viewer-stage {
+            background: #f8fbff;
+            border: 2px dashed #87CEEB;
+            border-radius: 12px;
+            min-height: 220px;
+            overflow: auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0.8rem;
+            cursor: default;
+            user-select: none;
+        }
+
+        .viewer-stage.pan-enabled {
+            cursor: grab;
+        }
+
+        .viewer-stage.panning {
+            cursor: grabbing;
+        }
+
+        .viewer-image {
+            max-width: 100%;
+            height: auto;
+            transform-origin: center center;
+            transition: transform 0.15s ease;
+        }
+
+        .chapter-dropdown .btn {
+            border-radius: 25px;
+            padding: 0.5rem 1.2rem;
+            background: #4682B4;
+            border-color: #4682B4;
+            color: #fff;
+        }
+
+        .chapter-dropdown .btn:hover,
+        .chapter-dropdown .btn:focus,
+        .chapter-dropdown .btn:active {
+            background: #005f99;
+            border-color: #005f99;
+            color: #fff;
+        }
     </style>
 </head>
 
@@ -151,55 +288,191 @@
                         <li class="nav-item">
                             <a class="nav-link" href="contact-us.html">Contact Us</a>
                         </li>
-                    </ul>                  
-                    </div>
+                    </ul>
                 </div>
             </div>
         </nav>
     </header>
 
     <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <h1>Welcome to Team δ - IoT Explorer</h1>
-            <p>We are building the future of smart connectivity through a unified, multi-tenant IoT platform. Join us in
-                exploring innovation and technology.</p>
-        </section>
+        <div class="container">
+            <section id="image-viewer" class="image-viewer d-none" aria-live="polite">
+                <div class="viewer-header">
+                    <h3 id="viewer-title" class="viewer-title">Image Preview</h3>
+                    <div class="viewer-controls">
+                        <button id="zoom-out" class="btn btn-outline-dark btn-sm" type="button">-</button>
+                        <button id="zoom-in" class="btn btn-outline-dark btn-sm" type="button">+</button>
+                        <button id="zoom-reset" class="btn btn-outline-dark btn-sm" type="button">Reset</button>
+                        <button id="viewer-close" class="btn btn-dark btn-sm" type="button">Închide</button>
+                    </div>
+                </div>
+                <div id="viewer-stage" class="viewer-stage">
+                    <img id="viewer-image" class="viewer-image" src="" alt="Expanded preview">
+                </div>
+            </section>
+        </div>
 
-        <!-- Example content cards -->
+        <div class="container mb-4">
+            <div class="dropdown chapter-dropdown">
+                <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                    aria-expanded="false">
+                    Navigate Chapters
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a class="dropdown-item" href="#introduction-overview">1. Introduction &amp; Project Overview</a></li>
+                    <li><a class="dropdown-item" href="#system-architecture">2. System Architecture</a></li>
+                    <li><a class="dropdown-item" href="#hardware-design">3. Hardware și Design (PCB &amp; 3D)</a></li>
+                    <li><a class="dropdown-item" href="#software-logic">4. Software &amp; Logic</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- About Project Sections -->
         <div class="container">
             <div class="row g-4">
-                <div class="col-md-6 col-lg-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Resources</h5>
-                            <p class="card-text">A collection of documentation, tutorials, and technical insights that support the development and deployment of our IoT platform. 
-                                These resources are designed to help understand the architecture, tools, and real-world applications of the project.
-                                applications.</p>
-                            <a href="explore.html" class="btn btn-outline-dark btn-sm">Explore</a>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <section id="introduction-overview" class="about-section h-100">
+                        <h2>1. Introduction &amp; Project Overview</h2>
+                        <p><b> AtmoPredict IoT </b> is an environmental monitoring station designed to predict local weather patterns 
+                            by analyzing real-time atmospheric data. Unlike standard weather apps that rely on regional forecasts,
+                             this device provides local insights based on the precise evolution of barometric pressure and humidity
+                              at the user's exact location.
+                        </p>
+                        <p>
+                        The core objective is to detect early signs of "bad weather" (storms, heavy rain, or sudden pressure drops) before they occur, using localized trend analysis.
+                        </p>
+                    </section>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Meet the Team</h5>
-                            <p class="card-text">Discover the talented people behind the innovation and creativity of
-                                our
-                                IoT solutions.</p>
-                            <a href="Team.html" class="btn btn-outline-dark btn-sm">Learn More</a>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <section id="system-architecture" class="about-section h-100">
+                        <h2>2. System Architecture</h2>
+                        <p>AtmoPredict is built on a multi-layer architecture that integrates hardware sensing, local
+                            processing, and cloud-based data visualization. The system follows a Sensor-to-Cloud
+                            topology.</p>
+
+                        <h3>Architectural Overview</h3>
+                        <p>The workflow of the system is divided into four main stages:</p>
+                        <ol>
+                            <li><strong>Data Acquisition:</strong> Sensors measure environmental variables (Pressure,
+                                Humidity and Temperature).</li>
+                            <li><strong>Edge Processing:</strong> The ESP32 processes raw signals, applies calibration
+                                offsets, and calculates weather trends.</li>
+                            <li><strong>Local Feedback:</strong> Immediate data visualization via the integrated physical
+                                display.</li>
+                            <li><strong>Cloud Integration:</strong> Data transmission via HTTP to the web server for
+                                long-term storage and analysis.</li>
+                        </ol>
+
+                        <h3>Hardware Layer</h3>
+                        <ul>
+                            <li><strong>The Brain: ESP32-WROOM-32 module</strong>
+                                <ul>
+                                    <li>Chosen for its dual-core processing capabilities and integrated WiFi/Bluetooth
+                                        stack.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <img class="component-image" src="../images/ESP32.jpg" data-title="ESP32-WROOM-32 Module"
+                            alt="ESP32-WROOM-32 component image placeholder">
+
+                        <ul>
+                            <li><strong>Primary Sensor: SparkFun BME280 (Atmospheric Sensor)</strong>
+                                <ul>
+                                    <li>This sensor measures Barometric Pressure, Humidity, and Temperature.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <img class="component-image" src="../images/BME280.jpg" data-title="SparkFun BME280 Atmospheric Sensor"
+                            alt="SparkFun BME280 component image placeholder">
+
+                        <ul>
+                            <li><strong>Visual Interface: Adafruit 2.4&quot; TFT LCD (ILI9341)</strong>
+                                <ul>
+                                    <li>A vibrant display used for real-time telemetry.</li>
+                                    <li>Resolution: 240 x 320 pixels.</li>
+                                    <li>SPI Interface: High-speed communication for smooth UI updates.</li>
+                                    <li>Integrated Features: Includes a touchscreen for navigation and a MicroSD socket
+                                        for local data logging in case of WiFi outages.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <img class="component-image" src="../images/Display.jpg" data-title="Adafruit 2.4 TFT LCD (ILI9341)"
+                            alt="Adafruit ILI9341 component image placeholder">
+
+                        <h3>Communication &amp; Data Flow</h3>
+                        <p>The efficiency of the AtmoPredict relies on a structured data pipeline. The system
+                            architecture ensures that environmental readings are not only displayed locally on the
+                            Adafruit TFT screen but also synchronized with a remote server.</p>
+
+                        <p><strong>Data Transmission Pipeline:</strong></p>
+                        <ol>
+                            <li><strong>Acquisition &amp; Processing:</strong> The ESP32 acts as the central processing
+                                hub, interfacing with the BME280 to collect atmospheric data. The primary objective of
+                                this stage is to analyze fluctuations in barometric pressure and humidity.</li>
+                            <li><strong>Telemetry Ingestion:</strong> Processed data is encapsulated into a JSON payload
+                                and published to a specific MQTT topic over a secure Wi-Fi link.</li>
+                            <li><strong>Broker Routing:</strong> The Mosquitto Broker receives the message and dispatches
+                                it to the backend ingestor through the Caddy Reverse Proxy.</li>
+                            <li><strong>Data Persistence:</strong> The backend service validates the incoming signal and
+                                stores the timestamped values into a Timescale database.</li>
+                            <li><strong>Dashboard Delivery:</strong> The frontend fetches the persisted data via HTTPS
+                                REST API calls to update real-time charts and the user interface.</li>
+                        </ol>
+
+                        <h3>Web &amp; Visualization Layer</h3>
+                        <p>The frontend represents the interface between complex atmospheric data and actionable user
+                            insights. It is designed as a responsive web dashboard that fetches and renders telemetry in
+                            real-time.</p>
+                    </section>
                 </div>
-                <div class="col-md-6 col-lg-4">
-                    <div class="card shadow-sm h-100">
-                        <div class="card-body">
-                            <h5 class="card-title">Get in Touch</h5>
-                            <p class="card-text">We’d love to hear your ideas, feedback, and collaboration proposals.
-                            </p>
-                            <a href="contact-us.html" class="btn btn-outline-dark btn-sm">Contact Us</a>
-                        </div>
-                    </div>
+                <div class="col-12">
+                    <section id="hardware-design" class="about-section h-100">
+                        <h2>3. Hardware și Design (PCB &amp; 3D)</h2>
+                        <p>The hardware design of the IoT project consists of a custom-designed Printed Circuit Board
+                            (PCB) and a dedicated 3D enclosure. The PCB was developed using KiCad and integrates all
+                            essential subsystems, including the microcontroller unit, communication module, power
+                            management circuitry, and sensor/actuator interfaces.</p>
+
+                        <h3>Schematic Design</h3>
+                        <p>The schematic was created to clearly define all electrical connections and functional blocks
+                            of the system.</p>
+                        <img class="component-image" src="../images/Schematic_page-0001.jpg" data-title="System Schematic Design"
+                            alt="Schematic design image">
+
+                        <h3>PCB Layout Design</h3>
+                        <p>The PCB layout was designed to optimize:</p>
+                        <ul>
+                            <li>Compact board dimensions</li>
+                            <li>Efficient component placement</li>
+                            <li>Short and clean routing paths</li>
+                            <li>Proper grounding strategy (ground planes)</li>
+                        </ul>
+                        <img class="component-image" src="../images/F_PCB_page-0001.jpg" data-title="PCB Layout - Front Layer"
+                            alt="Front PCB layout image">
+                        <img class="component-image" src="../images/B_PCB_page-0001.jpg" data-title="PCB Layout - Back Layer"
+                            alt="Back PCB layout image">
+                        <img class="component-image" src="../images/F+B_PCB_page-0001.jpg" data-title="PCB Layout - Combined View"
+                            alt="Combined front and back PCB layout image">
+
+                        <h3>3D Enclosure Design</h3>
+                        <p>A custom 3D enclosure was designed to match the PCB geometry and mounting requirements. The
+                            enclosure provides:</p>
+                        <ul>
+                            <li>Mechanical protection</li>
+                            <li>Secure PCB mounting points</li>
+                            <li>Access to connectors and user interfaces</li>
+                        </ul>
+                        <img class="component-image" src="../images/3Dcase.jpg" data-title="3D Enclosure Design"
+                            alt="3D enclosure design image">
+                    </section>
+                </div>
+                <div class="col-12">
+                    <section id="software-logic" class="about-section h-100">
+                        <h2>4. Software &amp; Logic</h2>
+                        <p>The software and logic layer is currently under active development. We are refining the
+                            firmware behavior, backend processing flow, and dashboard integration to deliver a stable,
+                            intelligent experience. A full technical overview will be published here very soon.</p>
+                    </section>
                 </div>
             </div>
         </div>
@@ -214,6 +487,142 @@
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         crossorigin="anonymous"></script>
+
+    <script>
+        (function () {
+            const zoomableImages = document.querySelectorAll('.component-image');
+            const viewer = document.getElementById('image-viewer');
+            const viewerImage = document.getElementById('viewer-image');
+            const viewerTitle = document.getElementById('viewer-title');
+            const viewerStage = document.getElementById('viewer-stage');
+            const zoomInButton = document.getElementById('zoom-in');
+            const zoomOutButton = document.getElementById('zoom-out');
+            const zoomResetButton = document.getElementById('zoom-reset');
+            const closeButton = document.getElementById('viewer-close');
+
+            let zoomLevel = 1;
+            const minZoom = 1;
+            const maxZoom = 4;
+            let isDragging = false;
+            let dragStartX = 0;
+            let dragStartY = 0;
+            let panX = 0;
+            let panY = 0;
+            let panStartX = 0;
+            let panStartY = 0;
+
+            function updatePanState() {
+                const panEnabled = zoomLevel > 1;
+                viewerStage.classList.toggle('pan-enabled', panEnabled);
+                if (!panEnabled) {
+                    viewerStage.classList.remove('panning');
+                    isDragging = false;
+                }
+            }
+
+            function applyTransform() {
+                viewerImage.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+                updatePanState();
+            }
+
+            function openViewer(sourceImage) {
+                const imageTitle = sourceImage.getAttribute('data-title') || sourceImage.alt || 'Image Preview';
+                viewerImage.src = sourceImage.src;
+                viewerImage.alt = imageTitle;
+                viewerTitle.textContent = imageTitle;
+                zoomLevel = 1;
+                panX = 0;
+                panY = 0;
+                applyTransform();
+
+                sourceImage.insertAdjacentElement('afterend', viewer);
+                viewer.classList.remove('d-none');
+            }
+
+            function changeZoom(delta) {
+                zoomLevel = Math.min(maxZoom, Math.max(minZoom, +(zoomLevel + delta).toFixed(2)));
+                applyTransform();
+            }
+
+            zoomableImages.forEach(function (image) {
+                image.addEventListener('click', function () {
+                    openViewer(image);
+                });
+            });
+
+            zoomInButton.addEventListener('click', function () {
+                changeZoom(0.2);
+            });
+
+            zoomOutButton.addEventListener('click', function () {
+                changeZoom(-0.2);
+            });
+
+            zoomResetButton.addEventListener('click', function () {
+                zoomLevel = 1;
+                panX = 0;
+                panY = 0;
+                applyTransform();
+            });
+
+            closeButton.addEventListener('click', function () {
+                viewer.classList.add('d-none');
+                viewerImage.src = '';
+                viewerStage.classList.remove('panning', 'pan-enabled');
+                isDragging = false;
+                panX = 0;
+                panY = 0;
+            });
+
+            viewerStage.addEventListener('wheel', function (event) {
+                if (viewer.classList.contains('d-none')) {
+                    return;
+                }
+
+                event.preventDefault();
+                if (event.deltaY < 0) {
+                    changeZoom(0.1);
+                } else {
+                    changeZoom(-0.1);
+                }
+            }, { passive: false });
+
+            viewerStage.addEventListener('mousedown', function (event) {
+                if (zoomLevel <= 1 || viewer.classList.contains('d-none')) {
+                    return;
+                }
+
+                isDragging = true;
+                dragStartX = event.clientX;
+                dragStartY = event.clientY;
+                panStartX = panX;
+                panStartY = panY;
+                viewerStage.classList.add('panning');
+                event.preventDefault();
+            });
+
+            window.addEventListener('mousemove', function (event) {
+                if (!isDragging) {
+                    return;
+                }
+
+                const deltaX = event.clientX - dragStartX;
+                const deltaY = event.clientY - dragStartY;
+                panX = panStartX + deltaX;
+                panY = panStartY + deltaY;
+                applyTransform();
+            });
+
+            window.addEventListener('mouseup', function () {
+                if (!isDragging) {
+                    return;
+                }
+
+                isDragging = false;
+                viewerStage.classList.remove('panning');
+            });
+        })();
+    </script>
 </body>
 
 </html>
